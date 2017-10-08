@@ -19,7 +19,7 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "precommit": "lint-staged",
-    "prettier": "prettier --single-quote --list-different --write 'src/**/*.{js,json,css}'"
+    "prettier": "prettier --single-quote --write 'src/**/*.{js,json,css}'"
   },
   "lint-staged": {
     "src/**/*.{js,json,css}": [
