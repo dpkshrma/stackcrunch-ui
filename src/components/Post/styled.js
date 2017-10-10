@@ -3,7 +3,12 @@ import styled, { css } from 'styled-components';
 
 export const Wrapper = styled.div`
   display: flex;
-  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`;
+
+export const Post = styled.div`
+  max-width: 700px;
 `;
 
 export const Header = styled.div`
@@ -54,6 +59,11 @@ export const Title = styled.h1`
     -webkit-transform: scaleX(1);
     transform: scaleX(1);
   }
+`;
+
+export const Content = styled.div`
+  font-size: 16px;
+  line-height: 26px;
 `;
 
 export const Separator = ({ space, delimiter }) => {
