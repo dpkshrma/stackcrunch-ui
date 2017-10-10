@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import logo from './logo.png';
 
@@ -16,7 +17,12 @@ const Content = styled.div`
   display: flex;
   align-items: center;
 `;
-const Logo = styled.img`
+const Logo = styled(Link)`
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+`;
+const LogoThumb = styled.img`
   height: 28px;
 `;
 const Text = styled.span`
@@ -33,11 +39,13 @@ const Topbar = props => {
   return (
     <Wrapper>
       <Content>
-        <Logo src={logo} />
-        <LogoText>
-          <Text weight={300}>stack</Text>
-          <Text weight={500}>crunch</Text>
-        </LogoText>
+        <Logo to="/">
+          <LogoThumb src={logo} />
+          <LogoText>
+            <Text weight={300}>stack</Text>
+            <Text weight={500}>crunch</Text>
+          </LogoText>
+        </Logo>
       </Content>
     </Wrapper>
   );
