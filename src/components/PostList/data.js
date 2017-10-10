@@ -15,7 +15,7 @@ export default [
       { text: 'react-motion', link: '/tags/react-motion', id: 'react-motion' },
       { text: 'animation', link: '/tags/animation', id: 'animation' }
     ],
-    postedOn: '24th Dec 2016',
-    ttr: '20m'
+    postedOn: 'Mar 24',
+    ttr: '20 min'
   }
 ];

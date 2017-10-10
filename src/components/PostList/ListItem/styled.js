@@ -1,3 +1,4 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
@@ -12,7 +13,7 @@ export const Header = styled.div`
   align-items: center;
 `;
 
-export const PostDate = styled.div`
+export const HeaderMetaText = styled.div`
   font-size: 12px;
   margin-left: 8px;
   color: #777;
@@ -42,8 +43,7 @@ export const MetaItem = styled.div`
 export const MetaLabel = styled.span`
   color: #777;
   font-size: 12px;
-  margin-left: 8px;
-  cursor: default;
+  margin-left: 4px;
 `;
 
 export const Title = styled(Link)`
@@ -79,6 +79,8 @@ export const Title = styled(Link)`
 export const ShareLink = styled.a`
   cursor: pointer;
   text-decoration: none;
+  display: flex;
+  align-items: center;
 `;
 
 export const Footer = styled.div`
@@ -86,6 +88,13 @@ export const Footer = styled.div`
   align-items: center;
   justify-content: space-between;
 `;
+
+export const Separator = ({ space, delimiter }) => {
+  const Span = styled.span`
+    margin: 0 ${space}px;
+  `;
+  return <Span>{delimiter}</Span>;
+};
 
 export const tagCSS = {
   text: css`

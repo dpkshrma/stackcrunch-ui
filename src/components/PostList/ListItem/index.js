@@ -3,7 +3,8 @@ import { Chip } from '../../common';
 import {
   Wrapper,
   Header,
-  PostDate,
+  HeaderMetaText,
+  Separator,
   Title,
   Abstract,
   Tags,
@@ -17,7 +18,6 @@ import {
 } from './styled';
 import { TWITTER_SHARE_URL, STACKCRUNCH_POST_URL } from '../../../config';
 import TwitterIcon from './icons/TwitterIcon';
-import ClockIcon from './icons/ClockIcon';
 
 const ListItem = ({ id, title, abstract, author, tags, postedOn, ttr }) => {
   const tagList = tags.map(tag => (
@@ -41,20 +41,19 @@ const ListItem = ({ id, title, abstract, author, tags, postedOn, ttr }) => {
           href={author.link}
           css={authorCSS}
         />
-        <PostDate>{postedOn}</PostDate>
+        <HeaderMetaText>
+          {postedOn} <Separator space={8} delimiter="|" /> {ttr} read{' '}
+        </HeaderMetaText>
       </Header>
-      <Title to="/post">{title}</Title>
+      <Title to={`/post/${id}`}>{title}</Title>
       <Abstract>{abstract}</Abstract>
       <Footer>
         <Tags>{tagList}</Tags>
         <Meta>
           <MetaItem>
-            <ClockIcon height={20} />
-            <MetaLabel>{ttr}</MetaLabel>
-          </MetaItem>
-          <MetaItem>
             <ShareLink href={shareLink} target="_blank">
               <TwitterIcon height={14} />
+              <MetaLabel>Share</MetaLabel>
             </ShareLink>
           </MetaItem>
         </Meta>
