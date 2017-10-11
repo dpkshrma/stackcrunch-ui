@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import ListItem from './ListItem';
-import posts from './data';
+import { PostService } from '../../services';
 
 const Wrapper = styled.div`
   display: flex;
@@ -21,7 +21,8 @@ const Sidebar = styled.div`
   width: 30%;
 `;
 
-const PostList = props => {
+const PostList = ({ match }) => {
+  const posts = PostService.getPage(match.params.page || 1);
   return (
     <Wrapper>
       <List>{posts.map(post => <ListItem {...post} key={post.id} />)}</List>
