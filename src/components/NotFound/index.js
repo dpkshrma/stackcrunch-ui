@@ -1,9 +1,9 @@
 import React from 'react';
 
-class NotFoundPage extends React.Component {
+class NotFound extends React.Component {
   render() {
     return <div>404: Nothing found :|</div>;
   }
 }
 
-export default NotFoundPage;
+export default NotFound;
