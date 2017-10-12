@@ -1,13 +1,8 @@
 const getPage = page => {
-  try {
-    const { data } = require(`./data/pages/${page}.json`);
-    return data;
-  } catch (e) {
-    // page not found
-  }
-  return [];
+  return import(`./data/pages/${page}.json`);
 };
 
 export default {
-  getPage
+  getPage,
+  getPageIds
 };
