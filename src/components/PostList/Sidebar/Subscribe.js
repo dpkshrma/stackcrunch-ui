@@ -1,6 +1,6 @@
 import React from 'react';
-import fetch from 'isomorphic-fetch';
 import styled from 'styled-components';
+import { subscribeUser } from '../../../services/Subscription';
 
 const Wrapper = styled.div`
   display: flex;
@@ -45,40 +45,63 @@ const Button = styled.button`
   padding: 0 12px;
 `;
 
-const postToGoogleForm = emailAddress => {
-  fetch(
-    'https://docs.google.com/forms/d/e/1FAIpQLSdeevzYMjyS_i4oGAg_ZCk_EMKmPbN5xa2IHQHH8kz_fyciNA/formResponse',
-    {
-      method: 'post',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*'
-      },
-      body: JSON.stringify({
-        emailAddress: 'dpkshrma01@gmail.com'
-      })
+class Subscribe extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      emailAddress: '',
+      subscribed: false
+    };
+  }
+  componentWillMount() {
+    const emailAddress = localStorage.getItem('subscriptionEmail');
+    if (emailAddress) {
+      this.setState({
+        emailAddress,
+        subscribed: true
+      });
     }
-  )
-    .then(response => {
-      console.log(response);
-    })
-    .catch(err => {
-      console.error(err);
+  }
+  updateEmailAddress = e => {
+    e.preventDefault();
+    this.setState({
+      emailAddress: e.target.value
     });
-};
-
-const Subscribe = props => {
-  return (
-    <Wrapper>
-      <Title>Subscribe</Title>
-      <Text>Get the latest posts delivered straight to your inbox!</Text>
+  };
+  subscribe = e => {
+    e.preventDefault();
+    subscribeUser(this.state.emailAddress)
+      .then(response => {
+        localStorage.setItem('subscriptionEmail', this.state.emailAddress);
+        this.setState({ subscribed: true });
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  };
+  render() {
+    const { subscribed } = this.state;
+    const form = (
       <FormGroup>
-        <Input type="text" placeholder="Email Address" />
-        <Button onClick={postToGoogleForm}>&#x2708;</Button>
+        <Input
+          type="text"
+          placeholder="Email Address"
+          value={this.state.emailAddress}
+          onChange={this.updateEmailAddress}
+        />
+        <Button onClick={this.subscribe}>&#x2708;</Button>
       </FormGroup>
-    </Wrapper>
-  );
-};
+    );
+    const successMessage = <Text>You're all Set!</Text>;
+    return (
+      <Wrapper>
+        <Title>Subscribe</Title>
+        <Text>Get the latest posts delivered straight to your inbox!</Text>
+        {!subscribed && form}
+        {subscribed && successMessage}
+      </Wrapper>
+    );
+  }
+}
 
 export default Subscribe;
