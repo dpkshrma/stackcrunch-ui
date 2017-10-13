@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import ListItem from './ListItem';
 import Pager from './Pager';
+import Sidebar from './Sidebar';
 import { PostService } from '../../services';
 import { URL_PREFIX } from '../../config';
 
@@ -17,10 +18,6 @@ const List = styled.div`
   flex-direction: column;
   width: 70%;
   margin-right: 16px;
-`;
-const Sidebar = styled.div`
-  height: 120px;
-  width: 30%;
 `;
 
 class PostList extends React.Component {
