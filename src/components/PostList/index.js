@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import ListItem from './ListItem';
+import Pager from './Pager';
 import { PostService } from '../../services';
 import { URL_PREFIX } from '../../config';
 
@@ -30,8 +31,7 @@ class PostList extends React.Component {
     };
   }
   componentWillMount() {
-    const pathParts = this.props.match.path.split('/');
-    const pageId = pathParts[pathParts.length - 1];
+    const pageId = this.getCurrentPageId();
     PostService.getPage(pageId || 1)
       .then(({ data: posts }) => {
         this.setState({ posts });
@@ -44,11 +44,17 @@ class PostList extends React.Component {
         // TODO: handle other errors
       });
   }
+  getCurrentPageId = () => {
+    const pathParts = this.props.match.path.split('/');
+    const pageId = pathParts[pathParts.length - 1];
+    return pageId;
+  };
   render() {
     return (
       <Wrapper>
         <List>
           {this.state.posts.map(post => <ListItem {...post} key={post.id} />)}
+          <Pager currentPageId={this.getCurrentPageId()} />
         </List>
         <Sidebar />
       </Wrapper>
