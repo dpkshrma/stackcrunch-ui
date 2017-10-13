@@ -8,9 +8,16 @@ export const Wrapper = styled.div`
   background: #f0f8ff;
   color: #333;
   padding: 16px;
+  padding-bottom: 24px;
+  margin-top: 48px;
 `;
-export const Title = styled.h2`
+export const HeaderImg = styled.img`
+  margin-top: -64px;
+`;
+export const Title = styled.span`
   font-weight: 300;
+  font-size: 24px;
+  margin: 12px 0 16px;
   color: #07c;
 `;
 export const Text = styled.span`
@@ -27,8 +34,12 @@ export const Input = styled.input`
   font-size: 14px;
   margin-top: 24px;
   outline: none;
-  border: 1px solid #3af;
+  border: 1px solid #bee7ff;
   width: 100%;
+  &:active,
+  &:focus {
+    border-color: #3af;
+  }
 `;
 export const Button = styled.button`
   font-size: 24px;

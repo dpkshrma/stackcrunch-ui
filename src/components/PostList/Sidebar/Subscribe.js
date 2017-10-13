@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   Wrapper,
+  HeaderImg,
   Title,
   Text,
   FormGroup,
@@ -10,6 +11,7 @@ import {
   EditEmail
 } from './styled';
 import { subscribeUser } from '../../../services/Subscription';
+import letter from './letter.png';
 
 class Subscribe extends React.Component {
   constructor(props) {
@@ -75,7 +77,8 @@ class Subscribe extends React.Component {
     );
     return (
       <Wrapper>
-        <Title>Subscribe</Title>
+        <HeaderImg src={letter} />
+        <Title>{subscribed ? 'Subscribed!' : 'Subscribe'}</Title>
         <Text>Get the latest posts delivered straight to your inbox!</Text>
         {!subscribed && form}
         {subscribed && successMessage}
