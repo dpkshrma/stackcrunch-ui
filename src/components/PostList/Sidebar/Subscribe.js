@@ -1,4 +1,5 @@
 import React from 'react';
+import fetch from 'isomorphic-fetch';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
@@ -44,6 +45,29 @@ const Button = styled.button`
   padding: 0 12px;
 `;
 
+const postToGoogleForm = emailAddress => {
+  fetch(
+    'https://docs.google.com/forms/d/e/1FAIpQLSdeevzYMjyS_i4oGAg_ZCk_EMKmPbN5xa2IHQHH8kz_fyciNA/formResponse',
+    {
+      method: 'post',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+      },
+      body: JSON.stringify({
+        emailAddress: 'dpkshrma01@gmail.com'
+      })
+    }
+  )
+    .then(response => {
+      console.log(response);
+    })
+    .catch(err => {
+      console.error(err);
+    });
+};
+
 const Subscribe = props => {
   return (
     <Wrapper>
@@ -51,7 +75,7 @@ const Subscribe = props => {
       <Text>Get the latest posts delivered straight to your inbox!</Text>
       <FormGroup>
         <Input type="text" placeholder="Email Address" />
-        <Button>&#x2708;</Button>
+        <Button onClick={postToGoogleForm}>&#x2708;</Button>
       </FormGroup>
     </Wrapper>
   );
