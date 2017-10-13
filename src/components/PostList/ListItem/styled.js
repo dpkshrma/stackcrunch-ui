@@ -21,7 +21,7 @@ export const HeaderMetaText = styled.div`
 
 export const Abstract = styled.div`
   font-size: 16px;
-  font-weight: 300;
+  font-weight: normal;
   line-height: 26px;
   color: #222;
   margin-bottom: 8px;
