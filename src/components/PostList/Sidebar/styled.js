@@ -9,7 +9,7 @@ export const Wrapper = styled.div`
   color: #333;
   padding: 16px;
   padding-bottom: 24px;
-  margin-top: 48px;
+  margin-top: 56px;
 `;
 export const HeaderImg = styled.img`
   margin-top: -64px;

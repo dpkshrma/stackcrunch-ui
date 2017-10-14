@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components';
 
 export const Wrapper = styled.div`
   max-width: 682px;
-  padding: 16px;
+  padding: 24px 16px;
   border-bottom: 1px solid #ddd;
 `;
 
