@@ -10,7 +10,7 @@ import {
   SuccessMsg,
   EditEmail
 } from './styled';
-import { subscribeUser } from '../../../services/Subscription';
+import { subscribeUser } from '../../services/Subscription';
 import letter from './letter.png';
 
 class Subscribe extends React.Component {
