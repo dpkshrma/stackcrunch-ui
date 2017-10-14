@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import ListItem from './ListItem';
 import Pager from './Pager';
 import { PostService } from '../../services';
-import { URL_PREFIX } from '../../config';
+import { URL_PREFIX, PAGE_TYPES } from '../../config';
 
 const Wrapper = styled.div`
   display: flex;
@@ -15,20 +15,27 @@ const List = styled.div`
   margin-right: 16px;
 `;
 
+const getURLSegments = urlPath => {
+  return urlPath.split('/').filter(segment => segment.length > 0);
+};
+
 class PostList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       posts: [],
-      tagId: null
+      pageType: {
+        type: PAGE_TYPES.MAIN
+      }
     };
   }
   componentWillMount() {
     const pageId = this.getCurrentPageId();
-    const tagId = this.getTagId();
-    PostService.getPage(pageId || 1, tagId)
+    const pageType = this.getPageType();
+
+    PostService.getPage(pageId || 1, pageType.type, pageType.id)
       .then(({ data: posts }) => {
-        this.setState({ posts, tagId });
+        this.setState({ posts, pageType });
       })
       .catch(err => {
         if (err.message.startsWith('Cannot find module')) {
@@ -39,29 +46,27 @@ class PostList extends React.Component {
         // TODO: handle other errors
       });
   }
-  getTagId = () => {
-    const [firstPart, tagId] = this.props.match.path
-      .split('/')
-      .filter(part => part.length > 0);
-    if (firstPart === 'tags') {
-      return tagId;
+  getPageType = () => {
+    const { path } = this.props.match;
+    const [firstPart, pageTypeId] = getURLSegments(path);
+    if (PAGE_TYPES.SPECIAL.indexOf(firstPart) !== -1) {
+      return { id: pageTypeId, type: firstPart };
     }
-    return null;
+    return { type: PAGE_TYPES.MAIN };
   };
   getCurrentPageId = () => {
-    const pathParts = this.props.match.path
-      .split('/')
-      .filter(part => part.length > 0);
+    const { path } = this.props.match;
+    const pathParts = getURLSegments(path);
     const pageId = pathParts[pathParts.length - 1];
     return pageId;
   };
   render() {
-    const { tagId } = this.state;
+    const { pageType } = this.state;
     return (
       <Wrapper>
         <List>
           {this.state.posts.map(post => <ListItem {...post} key={post.id} />)}
-          <Pager currentPageId={this.getCurrentPageId()} tagId={tagId} />
+          <Pager currentPageId={this.getCurrentPageId()} pageType={pageType} />
         </List>
       </Wrapper>
     );

@@ -2,29 +2,39 @@ import metadata from './data/meta.json';
 
 const { pages } = metadata;
 
-const getPage = (page, type) => {
-  return import(`./data/pages/${type || '_main'}/${page}.json`);
+const getPage = (pageId, type, typeId) => {
+  let pagePath = './data/pages';
+  // type of page: main/tags/authors
+  let pageType = type;
+  if (!type) {
+    pageType = 'main';
+  }
+  pagePath += `/${pageType}`;
+  // author/tag id
+  if (typeId) {
+    pagePath += `/${typeId}`;
+  }
+  return import(`${pagePath}/${pageId}.json`);
 };
 
 const getMainPageIds = () => {
-  return pages._main.map(fileName => fileName.split('.')[0]);
+  return pages.main.pages;
 };
 
-const getTaggedPageIds = tagId => {
-  if (Object.keys(pages).indexOf(tagId) === -1) {
-    throw new Error(`Tag '${tagId}' not found`);
+const getSpecialPageTypeIds = pageType => {
+  return Object.keys(pages[pageType] || {});
+};
+
+const getSpecialPageIds = (pageType, pageTypeId) => {
+  if (getSpecialPageTypeIds(pageType).indexOf(pageTypeId) === -1) {
+    throw new Error(`'${pageType}' '${pageTypeId}' not found`);
   }
-  return pages[tagId].map(fileName => fileName.split('.')[0]);
-};
-
-const getTags = () => {
-  const specialIds = ['_main', '_user'];
-  return Object.keys(pages).filter(id => specialIds.indexOf(id) === -1);
+  return pages[pageType][pageTypeId].pages;
 };
 
 export default {
   getPage,
   getMainPageIds,
-  getTags,
-  getTaggedPageIds
+  getSpecialPageTypeIds,
+  getSpecialPageIds
 };

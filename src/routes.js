@@ -8,7 +8,7 @@ import App from './components/App';
 import { PostService } from './services';
 import { asyncLoad } from './helpers';
 // import { routeAnimation } from './helpers';
-import { URL_PREFIX } from './config';
+import { URL_PREFIX, PAGE_TYPES } from './config';
 
 // redux store
 const store = createStore(rootReducer);
@@ -21,8 +21,37 @@ const NotFound = asyncLoad({ loader: () => import(`./components/NotFound`) });
 // const { bounceTransition, mapStyles } = routeAnimation;
 
 // post listing page config
-const pageIds = PostService.getMainPageIds();
-const [firstPageId] = pageIds;
+const mainPageIds = PostService.getMainPageIds();
+const [firstPageId] = mainPageIds;
+
+// Routes
+const mainPageRoutes = mainPageIds.map(pageId => (
+  <Route
+    exact
+    key={pageId}
+    component={asyncLoad({
+      loader: () => import(`./components/PostList`)
+    })}
+    path={`${URL_PREFIX}/posts/${pageId}`}
+  />
+));
+
+const specialPageRoutes = PAGE_TYPES.SPECIAL.map(pageType => {
+  return PostService.getSpecialPageTypeIds(pageType).map(pageTypeId => {
+    return PostService.getSpecialPageIds(pageType, pageTypeId).map(pageId => {
+      return (
+        <Route
+          exact
+          key={pageId}
+          component={asyncLoad({
+            loader: () => import(`./components/PostList`)
+          })}
+          path={`${URL_PREFIX}/${pageType}/${pageTypeId}/posts/${pageId}`}
+        />
+      );
+    });
+  });
+});
 
 export default (
   <Provider store={store}>
@@ -44,28 +73,8 @@ export default (
           path="/posts"
           render={() => <Redirect to={`/posts/${firstPageId}`} />}
         />
-        {pageIds.map(pageId => (
-          <Route
-            exact
-            key={pageId}
-            component={asyncLoad({
-              loader: () => import(`./components/PostList`)
-            })}
-            path={`${URL_PREFIX}/posts/${pageId}`}
-          />
-        ))}
-        {PostService.getTags().map(tag => {
-          return PostService.getTaggedPageIds(tag).map(pageId => (
-            <Route
-              exact
-              key={pageId}
-              component={asyncLoad({
-                loader: () => import(`./components/PostList`)
-              })}
-              path={`${URL_PREFIX}/tags/${tag}/posts/${pageId}`}
-            />
-          ));
-        })}
+        {mainPageRoutes}
+        {specialPageRoutes}
         <Route exact component={Post} path={`${URL_PREFIX}/post/:postId`} />
         <Route component={NotFound} />
       </Switch>

@@ -40,7 +40,7 @@ const ListItem = ({ id, title, abstract, author, tags, postedOn, ttr }) => {
         <Chip
           img={author.img}
           text={author.name}
-          href={author.link}
+          to={author.link}
           css={authorCSS}
         />
         <HeaderMetaText>

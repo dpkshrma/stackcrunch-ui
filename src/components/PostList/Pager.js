@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 import { PostService } from '../../services';
 import { getPrevNextPageIds } from '../../helpers';
+import { URL_PREFIX, PAGE_TYPES } from '../../config';
 
 const Wrapper = styled.div`
   display: flex;
@@ -33,15 +34,16 @@ const DisabledLink = styled.span`
   cursor: default;
 `;
 
-const Pager = ({ currentPageId, tagId }) => {
-  // TODO: check for tagged/user
-  let pageIds, baseURL;
-  if (tagId) {
-    baseURL = `/tags/${tagId}/posts`;
-    pageIds = PostService.getTaggedPageIds(tagId);
-  } else {
-    baseURL = '/posts';
+const Pager = ({ currentPageId, pageType = {} }) => {
+  let pageIds = [],
+    baseURL = URL_PREFIX;
+
+  if (pageType.type === PAGE_TYPES.MAIN) {
+    baseURL += '/posts';
     pageIds = PostService.getMainPageIds();
+  } else {
+    baseURL += `/${pageType.type}/${pageType.id}/posts`;
+    pageIds = PostService.getSpecialPageIds(pageType.type, pageType.id);
   }
   const { prevPageId, nextPageId } = getPrevNextPageIds(pageIds, currentPageId);
 

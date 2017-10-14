@@ -1,6 +1,17 @@
 {
   "pages": {
-    "_main": ["1.json", "2.json", "3.json"],
-    "react": ["1.json", "2.json"]
+    "main": {
+      "pages": ["1", "2", "3"]
+    },
+    "tags": {
+      "react": {
+        "pages": ["1", "2"]
+      }
+    },
+    "authors": {
+      "chenglou": {
+        "pages": ["1", "2"]
+      }
+    }
   }
 }
