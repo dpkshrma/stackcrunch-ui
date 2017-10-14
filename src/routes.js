@@ -5,7 +5,7 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import rootReducer from './reducers';
 import App from './components/App';
-import { PostService } from './services';
+import { PageService } from './services';
 import { asyncLoad } from './helpers';
 // import { routeAnimation } from './helpers';
 import { URL_PREFIX, PAGE_TYPES } from './config';
@@ -21,7 +21,7 @@ const NotFound = asyncLoad({ loader: () => import(`./components/NotFound`) });
 // const { bounceTransition, mapStyles } = routeAnimation;
 
 // post listing page config
-const mainPageIds = PostService.getMainPageIds();
+const mainPageIds = PageService.getMainPageIds();
 const [firstPageId] = mainPageIds;
 
 // Routes
@@ -37,8 +37,8 @@ const mainPageRoutes = mainPageIds.map(pageId => (
 ));
 
 const specialPageRoutes = PAGE_TYPES.SPECIAL.map(pageType => {
-  return PostService.getSpecialPageTypeIds(pageType).map(pageTypeId => {
-    return PostService.getSpecialPageIds(pageType, pageTypeId).map(pageId => {
+  return PageService.getSpecialPageTypeIds(pageType).map(pageTypeId => {
+    return PageService.getSpecialPageIds(pageType, pageTypeId).map(pageId => {
       return (
         <Route
           exact

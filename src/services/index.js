@@ -1,1 +1,1 @@
-export { default as PostService } from './Post';
+export { default as PageService } from './Page';

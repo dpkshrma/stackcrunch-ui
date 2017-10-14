@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
-import { PostService } from '../../services';
+import { PageService } from '../../services';
 import { getPrevNextPageIds } from '../../helpers';
 import { URL_PREFIX, PAGE_TYPES } from '../../config';
 
@@ -40,10 +40,10 @@ const Pager = ({ currentPageId, pageType = {} }) => {
 
   if (pageType.type === PAGE_TYPES.MAIN) {
     baseURL += '/posts';
-    pageIds = PostService.getMainPageIds();
+    pageIds = PageService.getMainPageIds();
   } else {
     baseURL += `/${pageType.type}/${pageType.id}/posts`;
-    pageIds = PostService.getSpecialPageIds(pageType.type, pageType.id);
+    pageIds = PageService.getSpecialPageIds(pageType.type, pageType.id);
   }
   const { prevPageId, nextPageId } = getPrevNextPageIds(pageIds, currentPageId);
 

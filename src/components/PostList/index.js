@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import ListItem from './ListItem';
 import Pager from './Pager';
-import { PostService } from '../../services';
+import { PageService } from '../../services';
 import { URL_PREFIX, PAGE_TYPES } from '../../config';
 
 const Wrapper = styled.div`
@@ -33,7 +33,7 @@ class PostList extends React.Component {
     const pageId = this.getCurrentPageId();
     const pageType = this.getPageType();
 
-    PostService.getPage(pageId || 1, pageType.type, pageType.id)
+    PageService.getPage(pageId || 1, pageType.type, pageType.id)
       .then(({ data: posts }) => {
         this.setState({ posts, pageType });
       })
