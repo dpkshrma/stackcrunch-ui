@@ -1,6 +1,6 @@
 import React from 'react';
 import { AnimatedSwitch } from 'react-router-transition';
-import { Route, Redirect } from 'react-router-dom';
+import { Route, Redirect, Switch } from 'react-router-dom';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import rootReducer from './reducers';
@@ -26,12 +26,13 @@ const [firstPageId] = pageIds;
 export default (
   <Provider store={store}>
     <App>
-      <AnimatedSwitch
+      {/* <AnimatedSwitch
         atEnter={bounceTransition.atEnter}
         atLeave={bounceTransition.atLeave}
         atActive={bounceTransition.atActive}
         mapStyles={mapStyles}
-      >
+      > */}
+      <Switch>
         <Route
           exact
           path="/"
@@ -54,7 +55,8 @@ export default (
         ))}
         <Route exact component={Post} path={`${URL_PREFIX}/post/:postId`} />
         <Route component={NotFound} />
-      </AnimatedSwitch>
+      </Switch>
+      {/* </AnimatedSwitch> */}
     </App>
   </Provider>
 );

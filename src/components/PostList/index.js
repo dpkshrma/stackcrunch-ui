@@ -8,7 +8,6 @@ import { URL_PREFIX } from '../../config';
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
-  width: 100%;
 `;
 const List = styled.div`
   display: flex;
