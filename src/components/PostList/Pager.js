@@ -33,14 +33,22 @@ const DisabledLink = styled.span`
   cursor: default;
 `;
 
-const Pager = ({ currentPageId }) => {
-  const pageIds = PostService.getPageIds();
+const Pager = ({ currentPageId, tagId }) => {
+  // TODO: check for tagged/user
+  let pageIds, baseURL;
+  if (tagId) {
+    baseURL = `/tags/${tagId}/posts`;
+    pageIds = PostService.getTaggedPageIds(tagId);
+  } else {
+    baseURL = '/posts';
+    pageIds = PostService.getMainPageIds();
+  }
   const { prevPageId, nextPageId } = getPrevNextPageIds(pageIds, currentPageId);
 
   return (
     <Wrapper>
       {prevPageId ? (
-        <PageLink to={`/posts/${prevPageId}`}>Prev</PageLink>
+        <PageLink to={`${baseURL}/${prevPageId}`}>Prev</PageLink>
       ) : (
         <DisabledLink>Prev</DisabledLink>
       )}
@@ -52,14 +60,14 @@ const Pager = ({ currentPageId }) => {
             active = 1;
           }
           return (
-            <PageLink key={pageId} active={active} to={`/posts/${pageId}`}>
+            <PageLink key={pageId} active={active} to={`${baseURL}/${pageId}`}>
               {pageId}
             </PageLink>
           );
         })
       } */}
       {nextPageId ? (
-        <PageLink to={`/posts/${nextPageId}`}>Next</PageLink>
+        <PageLink to={`${baseURL}/${nextPageId}`}>Next</PageLink>
       ) : (
         <DisabledLink>Next</DisabledLink>
       )}

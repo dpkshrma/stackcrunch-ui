@@ -20,9 +20,11 @@ import { TWITTER_SHARE_URL, STACKCRUNCH_POST_URL } from '../../../config';
 import TwitterIcon from './icons/TwitterIcon';
 
 const ListItem = ({ id, title, abstract, author, tags, postedOn, ttr }) => {
-  const tagList = tags.map(tag => (
-    <Chip key={tag.id} text={tag.text} to={tag.link} css={tagCSS} />
-  ));
+  const tagList =
+    tags &&
+    tags.map(tag => (
+      <Chip key={tag.id} text={tag.text} to={tag.link} css={tagCSS} />
+    ));
 
   // TODO: ellipsify shareText if char length overshot
   const shareText = `${title} by @${author.twitterHandle}`;

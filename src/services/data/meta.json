@@ -1,0 +1,6 @@
+{
+  "pages": {
+    "_main": ["1.json", "2.json", "3.json"],
+    "react": ["1.json", "2.json"]
+  }
+}

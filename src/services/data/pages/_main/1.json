@@ -18,6 +18,11 @@
           "link": "/tags/react-motion",
           "id": "react-motion"
         },
+        {
+          "text": "react",
+          "link": "/tags/react/posts/1",
+          "id": "react"
+        },
         { "text": "animation", "link": "/tags/animation", "id": "animation" }
       ],
       "postedOn": "Mar 24",

@@ -19,34 +19,49 @@ class PostList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      posts: []
+      posts: [],
+      tagId: null
     };
   }
   componentWillMount() {
     const pageId = this.getCurrentPageId();
-    PostService.getPage(pageId || 1)
+    const tagId = this.getTagId();
+    PostService.getPage(pageId || 1, tagId)
       .then(({ data: posts }) => {
-        this.setState({ posts });
+        this.setState({ posts, tagId });
       })
       .catch(err => {
         if (err.message.startsWith('Cannot find module')) {
           // redirect to NotFound page
+          console.error(err);
           this.props.history.push(`${URL_PREFIX}/404`);
         }
         // TODO: handle other errors
       });
   }
+  getTagId = () => {
+    const [firstPart, tagId] = this.props.match.path
+      .split('/')
+      .filter(part => part.length > 0);
+    if (firstPart === 'tags') {
+      return tagId;
+    }
+    return null;
+  };
   getCurrentPageId = () => {
-    const pathParts = this.props.match.path.split('/');
+    const pathParts = this.props.match.path
+      .split('/')
+      .filter(part => part.length > 0);
     const pageId = pathParts[pathParts.length - 1];
     return pageId;
   };
   render() {
+    const { tagId } = this.state;
     return (
       <Wrapper>
         <List>
           {this.state.posts.map(post => <ListItem {...post} key={post.id} />)}
-          <Pager currentPageId={this.getCurrentPageId()} />
+          <Pager currentPageId={this.getCurrentPageId()} tagId={tagId} />
         </List>
       </Wrapper>
     );
