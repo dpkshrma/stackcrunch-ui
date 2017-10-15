@@ -7,3 +7,7 @@ export const PAGE_TYPES = {
   SPECIAL: ['tags', 'authors'],
   MAIN: 'main'
 };
+export const REMARKABLE_OPTIONS = {
+  html: true,
+  linkify: true
+};

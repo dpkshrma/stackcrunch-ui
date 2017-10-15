@@ -5,6 +5,8 @@ This is essentially state driven animation vs. action driven animation. By apply
 
 ## State driven animation
 
+<sc:embed type="youtube" url="http://youtube.com" />
+
 Let’s take a look at a basic example of state driven animation vs. action driven animation: interacting with a modal. This is a simulation of state driven animation being applied to a modal:
 
 As the modal appears, it fades in. Whatever button is pushed, it fades out again. What’s wrong with this animation? Fading between hidden and visible isn’t helpful to understand what’s happening on screen, other than in underlining that an object is being shown and hidden.

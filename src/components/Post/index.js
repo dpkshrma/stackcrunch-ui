@@ -13,19 +13,18 @@ import {
 } from './styled';
 import { markdownToDraft } from 'markdown-draft-js';
 import { Editor, EditorState, convertFromRaw } from 'draft-js';
+import { markdownToDraftOptions } from './helpers';
 import postMeta from './data';
 import post from './postData';
 
 class PostPage extends React.Component {
   constructor(props) {
     super(props);
-    const contentState = markdownToDraft(post);
+    const contentState = markdownToDraft(post, markdownToDraftOptions);
     const editorState = EditorState.createWithContent(
       convertFromRaw(contentState)
     );
-    this.state = {
-      editorState
-    };
+    this.state = { editorState };
   }
   onChange = editorState => {
     this.setState({ editorState });
