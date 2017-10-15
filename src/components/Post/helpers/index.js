@@ -1,16 +1,17 @@
-import getRMEmbedPlugin, { embedId } from './rmPlugins/embed';
-import { REMARKABLE_OPTIONS } from '../../config';
+import getRMEmbedPlugin from '../rmPlugins/embed';
+import { REMARKABLE_OPTIONS } from '../../../config';
 
 export const markdownToDraftOptions = {
   remarkableOptions: REMARKABLE_OPTIONS,
   remarkablePlugins: [getRMEmbedPlugin()],
   blockEntities: {
-    [embedId]: ({ data }) => {
-      return {
-        type: 'EMBED',
+    video: ({ data }) => {
+      const blockEntity = {
+        type: 'video',
         mutability: 'IMMUTABLE',
         data
       };
+      return blockEntity;
     }
   }
 };

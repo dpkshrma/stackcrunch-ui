@@ -11,9 +11,10 @@ import {
   Content,
   authorCSS
 } from './styled';
-import { markdownToDraft } from 'markdown-draft-js';
 import { Editor, EditorState, convertFromRaw } from 'draft-js';
 import { markdownToDraftOptions } from './helpers';
+import markdownToDraft from './helpers/markdownToDraft';
+import comboDecorator from './decorators';
 import postMeta from './data';
 import post from './postData';
 
@@ -22,7 +23,8 @@ class PostPage extends React.Component {
     super(props);
     const contentState = markdownToDraft(post, markdownToDraftOptions);
     const editorState = EditorState.createWithContent(
-      convertFromRaw(contentState)
+      convertFromRaw(contentState),
+      comboDecorator
     );
     this.state = { editorState };
   }

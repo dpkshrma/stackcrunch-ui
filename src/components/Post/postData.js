@@ -1,11 +1,14 @@
-export default `
+const videoEmbedMarkdown = `
+  <sc:embed url="https://vimeo.com/238096496" />
+`;
+const fullPost = `
 How do we animate interfaces in ways that are not just beautiful, but meaningful? When we add motion to interfaces we want to in one way or another improve the user experience, be it through aiding the comprehension of a concept, setting the mood, improving the perception of speed, or directing the attention of a user. Regardless of the intent of the animation, when animations fail to be meaningful they often fail because of the same reason; failed animations simply visualize objects morphing between being hidden and visible, rather than visualizing the actions unfolding on screen. A window rarely just closes or opens; a message is sent, a draft is discarded, an item is used.
 
 This is essentially state driven animation vs. action driven animation. By applying action driven animation you can catch yourself in the act of creating something that’s not as meaningful as it could be. Are you simply morphing between states, or are you visualizing actions? Meaningful motion is about clear and engaging storytelling, and we can apply action driven animation to remind ourselves when we’re straying from that path.
 
 ## State driven animation
 
-<sc:embed type="youtube" url="http://youtube.com" />
+${videoEmbedMarkdown}
 
 Let’s take a look at a basic example of state driven animation vs. action driven animation: interacting with a modal. This is a simulation of state driven animation being applied to a modal:
 
@@ -31,3 +34,6 @@ If we do so, it’s easy to in our animations neglect how these states are conne
 
 Action driven animation elevates the connections between the views to become the plots of the motion. In other words, what took you between state and A and state B? In our Email app, you can get between state A (composing visible) and state B (composing hidden) in at least two different ways: either by sending an email, or by discarding an email and closing the window.
 `;
+
+export default fullPost;
+// export default videoEmbedMarkdown;
