@@ -41,7 +41,10 @@ const DefaultBlockTypes = {
       type: 'code-block',
       text: (item.content || '').replace(TRAILING_NEW_LINE, ''), // remarkable seems to always append an erronious trailing newline to its codeblock content, so we need to trim it out.
       entityRanges: [],
-      inlineStyleRanges: []
+      inlineStyleRanges: [],
+      data: {
+        syntax: item.params
+      }
     };
   },
 

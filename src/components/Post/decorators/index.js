@@ -1,6 +1,8 @@
 import { CompositeDecorator } from 'draft-js';
-import videoDecorator from './video';
+import MultiDecorator from 'draft-js-multidecorators';
+import composableDecorators from './composable';
+import customDecorators from './custom';
 
-const compositeDecorator = new CompositeDecorator([videoDecorator]);
+const compositeDecorator = new CompositeDecorator([...composableDecorators]);
 
-export default compositeDecorator;
+export default new MultiDecorator([compositeDecorator, ...customDecorators]);

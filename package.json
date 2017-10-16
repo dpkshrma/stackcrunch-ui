@@ -5,8 +5,11 @@
   "dependencies": {
     "decorate-component-with-props": "^1.0.2",
     "draft-js": "^0.10.3",
+    "draft-js-multidecorators": "^1.0.0",
+    "draft-js-prism": "^1.0.5",
     "immutability-helper": "^2.4.0",
     "markdown-draft-js": "^0.4.1",
+    "prismjs": "^1.6.0",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-loadable": "^5.1.0",
