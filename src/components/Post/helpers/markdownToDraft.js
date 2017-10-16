@@ -78,8 +78,20 @@ const DefaultBlockEntities = {
       type: 'LINK',
       mutability: 'MUTABLE',
       data: {
-        href: href,
-        title: title
+        href,
+        title
+      }
+    };
+  },
+  image: item => {
+    const { src, title, alt } = item;
+    return {
+      type: 'IMAGE',
+      mutability: 'MUTABLE',
+      data: {
+        src,
+        title,
+        alt
       }
     };
   }
