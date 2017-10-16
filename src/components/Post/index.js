@@ -12,7 +12,7 @@ import {
   authorCSS
 } from './styled';
 import { Editor, EditorState, convertFromRaw } from 'draft-js';
-import { markdownToDraftOptions } from './helpers';
+import { markdownToDraftOptions, blockRenderMap } from './helpers';
 import markdownToDraft from './helpers/markdownToDraft';
 import comboDecorator from './decorators';
 import postMeta from './data';
@@ -56,6 +56,7 @@ class PostPage extends React.Component {
               editorState={this.state.editorState}
               onChange={this.onChange}
               readOnly={true}
+              blockRenderMap={blockRenderMap}
             />
           </Content>
         </Post>

@@ -1,3 +1,5 @@
+import Immutable from 'immutable';
+import { DefaultDraftBlockRenderMap } from 'draft-js';
 import getRMEmbedPlugin from '../rmPlugins/embed';
 import { REMARKABLE_OPTIONS } from '../../../config';
 
@@ -15,3 +17,14 @@ export const markdownToDraftOptions = {
     }
   }
 };
+
+export const blockRenderMap = DefaultDraftBlockRenderMap.merge(
+  Immutable.Map({
+    blockquote: {
+      element: 'div'
+    },
+    atomic: {
+      element: 'div'
+    }
+  })
+);
