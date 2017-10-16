@@ -1,5 +1,5 @@
 import { CompositeDecorator } from 'draft-js';
-import MultiDecorator from 'draft-js-multidecorators';
+import MultiDecorator from './MultiDecorator';
 import composableDecorators from './composable';
 import customDecorators from './custom';
 
