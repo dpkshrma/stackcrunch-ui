@@ -1,3 +1,4 @@
 import videoDecorator from './video';
+import blockquoteDecorator from './blockquote';
 
-export default [videoDecorator];
+export default [videoDecorator, blockquoteDecorator];
