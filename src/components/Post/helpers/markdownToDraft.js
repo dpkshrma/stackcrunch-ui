@@ -72,12 +72,14 @@ const DefaultBlockTypes = {
 // again. In this case, key is remarkable key, value is
 // meethod that returns the draftjs key + any data needed.
 const DefaultBlockEntities = {
-  link_open: function(item) {
+  link_open: item => {
+    const { href, title } = item;
     return {
       type: 'LINK',
       mutability: 'MUTABLE',
       data: {
-        url: item.href
+        href: href,
+        title: title
       }
     };
   }
