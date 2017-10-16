@@ -1,6 +1,27 @@
 const videoEmbedMarkdown = `
-  <sc:embed url="https://vimeo.com/238096496" />
+<sc:embed url="https://vimeo.com/238096496" />
 `;
+const blockquote = `
+> Let your actions drive your animations
+`;
+const fence = `
+\`\`\`javascript
+var x = 'cool';
+console.log('this is super ' + x);
+\`\`\`
+`;
+const link = `
+  [Space Mobile](https://cdn.dribbble.com/users/255512/screenshots/3871706/mobile.png "Space Mobile Link")
+`;
+
+const image = `
+  ![Space Mobile](https://cdn.dribbble.com/users/255512/screenshots/3871706/mobile.png "Space Mobile Link")
+`;
+
+const inlineCode = `
+  this is pretty \`var x = 'cool';\` awesome right?
+`;
+
 const fullPost = `
 How do we animate interfaces in ways that are not just beautiful, but meaningful? When we add motion to interfaces we want to in one way or another improve the user experience, be it through aiding the comprehension of a concept, setting the mood, improving the perception of speed, or directing the attention of a user. Regardless of the intent of the animation, when animations fail to be meaningful they often fail because of the same reason; failed animations simply visualize objects morphing between being hidden and visible, rather than visualizing the actions unfolding on screen. A window rarely just closes or opens; a message is sent, a draft is discarded, an item is used.
 
@@ -20,7 +41,17 @@ You might be thinking “C’mon, what is there to understand? It’s a modal. I
 
 Here’s is a simulation of action driven animation being applied to the same modal:
 
+${blockquote}
+
 Now, how is this better than the previous animation? Try to ignore for the moment the aesthetics of the two. What we want to focus on is this: what does the second animation convey that the first one does not?
+
+#### Fenced Codeblocks:
+${fence}
+
+${image}
+${link}
+
+${inlineCode}
 
 In the first example, with state driven animation, we use two different animations: fading in, and fading out. Clicking Cancel and clicking Do it both triggers the fade out animation. In other words, the only thing we’re differentiating between is the states of the modal: hidden vs. visible.
 
@@ -36,4 +67,3 @@ Action driven animation elevates the connections between the views to become the
 `;
 
 export default fullPost;
-// export default videoEmbedMarkdown;
