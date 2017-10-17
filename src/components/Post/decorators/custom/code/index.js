@@ -1,7 +1,6 @@
 import React from 'react';
 import PrismDecorator from 'draft-js-prism';
 import Prism from 'prismjs';
-import './prism.css';
 
 const codeDecorator = new PrismDecorator({
   prism: Prism,
