@@ -15,7 +15,6 @@ export const Post = styled.div`
 export const Header = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 32px;
 `;
 
 export const HeaderMeta = styled.div`
