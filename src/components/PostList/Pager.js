@@ -2,7 +2,7 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 import { PageService } from '../../services';
-import { getPrevNextPageIds } from '../../helpers';
+import { getPrevNextPageIds } from '../../helpers/index';
 import { URL_PREFIX, PAGE_TYPES } from '../../config';
 
 const Wrapper = styled.div`
