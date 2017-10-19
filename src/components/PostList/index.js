@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import ListItem from './ListItem';
 import Pager from './Pager';
-import { hooks } from '../../helpers/routes';
+import { hooks, getURLSegments } from '../../helpers/routes';
 import { PageService } from '../../services';
 import { URL_PREFIX, PAGE_TYPES } from '../../config';
 
@@ -16,10 +16,6 @@ const List = styled.div`
   flex-direction: column;
   margin-right: 16px;
 `;
-
-const getURLSegments = urlPath => {
-  return urlPath.split('/').filter(segment => segment.length > 0);
-};
 
 class PostList extends React.Component {
   constructor(props) {

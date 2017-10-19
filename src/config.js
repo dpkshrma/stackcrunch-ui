@@ -16,5 +16,7 @@ export const REMARKABLE_OPTIONS = {
 };
 // sidebar widget types
 export const WIDGET_TYPES = {
-  tagInfo: 'tagInfo'
+  tagInfo: 'tagInfo',
+  authorInfo: 'authorInfo',
+  ref: 'ref'
 };

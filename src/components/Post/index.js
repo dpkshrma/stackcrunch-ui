@@ -1,4 +1,7 @@
 import React from 'react';
+import { Editor, EditorState, convertFromRaw } from 'draft-js';
+import { connect } from 'react-redux';
+// stateless components
 import { Chip } from '../common';
 import {
   Wrapper,
@@ -11,12 +14,16 @@ import {
   Content,
   authorCSS
 } from './styled';
-import { Editor, EditorState, convertFromRaw } from 'draft-js';
+// global helpers
+import { hooks, getURLSegments } from '../../helpers/routes';
+// component helpers
 import { markdownToDraftOptions, blockRenderMap } from './helpers';
 import markdownToDraft from './helpers/markdownToDraft';
 import comboDecorator from './decorators';
+// sample data
 import postMeta from './data';
 import post from './postData';
+// css
 import './decorators/custom/code/prism.css';
 
 class PostPage extends React.Component {
@@ -29,6 +36,18 @@ class PostPage extends React.Component {
     );
     this.state = { editorState };
   }
+  componentWillMount() {
+    const postId = this.getPostId();
+    hooks.post.onEnter(this.props.dispatch, postId);
+  }
+  componentWillUnmount() {
+    hooks.post.onLeave(this.props.dispatch);
+  }
+  getPostId = () => {
+    const { path } = this.props.match;
+    const [postId] = getURLSegments(path);
+    return postId;
+  };
   onChange = editorState => {
     this.setState({ editorState });
   };
@@ -66,4 +85,4 @@ class PostPage extends React.Component {
   }
 }
 
-export default PostPage;
+export default connect()(PostPage);

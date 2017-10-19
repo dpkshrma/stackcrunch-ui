@@ -1,12 +1,5 @@
-import types from './types';
-
-const showTagWidget = tagId => {
-  return {
-    type: types.SHOW_TAG_INFO_WIDGET,
-    tagId
-  };
-};
+import widgetActions from './widget';
 
 export default {
-  showTagWidget
+  ...widgetActions
 };

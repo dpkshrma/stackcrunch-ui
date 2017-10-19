@@ -6,6 +6,9 @@ const Wrapper = styled.div`
   border: 1px solid #e0dcbf;
   background: #fff8dc;
   padding: 12px;
+  margin-top: 24px;
+  position: sticky;
+  top: 24px;
 `;
 const Title = styled.div`
   text-transform: uppercase;
