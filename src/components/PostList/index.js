@@ -49,7 +49,7 @@ class PostList extends React.Component {
   getPageType = () => {
     const { path } = this.props.match;
     const [firstPart, pageTypeId] = getURLSegments(path);
-    if (PAGE_TYPES.SPECIAL.indexOf(firstPart) !== -1) {
+    if (PAGE_TYPES.SPECIAL[firstPart]) {
       return { id: pageTypeId, type: firstPart };
     }
     return { type: PAGE_TYPES.MAIN };

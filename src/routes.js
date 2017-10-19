@@ -6,8 +6,8 @@ import { Provider } from 'react-redux';
 import rootReducer from './reducers';
 import App from './components/App';
 import { PageService } from './services';
-import { asyncLoad } from './helpers';
-// import { routeAnimation } from './helpers';
+import { asyncLoad } from './helpers/routes';
+// import { routeAnimation } from './helpers/routes';
 import { URL_PREFIX, PAGE_TYPES } from './config';
 
 // redux store
@@ -36,7 +36,7 @@ const mainPageRoutes = mainPageIds.map(pageId => (
   />
 ));
 
-const specialPageRoutes = PAGE_TYPES.SPECIAL.map(pageType => {
+const specialPageRoutes = Object.values(PAGE_TYPES.SPECIAL).map(pageType => {
   return PageService.getSpecialPageTypeIds(pageType).map(pageTypeId => {
     return PageService.getSpecialPageIds(pageType, pageTypeId).map(pageId => {
       return (
