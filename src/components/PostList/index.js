@@ -1,7 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 import ListItem from './ListItem';
 import Pager from './Pager';
+import { hooks } from '../../helpers/routes';
 import { PageService } from '../../services';
 import { URL_PREFIX, PAGE_TYPES } from '../../config';
 
@@ -30,9 +32,15 @@ class PostList extends React.Component {
     };
   }
   componentWillMount() {
-    const pageId = this.getCurrentPageId();
     const pageType = this.getPageType();
-
+    const { onEnter = () => {} } = hooks[pageType.type] || {};
+    this.setState({ pageType }, () => {
+      onEnter(this.props.dispatch, pageType.id);
+    });
+  }
+  componentDidMount() {
+    const { pageType } = this.state;
+    const pageId = this.getCurrentPageId();
     PageService.getPage(pageId || 1, pageType.type, pageType.id)
       .then(({ data: posts }) => {
         this.setState({ posts, pageType });
@@ -45,6 +53,11 @@ class PostList extends React.Component {
         }
         // TODO: handle other errors
       });
+  }
+  componentWillUnmount() {
+    const { pageType } = this.state;
+    const { onLeave = () => {} } = hooks[pageType.type] || {};
+    onLeave(this.props.dispatch, pageType.id);
   }
   getPageType = () => {
     const { path } = this.props.match;
@@ -73,4 +86,4 @@ class PostList extends React.Component {
   }
 }
 
-export default PostList;
+export default connect()(PostList);
