@@ -11,7 +11,11 @@
     "authors": {
       "chenglou": {
         "pages": ["1", "2"]
+      },
+      "addyosmani": {
+        "pages": ["1"]
       }
     }
-  }
+  },
+  "posts": ["1"]
 }

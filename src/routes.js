@@ -5,7 +5,7 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import rootReducer from './reducers';
 import App from './components/App';
-import { PageService } from './services';
+import { PageService, PostService } from './services';
 import { asyncLoad } from './helpers/routes';
 // import { routeAnimation } from './helpers/routes';
 import { URL_PREFIX, PAGE_TYPES } from './config';
@@ -23,6 +23,7 @@ const NotFound = asyncLoad({ loader: () => import(`./components/NotFound`) });
 // post listing page config
 const mainPageIds = PageService.getMainPageIds();
 const [firstPageId] = mainPageIds;
+const postIds = PostService.getPostIds();
 
 // Routes
 const mainPageRoutes = mainPageIds.map(pageId => (
@@ -53,6 +54,17 @@ const specialPageRoutes = Object.values(PAGE_TYPES.SPECIAL).map(pageType => {
   });
 });
 
+const postRoutes = postIds.map(postId => {
+  return (
+    <Route
+      exact
+      key={postId}
+      component={Post}
+      path={`${URL_PREFIX}/post/${postId}`}
+    />
+  );
+});
+
 export default (
   <Provider store={store}>
     <App>
@@ -75,7 +87,7 @@ export default (
         />
         {mainPageRoutes}
         {specialPageRoutes}
-        <Route exact component={Post} path={`${URL_PREFIX}/post/:postId`} />
+        {postRoutes}
         <Route component={NotFound} />
       </Switch>
       {/* </AnimatedSwitch> */}
