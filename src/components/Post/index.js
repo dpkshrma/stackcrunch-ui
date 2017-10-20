@@ -23,7 +23,6 @@ import { markdownToDraftOptions, blockRenderMap } from './helpers';
 import markdownToDraft from './helpers/markdownToDraft';
 import comboDecorator from './decorators';
 // sample data
-import postMeta from './data';
 import { URL_PREFIX } from '../../config';
 // css
 import './decorators/custom/code/prism.css';
@@ -32,20 +31,22 @@ class PostPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      editorState: EditorState.createEmpty()
+      editorState: EditorState.createEmpty(),
+      metadata: {},
+      loaded: false
     };
   }
   componentWillMount() {
     const postId = this.getPostId();
     // Load post in the editor
     PostService.getPost(postId)
-      .then(({ post }) => {
+      .then(({ post, metadata }) => {
         const contentState = markdownToDraft(post, markdownToDraftOptions);
         const editorState = EditorState.createWithContent(
           convertFromRaw(contentState),
           comboDecorator
         );
-        this.setState({ editorState });
+        this.setState({ editorState, metadata, loaded: true });
       })
       .catch(err => {
         if (err.message.startsWith('Cannot find module')) {
@@ -70,7 +71,10 @@ class PostPage extends React.Component {
     this.setState({ editorState });
   };
   render() {
-    const { author } = postMeta;
+    const { author = {}, postedOn, ttr, title } = this.state.metadata;
+    if (!this.state.loaded) {
+      return <div>Loading the post...</div>;
+    }
     return (
       <Wrapper>
         <Post>
@@ -83,11 +87,10 @@ class PostPage extends React.Component {
                 css={authorCSS}
               />
               <HeaderMetaText>
-                {postMeta.postedOn} <Separator space={8} delimiter="|" />{' '}
-                {postMeta.ttr}
+                {postedOn} <Separator space={8} delimiter="|" /> {ttr}
               </HeaderMetaText>
             </HeaderMeta>
-            <Title>{postMeta.title}</Title>
+            <Title>{title}</Title>
           </Header>
           <Content>
             <Editor
