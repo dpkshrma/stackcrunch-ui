@@ -29,6 +29,16 @@ const Ref = styled.div`
     color: #07c;
   }
 `;
+const Bullet = styled.div`
+  height: 8px;
+  width: 8px;
+  border: 1px solid #e0dcbf;
+  transform: rotate(135deg);
+  position: absolute;
+  margin-left: -26px;
+  margin-top: 6px;
+  background: #fff;
+`;
 
 class References extends React.Component {
   render() {
@@ -38,6 +48,7 @@ class References extends React.Component {
         {refs.map((ref, i) => {
           return (
             <Ref key={i}>
+              <Bullet />
               <a href={ref.href} target="_blank">
                 {ref.title}
               </a>
