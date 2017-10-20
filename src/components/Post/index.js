@@ -14,6 +14,8 @@ import {
   Content,
   authorCSS
 } from './styled';
+// services
+import PostService from '../../services/Post';
 // global helpers
 import { hooks, getURLSegments } from '../../helpers/routes';
 // component helpers
@@ -22,22 +24,38 @@ import markdownToDraft from './helpers/markdownToDraft';
 import comboDecorator from './decorators';
 // sample data
 import postMeta from './data';
-import post from './postData';
+import { URL_PREFIX } from '../../config';
 // css
 import './decorators/custom/code/prism.css';
 
 class PostPage extends React.Component {
   constructor(props) {
     super(props);
-    const contentState = markdownToDraft(post, markdownToDraftOptions);
-    const editorState = EditorState.createWithContent(
-      convertFromRaw(contentState),
-      comboDecorator
-    );
-    this.state = { editorState };
+    this.state = {
+      editorState: EditorState.createEmpty()
+    };
   }
   componentWillMount() {
     const postId = this.getPostId();
+    // Load post in the editor
+    PostService.getPost(postId)
+      .then(({ post }) => {
+        const contentState = markdownToDraft(post, markdownToDraftOptions);
+        const editorState = EditorState.createWithContent(
+          convertFromRaw(contentState),
+          comboDecorator
+        );
+        this.setState({ editorState });
+      })
+      .catch(err => {
+        if (err.message.startsWith('Cannot find module')) {
+          // redirect to NotFound page
+          console.error(err);
+          this.props.history.push(`${URL_PREFIX}/404`);
+        }
+        // TODO: handle other errors
+      });
+    // onEnter route hook
     hooks.post.onEnter(this.props.dispatch, postId);
   }
   componentWillUnmount() {
@@ -45,7 +63,7 @@ class PostPage extends React.Component {
   }
   getPostId = () => {
     const { path } = this.props.match;
-    const [postId] = getURLSegments(path);
+    const [, postId] = getURLSegments(path);
     return postId;
   };
   onChange = editorState => {
