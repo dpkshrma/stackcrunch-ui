@@ -13,9 +13,12 @@ const Wrapper = styled.div`
 const widgetMap = {
   [WIDGET_TYPES.tagInfo]: ({ props = {}, key }) => {},
   [WIDGET_TYPES.authorInfo]: ({ props = {}, key }) => {},
-  [WIDGET_TYPES.ref]: ({ props = {}, key }) => (
-    <References {...props} key={key} />
-  )
+  [WIDGET_TYPES.ref]: ({ props = {}, key }) => {
+    if (!props.refs) {
+      return null;
+    }
+    return <References {...props} key={key} />;
+  }
 };
 
 class Sidebar extends React.Component {
