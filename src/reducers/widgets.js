@@ -7,6 +7,20 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case 'SHOW_SUBSCRIBE_WIDGET':
+      return update(state, {
+        visible: {
+          $merge: {
+            [WIDGET_TYPES.subscribe]: {}
+          }
+        }
+      });
+    case 'HIDE_SUBSCRIBE_WIDGET':
+      return update(state, {
+        visible: {
+          $unset: [WIDGET_TYPES.subscribe]
+        }
+      });
     case 'SHOW_TAG_INFO_WIDGET':
       return update(state, {
         visible: {

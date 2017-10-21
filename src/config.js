@@ -18,5 +18,6 @@ export const REMARKABLE_OPTIONS = {
 export const WIDGET_TYPES = {
   tagInfo: 'tagInfo',
   authorInfo: 'authorInfo',
-  ref: 'ref'
+  ref: 'ref',
+  subscribe: 'subscribe'
 };

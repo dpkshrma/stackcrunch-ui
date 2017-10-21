@@ -33,6 +33,16 @@ const hideRefWidget = () => {
     type: types.HIDE_REF_WIDGET
   };
 };
+const showSubscribeWidget = () => {
+  return {
+    type: types.SHOW_SUBSCRIBE_WIDGET
+  };
+};
+const hideSubscribeWidget = () => {
+  return {
+    type: types.HIDE_SUBSCRIBE_WIDGET
+  };
+};
 
 export default {
   showTagInfoWidget,
@@ -40,5 +50,7 @@ export default {
   showAuthorInfoWidget,
   hideAuthorInfoWidget,
   showRefWidget,
-  hideRefWidget
+  hideRefWidget,
+  showSubscribeWidget,
+  hideSubscribeWidget
 };
