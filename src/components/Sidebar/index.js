@@ -21,8 +21,13 @@ const widgetMap = {
 class Sidebar extends React.Component {
   render() {
     const widgets = [];
-    for (let widgetType in this.props.widgets.visible) {
-      const widget = widgetMap[widgetType]({ key: widgetType });
+    const { visible: visibleWidgets } = this.props.widgets;
+    for (let widgetType in visibleWidgets) {
+      const props = visibleWidgets[widgetType];
+      const widget = widgetMap[widgetType]({
+        key: widgetType,
+        props
+      });
       widgets.push(widget);
     }
     return (

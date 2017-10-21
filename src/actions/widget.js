@@ -22,10 +22,10 @@ const hideAuthorInfoWidget = () => {
     type: types.HIDE_AUTHOR_INFO_WIDGET
   };
 };
-const showRefWidget = postId => {
+const showRefWidget = refs => {
   return {
     type: types.SHOW_REF_WIDGET,
-    postId
+    refs
   };
 };
 const hideRefWidget = () => {

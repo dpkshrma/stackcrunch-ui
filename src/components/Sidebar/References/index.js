@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import refs from './data';
 
 const Wrapper = styled.div`
   border: 1px solid #e0dcbf;
@@ -45,7 +44,7 @@ class References extends React.Component {
     return (
       <Wrapper>
         <Title>References</Title>
-        {refs.map((ref, i) => {
+        {this.props.refs.map((ref, i) => {
           return (
             <Ref key={i}>
               <Bullet />

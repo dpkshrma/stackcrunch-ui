@@ -39,7 +39,9 @@ export default (state = INITIAL_STATE, action) => {
       return update(state, {
         visible: {
           $merge: {
-            [WIDGET_TYPES.ref]: action.postId
+            [WIDGET_TYPES.ref]: {
+              refs: action.refs
+            }
           }
         }
       });

@@ -40,13 +40,15 @@ class PostPage extends React.Component {
     const postId = this.getPostId();
     // Load post in the editor
     PostService.getPost(postId)
-      .then(({ post, metadata }) => {
+      .then(({ post, metadata, refs }) => {
         const contentState = markdownToDraft(post, markdownToDraftOptions);
         const editorState = EditorState.createWithContent(
           convertFromRaw(contentState),
           comboDecorator
         );
         this.setState({ editorState, metadata, loaded: true });
+        // onEnter route hook
+        hooks.post.onEnter(this.props.dispatch, refs);
       })
       .catch(err => {
         if (err.message.startsWith('Cannot find module')) {
@@ -56,8 +58,6 @@ class PostPage extends React.Component {
         }
         // TODO: handle other errors
       });
-    // onEnter route hook
-    hooks.post.onEnter(this.props.dispatch, postId);
   }
   componentWillUnmount() {
     hooks.post.onLeave(this.props.dispatch);
