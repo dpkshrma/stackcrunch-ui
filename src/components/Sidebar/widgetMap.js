@@ -8,9 +8,9 @@ export default {
   [WIDGET_TYPES.subscribe]: ({ props = {}, key }) => (
     <Subscribe {...props} key={key} />
   ),
-  [WIDGET_TYPES.authorInfo]: ({ props = {}, key }) => (
-    <Author {...props} key={key} />
-  ),
+  [WIDGET_TYPES.authorInfo]: ({ props = {}, key }) => {
+    return <Author {...props} key={key} />;
+  },
   [WIDGET_TYPES.ref]: ({ props = {}, key }) => {
     if (!props.refs) {
       return null;

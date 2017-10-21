@@ -25,7 +25,9 @@ export default (state = INITIAL_STATE, action) => {
       return update(state, {
         visible: {
           $merge: {
-            [WIDGET_TYPES.tagInfo]: action.tagId
+            [WIDGET_TYPES.tagInfo]: {
+              tagId: action.tagId
+            }
           }
         }
       });
@@ -39,7 +41,9 @@ export default (state = INITIAL_STATE, action) => {
       return update(state, {
         visible: {
           $merge: {
-            [WIDGET_TYPES.authorInfo]: action.authorId
+            [WIDGET_TYPES.authorInfo]: {
+              authorId: action.authorId
+            }
           }
         }
       });

@@ -12,10 +12,10 @@ import {
   tagCSS
 } from './styled';
 import { Chip } from '../../common';
-import author from './data';
 import TwitterIcon from './icons/TwitterIcon';
 import GithubIcon from './icons/GithubIcon';
 import MediumIcon from './icons/MediumIcon';
+import { PageService } from '../../../services';
 
 const socialIconsMap = {
   github: props => <GithubIcon {...props} />,
@@ -24,25 +24,42 @@ const socialIconsMap = {
 };
 
 class Author extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      author: {}
+    };
+  }
+  componentDidMount() {
+    PageService.getAuthorInfo(this.props.authorId)
+      .then(author => {
+        this.setState({ author });
+      })
+      .catch(err => {
+        console.error(err);
+      });
+  }
   render() {
+    const { author = {} } = this.state;
     return (
       <Wrapper>
         <HeaderImg src={author.profileURL} alt={author.name} />
         <Title>{author.name}</Title>
         <SocialLinks>
-          {author.socialLinks.map(({ type, url }) => {
-            if (!socialIconsMap[type]) {
-              return null;
-            }
-            return (
-              <SocialLink key={type} href={url} target="_blank">
-                {socialIconsMap[type]({
-                  height: 24,
-                  width: 24
-                })}
-              </SocialLink>
-            );
-          })}
+          {author.socialLinks &&
+            author.socialLinks.map(({ type, url }) => {
+              if (!socialIconsMap[type]) {
+                return null;
+              }
+              return (
+                <SocialLink key={type} href={url} target="_blank">
+                  {socialIconsMap[type]({
+                    height: 24,
+                    width: 24
+                  })}
+                </SocialLink>
+              );
+            })}
         </SocialLinks>
         <Section>
           <SubTitle>About</SubTitle>
@@ -51,9 +68,10 @@ class Author extends React.Component {
         <Section>
           <SubTitle>Interests</SubTitle>
           <Tags>
-            {author.tags.map(tag => (
-              <Chip key={tag.id} text={tag.name} to={tag.link} css={tagCSS} />
-            ))}
+            {author.tags &&
+              author.tags.map(tag => (
+                <Chip key={tag.id} text={tag.name} to={tag.link} css={tagCSS} />
+              ))}
           </Tags>
         </Section>
       </Wrapper>

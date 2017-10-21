@@ -32,9 +32,14 @@ const getSpecialPageIds = (pageType, pageTypeId) => {
   return pages[pageType][pageTypeId].pages;
 };
 
+const getAuthorInfo = authorId => {
+  return import(`./data/authors/${authorId}.json`);
+};
+
 export default {
   getPage,
   getMainPageIds,
   getSpecialPageTypeIds,
-  getSpecialPageIds
+  getSpecialPageIds,
+  getAuthorInfo
 };
