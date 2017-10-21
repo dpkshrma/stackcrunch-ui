@@ -30,35 +30,34 @@
     },
     {
       "id": 2,
-      "title":
-        "Minima laborum eveniet accusamus dignissimos aliquam eos corporis.",
+      "title": "JavaScript Start-up Performance",
       "abstract":
-        "Sint ut dolorem omnis possimus omnis. Qui quas laborum perferendis sit libero consectetur sit aut eligendi. Quo natus repudiandae magni rerum laboriosam minima ex ipsum ut. Id tempora vel optio ipsum occaecati.",
+        "As web developers, we know how easy it is to end up with web page bloat. But loading a webpage is much more than shipping bytes down the wire. Once the browser has downloaded our page’s scripts it then has to parse, interpret & run them. In this post, we’ll dive into this phase for JavaScript, why it might be slowing down your app’s start-up & how you can fix it.",
       "author": {
-        "name": "Gilbert Moen",
-        "img": "http://lorempixel.com/65/65",
-        "link": "https://twitter.com/_chenglou",
-        "twitterHandle": "_chenglou"
+        "name": "Addy Osmani",
+        "img": "https://avatars1.githubusercontent.com/u/110953?s=460&v=4",
+        "link": "/authors/addyosmani/posts/1",
+        "twitterHandle": "addyosmani"
       },
       "tags": [
         {
-          "text": "apache",
-          "link": "/tags/apache",
-          "id": "apache"
+          "text": "javascript",
+          "link": "/tags/javascript",
+          "id": "javascript"
         },
         {
-          "text": "linux",
-          "link": "/tags/linux",
-          "id": "linux"
+          "text": "jsperf",
+          "link": "/tags/jsperf",
+          "id": "jsperf"
         },
         {
-          "text": "react-native",
-          "link": "/tags/react-native",
-          "id": "react-native"
+          "text": "lighthouse",
+          "link": "/tags/lighthouse",
+          "id": "lighthouse"
         }
       ],
-      "postedOn": "Feb 10",
-      "ttr": "14 min"
+      "postedOn": "Aug 19",
+      "ttr": "21 min"
     },
     {
       "id": 3,

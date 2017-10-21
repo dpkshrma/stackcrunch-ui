@@ -19,7 +19,6 @@ export const Title = styled.span`
   font-size: 24px;
   margin: 12px 0 16px;
   color: #07c;
-  border-bottom: 1px solid #bee7ff;
 `;
 export const Text = styled.span`
   font-size: 14px;

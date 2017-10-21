@@ -3,16 +3,20 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import Subscribe from './Subscribe';
 import References from './References';
+import Author from './Author';
 import { WIDGET_TYPES } from '../../config';
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+  max-width: 360px;
 `;
 
 const widgetMap = {
   [WIDGET_TYPES.tagInfo]: ({ props = {}, key }) => {},
-  [WIDGET_TYPES.authorInfo]: ({ props = {}, key }) => {},
+  [WIDGET_TYPES.authorInfo]: ({ props = {}, key }) => (
+    <Author {...props} key={key} />
+  ),
   [WIDGET_TYPES.ref]: ({ props = {}, key }) => {
     if (!props.refs) {
       return null;
