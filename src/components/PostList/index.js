@@ -57,9 +57,12 @@ class PostList extends React.Component {
   }
   getPageType = () => {
     const { path } = this.props.match;
-    const [firstPart, pageTypeId] = getURLSegments(path);
+    const [firstPart, secondPart] = getURLSegments(path);
     if (PAGE_TYPES.SPECIAL[firstPart]) {
-      return { id: pageTypeId, type: firstPart };
+      return { id: secondPart, type: PAGE_TYPES.SPECIAL[firstPart] };
+    } else if (firstPart.startsWith('@')) {
+      const [, pageTypeId] = firstPart.split('@');
+      return { id: pageTypeId, type: PAGE_TYPES.SPECIAL.authors };
     }
     return { type: PAGE_TYPES.MAIN };
   };

@@ -9,7 +9,7 @@
         "name": "Cheng Lou",
         "img":
           "https://pbs.twimg.com/profile_images/554199709909131265/Y5qUDaCB_400x400.jpeg",
-        "link": "/authors/chenglou/posts/1",
+        "link": "/@chenglou/posts/1",
         "twitterHandle": "_chenglou"
       },
       "tags": [
@@ -36,7 +36,7 @@
       "author": {
         "name": "Addy Osmani",
         "img": "https://avatars1.githubusercontent.com/u/110953?s=460&v=4",
-        "link": "/authors/addyosmani/posts/1",
+        "link": "/@addyosmani/posts/1",
         "twitterHandle": "addyosmani"
       },
       "tags": [

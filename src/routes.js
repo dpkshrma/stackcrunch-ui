@@ -41,6 +41,12 @@ const mainPageRoutes = mainPageIds.map(pageId => (
 const specialPageRoutes = Object.values(PAGE_TYPES.SPECIAL).map(pageType => {
   return PageService.getSpecialPageTypeIds(pageType).map(pageTypeId => {
     return PageService.getSpecialPageIds(pageType, pageTypeId).map(pageId => {
+      // default route format
+      let path = `${URL_PREFIX}/${pageType}/${pageTypeId}/posts/${pageId}`;
+      // special route format
+      if (pageType === PAGE_TYPES.SPECIAL.authors) {
+        path = `${URL_PREFIX}/@${pageTypeId}/posts/${pageId}`;
+      }
       return (
         <Route
           exact
@@ -48,7 +54,7 @@ const specialPageRoutes = Object.values(PAGE_TYPES.SPECIAL).map(pageType => {
           component={asyncLoad({
             loader: () => import(`./components/PostList`)
           })}
-          path={`${URL_PREFIX}/${pageType}/${pageTypeId}/posts/${pageId}`}
+          path={path}
         />
       );
     });
