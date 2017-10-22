@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import Topbar from '../Topbar';
 import Sidebar from '../Sidebar';
+import Footer from '../Footer';
 
 const Wrapper = styled.div`
   min-height: 100vh;
@@ -13,6 +14,7 @@ const Content = styled.div`
   max-width: 945px;
   margin: auto;
   margin-top: 24px;
+  min-height: calc(100vh - 264px);
 `;
 
 const App = ({ children }) => {
@@ -23,6 +25,7 @@ const App = ({ children }) => {
         {children}
         <Sidebar />
       </Content>
+      <Footer />
     </Wrapper>
   );
 };

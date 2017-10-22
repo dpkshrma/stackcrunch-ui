@@ -15,6 +15,7 @@ const Wrapper = styled.div`
   border: 1px solid #ccc;
   border-radius: 4px;
   padding: 32px;
+  max-height: 300px;
 `;
 const Title = styled.span`
   font-size: 20px;
