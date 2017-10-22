@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import logo from './logo.png';
 
 const Wrapper = styled.div`
@@ -25,14 +25,40 @@ const Logo = styled(Link)`
 const LogoThumb = styled.img`
   height: 28px;
 `;
+const LogoText = styled.div`
+  margin-left: 8px;
+  color: #333;
+`;
 const Text = styled.span`
   font-family: roboto;
   font-size: ${({ size }) => `${size || 20}px`};
   font-weight: ${({ weight }) => weight};
 `;
-const LogoText = styled.div`
+const RightNav = styled.div`
+  margin-left: auto;
+`;
+const Button = styled(Link)`
+  text-decoration: none;
+  font-size: 14px;
+  outline: none;
+  background: #fff;
+  border: 1px solid #0095ff;
+  border-radius: 2px;
+  padding: 8px 16px;
+  color: #07c;
+  cursor: pointer;
   margin-left: 8px;
-  color: #333;
+  &:hover {
+    background: #eaf5fd;
+  }
+  ${({ css }) => css};
+`;
+const signUpCSS = css`
+  background: #0095ff;
+  color: #fff;
+  &:hover {
+    background: #0585e2;
+  }
 `;
 
 const Topbar = props => {
@@ -46,6 +72,12 @@ const Topbar = props => {
             <Text weight={500}>crunch</Text>
           </LogoText>
         </Logo>
+        <RightNav>
+          <Button to={'/join?tab=signin'}>SignIn</Button>
+          <Button to={'/join?tab=signup'} css={signUpCSS}>
+            SignUp
+          </Button>
+        </RightNav>
       </Content>
     </Wrapper>
   );

@@ -16,6 +16,7 @@ const store = createStore(rootReducer);
 // route components
 const Post = asyncLoad({ loader: () => import(`./components/Post`) });
 const NotFound = asyncLoad({ loader: () => import(`./components/NotFound`) });
+const Join = asyncLoad({ loader: () => import(`./components/Join`) });
 
 // route animation helper
 // const { bounceTransition, mapStyles } = routeAnimation;
@@ -88,6 +89,7 @@ export default (
         {mainPageRoutes}
         {specialPageRoutes}
         {postRoutes}
+        <Route component={Join} to="/join" />
         <Route component={NotFound} />
       </Switch>
       {/* </AnimatedSwitch> */}
