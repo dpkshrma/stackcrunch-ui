@@ -2,10 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const SVG = styled.svg`
-  fill: #ccc;
-  &:hover {
-    fill: rgba(29, 161, 242, 0.8);
-  }
+  fill: rgba(29, 161, 242, 0.8);
 `;
 
 const TwitterIcon = ({ height }) => {

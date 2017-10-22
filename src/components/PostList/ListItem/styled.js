@@ -81,6 +81,10 @@ export const ShareLink = styled.a`
   text-decoration: none;
   display: flex;
   align-items: center;
+  filter: grayscale(1);
+  &:hover {
+    filter: grayscale(0);
+  }
 `;
 
 export const Footer = styled.div`
