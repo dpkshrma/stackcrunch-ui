@@ -3,6 +3,7 @@ import queryString from 'query-string';
 import StackExchangeIcon from './icons/stackexchange';
 import GithubIcon from './icons/github';
 import TwitterIcon from './icons/twitter';
+import { STACKCRUNCH_API_URL } from '../../config';
 import {
   Wrapper,
   Title,
@@ -42,12 +43,18 @@ export default class Join extends React.Component {
         },
         () => {
           // api call to check whether username exists
-          setTimeout(() => {
-            this.setState({
-              unameChecked: true,
-              unameExists: false
+          const url = `${STACKCRUNCH_API_URL}/users/${uname}/exists`;
+          fetch(url)
+            .then(response => response.json())
+            .then(({ exists: unameExists }) => {
+              this.setState({
+                unameChecked: true,
+                unameExists
+              });
+            })
+            .catch(err => {
+              console.error(err);
             });
-          }, 1000);
         }
       );
     }
