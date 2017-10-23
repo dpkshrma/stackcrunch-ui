@@ -68,11 +68,11 @@ export const JoinLink = styled(Link)`
 `;
 export const seCSS = css`
   margin-left: 0;
-  margin-right: 8px;
+  margin-right: 4px;
 `;
 export const ghCSS = css`
   margin-left: 4px;
-  margin-right: 4px;
+  margin-right: 0;
 `;
 export const twCSS = css`
   margin-right: 0;

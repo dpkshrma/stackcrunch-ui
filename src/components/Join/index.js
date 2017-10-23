@@ -2,7 +2,6 @@ import React from 'react';
 import queryString from 'query-string';
 import StackExchangeIcon from './icons/stackexchange';
 import GithubIcon from './icons/github';
-import TwitterIcon from './icons/twitter';
 import { STACKCRUNCH_API_URL } from '../../config';
 import {
   Wrapper,
@@ -25,9 +24,37 @@ export default class Join extends React.Component {
     this.state = {
       uname: '',
       unameChecked: false,
-      unameExists: false
+      unameExists: false,
+      socialAuthCompleted: this.didSocialAuthComplete(),
+      userRegistered: false
     };
   }
+  componentDidMount() {
+    if (this.state.socialAuthCompleted) {
+      const url = `${STACKCRUNCH_API_URL}/auth/reverse${this.props.location
+        .search}`;
+      fetch(url)
+        .then(response => response.json())
+        .then(({ success }) => {
+          this.setState({ userRegistered: success });
+          if (success) {
+            console.log('User registered successfully!!');
+          }
+        })
+        .catch(err => {
+          console.error(err);
+        });
+    }
+  }
+  didSocialAuthComplete = () => {
+    // twitter callback data
+    const {
+      oauth_token: oauthToken,
+      oauth_verifier: oauthVerifier
+    } = queryString.parse(this.props.location.search);
+
+    return oauthToken && oauthVerifier;
+  };
   onUsernameChange = e => {
     const uname = e.target.value;
     if (uname.length < 3) {
@@ -59,7 +86,25 @@ export default class Join extends React.Component {
       );
     }
   };
+  onTwitterClick = e => {
+    e.preventDefault();
+    const url = `${STACKCRUNCH_API_URL}/auth?strategy=twitter`;
+    window.location.href = url;
+  };
+  onGithubClick = e => {
+    e.preventDefault();
+    const url = `${STACKCRUNCH_API_URL}/auth/github`;
+    window.location.href = url;
+  };
+  onStackexchangeClick = e => {
+    e.preventDefault();
+    const url = `${STACKCRUNCH_API_URL}/auth/stackexchange`;
+    window.location.href = url;
+  };
   render() {
+    if (this.state.socialAuthCompleted) {
+    }
+
     const { tab } = queryString.parse(this.props.location.search);
 
     let unameInputCSS;
@@ -81,15 +126,15 @@ export default class Join extends React.Component {
     }
     const joinButtons = (
       <ButtonGroup>
-        <Button css={seCSS}>
+        <Button css={seCSS} onClick={this.onStackexchangeClick}>
           <StackExchangeIcon height="32" />
         </Button>
-        <Button css={ghCSS}>
+        <Button css={ghCSS} onClick={this.onGithubClick}>
           <GithubIcon height="32" />
         </Button>
-        <Button css={twCSS}>
+        {/* <Button css={twCSS} onClick={this.onTwitterClick}>
           <TwitterIcon height="24" />
-        </Button>
+        </Button> */}
       </ButtonGroup>
     );
     if (tab === 'signup') {
