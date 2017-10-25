@@ -13,18 +13,28 @@ import {
   JoinLink,
   seCSS,
   ghCSS,
-  twCSS,
   unameExistsInputCSS,
   unameAvailableInputCSS
 } from './styled';
+
+const INPUT_STATE = {
+  success: 'success',
+  error: 'error',
+  default: 'default'
+};
+const INFO_MSG = {
+  unameExists: 'Username already exists.',
+  unameAvailable: 'Cool! This username is available!',
+  userRegistered: 'User registered successfully!'
+};
 
 export default class Join extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       uname: '',
-      unameChecked: false,
-      unameExists: false,
+      inputMsg: '',
+      inputState: INPUT_STATE.default, // success, error
       socialAuthCompleted: this.didSocialAuthComplete(),
       userRegistered: false
     };
@@ -38,7 +48,7 @@ export default class Join extends React.Component {
         .then(({ success }) => {
           this.setState({ userRegistered: success });
           if (success) {
-            console.log('User registered successfully!!');
+            console.log(INFO_MSG.userRegistered);
           }
         })
         .catch(err => {
@@ -58,11 +68,7 @@ export default class Join extends React.Component {
   onUsernameChange = e => {
     const uname = e.target.value;
     if (uname.length < 3) {
-      this.setState({
-        uname,
-        unameChecked: false,
-        unameExists: false
-      });
+      this.setState({ uname, inputMsg: '', inputState: INPUT_STATE.default });
     } else {
       this.setState(
         {
@@ -74,10 +80,15 @@ export default class Join extends React.Component {
           fetch(url)
             .then(response => response.json())
             .then(({ exists: unameExists }) => {
-              this.setState({
-                unameChecked: true,
-                unameExists
-              });
+              let inputMsg, inputState;
+              if (unameExists) {
+                inputMsg = INFO_MSG.unameExists;
+                inputState = INPUT_STATE.error;
+              } else {
+                inputState = INPUT_STATE.success;
+                inputMsg = INFO_MSG.unameAvailable;
+              }
+              this.setState({ inputMsg, inputState });
             })
             .catch(err => {
               console.error(err);
@@ -86,19 +97,18 @@ export default class Join extends React.Component {
       );
     }
   };
-  onTwitterClick = e => {
+  onAuthButtonClick = (e, strategy) => {
     e.preventDefault();
-    const url = `${STACKCRUNCH_API_URL}/auth?strategy=twitter`;
-    window.location.href = url;
-  };
-  onGithubClick = e => {
-    e.preventDefault();
-    const url = `${STACKCRUNCH_API_URL}/auth/github`;
-    window.location.href = url;
-  };
-  onStackexchangeClick = e => {
-    e.preventDefault();
-    const url = `${STACKCRUNCH_API_URL}/auth/stackexchange`;
+    const { uname, inputState } = this.state;
+    if (inputState === INPUT_STATE.error) {
+      this.unameInput.focus();
+      return;
+    }
+    if (uname.length === 0) {
+      this.unameInput.focus();
+      return this.setState({ inputMsg: 'Username is required' });
+    }
+    const url = `${STACKCRUNCH_API_URL}/auth/${strategy}`;
     window.location.href = url;
   };
   render() {
@@ -108,31 +118,24 @@ export default class Join extends React.Component {
     const { tab } = queryString.parse(this.props.location.search);
 
     let unameInputCSS;
-    if (this.state.unameChecked) {
-      if (this.state.unameExists) {
-        unameInputCSS = unameExistsInputCSS;
-      } else {
-        unameInputCSS = unameAvailableInputCSS;
-      }
+    if (this.state.inputState === INPUT_STATE.success) {
+      unameInputCSS = unameAvailableInputCSS;
+    } else if (this.state.inputState === INPUT_STATE.error) {
+      unameInputCSS = unameExistsInputCSS;
     }
 
-    let inputMsg;
-    if (this.state.unameChecked) {
-      if (this.state.unameExists) {
-        inputMsg = <Text>Username already exists.</Text>;
-      } else {
-        inputMsg = <Text>Cool! This username is available!</Text>;
-      }
-    }
     const joinButtons = (
       <ButtonGroup>
-        <Button css={seCSS} onClick={this.onStackexchangeClick}>
+        <Button
+          css={seCSS}
+          onClick={e => this.onAuthButtonClick(e, 'stackexchange')}
+        >
           <StackExchangeIcon height="32" />
         </Button>
-        <Button css={ghCSS} onClick={this.onGithubClick}>
+        <Button css={ghCSS} onClick={e => this.onAuthButtonClick(e, 'github')}>
           <GithubIcon height="32" />
         </Button>
-        {/* <Button css={twCSS} onClick={this.onTwitterClick}>
+        {/* <Button css={twCSS} onClick={e => this.onAuthButtonClick(e, 'twitter')}>
           <TwitterIcon height="24" />
         </Button> */}
       </ButtonGroup>
@@ -148,11 +151,14 @@ export default class Join extends React.Component {
             debounceTimeout={300}
             onChange={this.onUsernameChange}
             css={unameInputCSS}
+            inputRef={input => {
+              this.unameInput = input;
+            }}
           />
-          {inputMsg}
+          <Text>{this.state.inputMsg}</Text>
           {joinButtons}
           <Text>Already have an account?</Text>
-          <JoinLink to={'/join?tab=signin'}>SignIn</JoinLink>
+          <JoinLink to={'/join?tab=signin'}>Sign In</JoinLink>
         </Wrapper>
       );
     }
@@ -161,7 +167,7 @@ export default class Join extends React.Component {
         <Title>Sign In</Title>
         {joinButtons}
         <Text>Don't have an account yet?</Text>
-        <JoinLink to={'/join?tab=signup'}>SignUp</JoinLink>
+        <JoinLink to={'/join?tab=signup'}>Sign Up</JoinLink>
       </Wrapper>
     );
   }

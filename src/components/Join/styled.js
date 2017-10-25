@@ -38,6 +38,7 @@ export const ButtonGroup = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
+  margin-top: 16px;
   margin-bottom: 48px;
 `;
 export const Button = styled.button`
@@ -50,7 +51,6 @@ export const Button = styled.button`
   outline: none;
   height: 51px;
   width: 100%;
-  margin-top: 24px;
   border-radius: 4px;
   &:hover {
     background: rgba(0, 0, 0, 0.01);
@@ -60,6 +60,7 @@ export const Button = styled.button`
 export const Text = styled.div`
   font-size: 12px;
   color: #999;
+  min-height: 16px;
 `;
 export const JoinLink = styled(Link)`
   text-decoration: none;
