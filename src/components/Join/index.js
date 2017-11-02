@@ -108,7 +108,10 @@ export default class Join extends React.Component {
       this.unameInput.focus();
       return this.setState({ inputMsg: 'Username is required' });
     }
-    const url = `${STACKCRUNCH_API_URL}/auth/${strategy}`;
+    const params = queryString.stringify({
+      username: this.state.uname
+    });
+    const url = `${STACKCRUNCH_API_URL}/auth/${strategy}?${params}`;
     window.location.href = url;
   };
   render() {
