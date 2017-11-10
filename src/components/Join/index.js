@@ -99,18 +99,20 @@ export default class Join extends React.Component {
   };
   onAuthButtonClick = (e, strategy) => {
     e.preventDefault();
-    const { uname, inputState } = this.state;
-    if (inputState === INPUT_STATE.error) {
-      this.unameInput.focus();
-      return;
+    let params = '';
+    const { tab } = queryString.parse(this.props.location.search);
+    if (tab === 'signup') {
+      const { uname, inputState } = this.state;
+      if (inputState === INPUT_STATE.error) {
+        this.unameInput.focus();
+        return;
+      }
+      if (uname.length === 0) {
+        this.unameInput.focus();
+        return this.setState({ inputMsg: 'Username is required' });
+      }
+      params = queryString.stringify({ username: uname });
     }
-    if (uname.length === 0) {
-      this.unameInput.focus();
-      return this.setState({ inputMsg: 'Username is required' });
-    }
-    const params = queryString.stringify({
-      username: this.state.uname
-    });
     const url = `${STACKCRUNCH_API_URL}/auth/${strategy}?${params}`;
     window.location.href = url;
   };
