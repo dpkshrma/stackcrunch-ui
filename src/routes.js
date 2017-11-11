@@ -85,12 +85,16 @@ export default (
         <Route
           exact
           path="/"
-          render={() => <Redirect to={`/posts/${firstPageId}`} />}
+          render={({ location }) => (
+            <Redirect to={`/posts/${firstPageId}/${location.search}`} />
+          )}
         />
         <Route
           exact
           path="/posts"
-          render={() => <Redirect to={`/posts/${firstPageId}`} />}
+          render={({ location }) => (
+            <Redirect to={`/posts/${firstPageId}/${location.search}`} />
+          )}
         />
         {mainPageRoutes}
         {specialPageRoutes}

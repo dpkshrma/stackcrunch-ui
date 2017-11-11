@@ -34,37 +34,10 @@ export default class Join extends React.Component {
     this.state = {
       uname: '',
       inputMsg: '',
-      inputState: INPUT_STATE.default, // success, error
-      socialAuthCompleted: this.didSocialAuthComplete(),
-      userRegistered: false
+      inputState: INPUT_STATE.default // success, error
     };
   }
-  componentDidMount() {
-    if (this.state.socialAuthCompleted) {
-      const url = `${STACKCRUNCH_API_URL}/auth/reverse${this.props.location
-        .search}`;
-      fetch(url)
-        .then(response => response.json())
-        .then(({ success }) => {
-          this.setState({ userRegistered: success });
-          if (success) {
-            console.log(INFO_MSG.userRegistered);
-          }
-        })
-        .catch(err => {
-          console.error(err);
-        });
-    }
-  }
-  didSocialAuthComplete = () => {
-    // twitter callback data
-    const {
-      oauth_token: oauthToken,
-      oauth_verifier: oauthVerifier
-    } = queryString.parse(this.props.location.search);
 
-    return oauthToken && oauthVerifier;
-  };
   onUsernameChange = e => {
     const uname = e.target.value;
     if (uname.length < 3) {
@@ -97,6 +70,7 @@ export default class Join extends React.Component {
       );
     }
   };
+
   onAuthButtonClick = (e, strategy) => {
     e.preventDefault();
     let params = '';
@@ -111,15 +85,24 @@ export default class Join extends React.Component {
         this.unameInput.focus();
         return this.setState({ inputMsg: 'Username is required' });
       }
-      params = queryString.stringify({ username: uname });
+      params = queryString.stringify({
+        username: uname,
+        returnPath: '/posts',
+        newToken: true,
+        proc: 'signup'
+      });
+    } else if (tab === 'signin') {
+      params = queryString.stringify({
+        returnPath: '/posts',
+        newToken: true,
+        proc: 'signin'
+      });
     }
     const url = `${STACKCRUNCH_API_URL}/auth/${strategy}?${params}`;
     window.location.href = url;
   };
-  render() {
-    if (this.state.socialAuthCompleted) {
-    }
 
+  render() {
     const { tab } = queryString.parse(this.props.location.search);
 
     let unameInputCSS;
