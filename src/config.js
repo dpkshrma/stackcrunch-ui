@@ -1,3 +1,4 @@
+// TODO: move to constants file
 export const TWITTER_SHARE_URL = 'https://twitter.com/share';
 export const STACKCRUNCH_POST_URL = 'https://stackcrunch.io/post';
 export const STACKCRUNCH_API_URL = 'http://localhost:3030';
@@ -24,3 +25,4 @@ export const WIDGET_TYPES = {
   ref: 'ref',
   subscribe: 'subscribe'
 };
+export const STACKCRUNCH_TOKEN_ID = 'stackcrunchToken';

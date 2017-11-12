@@ -12,9 +12,9 @@ import {
   tagCSS
 } from './styled';
 import { Chip } from '../../common';
-import TwitterIcon from './icons/TwitterIcon';
-import GithubIcon from './icons/GithubIcon';
-import MediumIcon from './icons/MediumIcon';
+import TwitterIcon from '../../icons/Twitter';
+import GithubIcon from '../../icons/Github';
+import MediumIcon from '../../icons/Medium';
 import { PageService } from '../../../services';
 
 const socialIconsMap = {

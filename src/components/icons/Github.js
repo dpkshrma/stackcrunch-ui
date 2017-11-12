@@ -2,10 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const SVG = styled.svg`
-  fill: #939393;
-  &:hover {
-    fill: #111;
-  }
+  fill: #111;
 `;
 
 const GithubIcon = props => {

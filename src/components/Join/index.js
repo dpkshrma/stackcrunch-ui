@@ -1,7 +1,7 @@
 import React from 'react';
 import queryString from 'query-string';
-import StackExchangeIcon from './icons/stackexchange';
-import GithubIcon from './icons/github';
+import StackExchangeIcon from '../icons/StackExchange';
+import GithubIcon from '../icons/GithubOctocat';
 import { STACKCRUNCH_API_URL } from '../../config';
 import {
   Wrapper,
@@ -73,8 +73,12 @@ export default class Join extends React.Component {
 
   onAuthButtonClick = (e, strategy) => {
     e.preventDefault();
-    let params = '';
     const { tab } = queryString.parse(this.props.location.search);
+    let params = queryString.stringify({
+      returnPath: '/posts',
+      newToken: true,
+      proc: 'signin'
+    });
     if (tab === 'signup') {
       const { uname, inputState } = this.state;
       if (inputState === INPUT_STATE.error) {
@@ -90,12 +94,6 @@ export default class Join extends React.Component {
         returnPath: '/posts',
         newToken: true,
         proc: 'signup'
-      });
-    } else if (tab === 'signin') {
-      params = queryString.stringify({
-        returnPath: '/posts',
-        newToken: true,
-        proc: 'signin'
       });
     }
     const url = `${STACKCRUNCH_API_URL}/auth/${strategy}?${params}`;
@@ -121,7 +119,7 @@ export default class Join extends React.Component {
           <StackExchangeIcon height="32" />
         </Button>
         <Button css={ghCSS} onClick={e => this.onAuthButtonClick(e, 'github')}>
-          <GithubIcon height="32" />
+          <GithubIcon height="32" style={{ marginTop: 4 }} />
         </Button>
         {/* <Button css={twCSS} onClick={e => this.onAuthButtonClick(e, 'twitter')}>
           <TwitterIcon height="24" />

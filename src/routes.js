@@ -1,22 +1,19 @@
 import React from 'react';
 // import { AnimatedSwitch } from 'react-router-transition';
 import { Route, Redirect, Switch } from 'react-router-dom';
-import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import rootReducer from './reducers';
 import App from './components/App';
 import { PageService, PostService } from './services';
 import { asyncLoad } from './helpers/routes';
+import store from './store';
 // import { routeAnimation } from './helpers/routes';
 import { URL_PREFIX, PAGE_TYPES } from './config';
-
-// redux store
-const store = createStore(rootReducer);
 
 // route components
 const Post = asyncLoad({ loader: () => import(`./components/Post`) });
 const NotFound = asyncLoad({ loader: () => import(`./components/NotFound`) });
 const Join = asyncLoad({ loader: () => import(`./components/Join`) });
+const Profile = asyncLoad({ loader: () => import(`./components/Profile`) });
 
 // route animation helper
 // const { bounceTransition, mapStyles } = routeAnimation;
@@ -99,7 +96,8 @@ export default (
         {mainPageRoutes}
         {specialPageRoutes}
         {postRoutes}
-        <Route component={Join} to="/join" />
+        <Route exact component={Profile} path="/profile" />
+        <Route exact component={Join} path="/join" />
         <Route component={NotFound} />
       </Switch>
       {/* </AnimatedSwitch> */}

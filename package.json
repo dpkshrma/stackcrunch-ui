@@ -7,6 +7,7 @@
     "draft-js": "^0.10.3",
     "draft-js-prism": "^1.0.5",
     "immutability-helper": "^2.4.0",
+    "jwt-decode": "^2.2.0",
     "markdown-draft-js": "^0.4.1",
     "prismjs": "^1.6.0",
     "query-string": "^5.0.0",
@@ -19,6 +20,7 @@
     "react-router-transition": "^1.1.1",
     "react-scripts": "1.0.14",
     "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0",
     "styled-components": "^2.2.1",
     "typeface-roboto": "^0.0.35"
   },
@@ -40,6 +42,7 @@
     "husky": "^0.14.3",
     "lint-staged": "^4.2.3",
     "prettier": "^1.7.4",
-    "redux-devtools": "^3.4.0"
+    "redux-devtools": "^3.4.0",
+    "redux-logger": "^3.0.6"
   }
 }

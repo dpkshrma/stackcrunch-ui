@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Topbar from '../Topbar';
 import Sidebar from '../Sidebar';
 import Footer from '../Footer';
+import ErrorBoundary from './ErrorBoundary';
 
 const Wrapper = styled.div`
   min-height: 100vh;
@@ -21,10 +22,12 @@ const App = ({ children }) => {
   return (
     <Wrapper>
       <Topbar />
-      <Content>
-        {children}
-        <Sidebar />
-      </Content>
+      <ErrorBoundary>
+        <Content>
+          {children}
+          <Sidebar />
+        </Content>
+      </ErrorBoundary>
       <Footer />
     </Wrapper>
   );
