@@ -14,7 +14,6 @@ export const updateProfile = profile => {
   const url = `${STACKCRUNCH_API_URL}/profile`;
   const authToken = localStorage.getItem(STACKCRUNCH_TOKEN_ID);
   delete profile.avatarURL;
-  console.log(profile);
   const opts = {
     method: 'post',
     headers: {

@@ -11,6 +11,7 @@ import {
   SectionTitle,
   ThumbWrapper,
   About,
+  UsernameInputGroup,
   FormButton,
   ProfileImageContent,
   ProfileFormGroup,
@@ -27,6 +28,7 @@ import {
   SubmitButton
 } from './styled';
 import UserIcon from '../icons/User';
+import UserIcon2 from '../icons/User2';
 import GithubIcon from '../icons/Github';
 import TwitterIcon from '../icons/Twitter';
 import MediumIcon from '../icons/Medium';
@@ -209,11 +211,14 @@ class Profile extends SC {
               src={user.avatarURL}
             />
             <ProfileFormGroup>
-              <FormInput
-                placeholder="Username"
-                disabled="disabled"
-                value={user.username}
-              />
+              <UsernameInputGroup>
+                <UserIcon2 height={20} width={20} fill="#aaa" />
+                <FormInput
+                  placeholder="Username"
+                  disabled="disabled"
+                  value={user.username}
+                />
+              </UsernameInputGroup>
               <FormInput name="name" placeholder="Name" value={user.name} />
               <FormTextArea
                 name="description"

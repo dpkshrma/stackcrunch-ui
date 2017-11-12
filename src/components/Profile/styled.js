@@ -151,6 +151,18 @@ export const ProfileFormGroup = FormGroup.extend`
   padding-left: 20px;
   width: 100%;
 `;
+export const UsernameInputGroup = FormGroup.extend`
+  position: relative;
+  > svg {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+  }
+  > ${FormInput} {
+    padding-left: 36px;
+  }
+`;
+
 export const Links = Section.extend`
   display: flex;
   flex-direction: column;
