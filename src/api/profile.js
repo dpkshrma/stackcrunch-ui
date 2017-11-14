@@ -13,7 +13,6 @@ export const fetchProfile = () => {
 export const updateProfile = profile => {
   const url = `${STACKCRUNCH_API_URL}/profile`;
   const authToken = localStorage.getItem(STACKCRUNCH_TOKEN_ID);
-  delete profile.avatarURL;
   const opts = {
     method: 'post',
     headers: {
@@ -22,6 +21,19 @@ export const updateProfile = profile => {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({ user: profile })
+  };
+  return fetch(url, opts).then(response => response.json());
+};
+
+export const uploadProfilePhoto = file => {
+  const url = `${STACKCRUNCH_API_URL}/profile/photo`;
+  const authToken = localStorage.getItem(STACKCRUNCH_TOKEN_ID);
+  const form = new FormData();
+  form.append('avatar', file);
+  const opts = {
+    method: 'post',
+    headers: { Authorization: authToken },
+    body: form
   };
   return fetch(url, opts).then(response => response.json());
 };

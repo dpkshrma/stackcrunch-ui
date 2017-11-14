@@ -75,6 +75,9 @@ export const FormButton = Button.extend`
   align-items: center;
   justify-content: center;
   font-size: 14px;
+  &:disabled {
+    background: #f4f4f4;
+  }
 `;
 export const Form = styled.form`
   display: flex;
@@ -142,6 +145,9 @@ export const FileInput = styled.div`
     top: 0;
     opacity: 0;
     cursor: pointer;
+    &:disabled {
+      cursor: wait;
+    }
   }
   &:hover {
     background: rgba(0, 0, 0, 0.01);

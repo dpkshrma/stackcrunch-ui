@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from '../icons/logo.png';
 import GithubIcon from '../icons/Github';
-import { GH_CONTRIBUTION_URL, STACKCRUNCH_TOKEN_ID } from '../../config';
+import { GH_CONTRIBUTION_URL } from '../../config';
 import {
   Wrapper,
   Content,

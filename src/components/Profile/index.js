@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import jwtDecode from 'jwt-decode';
 import queryString from 'query-string';
 import { omit } from '../../utils/object';
-import { getProfile, setProfile } from '../../actions/user';
+import { getProfile, setProfile, setProfilePhoto } from '../../actions/user';
 import SC from '../common/SC';
 import {
   Wrapper,
@@ -77,7 +77,7 @@ const connectCards = [
   }
 ];
 
-const ProfileImage = ({ src, onChange }) => {
+const ProfileImage = ({ src, onChange, uploading }) => {
   return (
     <ProfileImageContent>
       <ThumbWrapper>
@@ -88,8 +88,15 @@ const ProfileImage = ({ src, onChange }) => {
         )}
       </ThumbWrapper>
       <FileInput>
-        <FormButton>Update</FormButton>
-        <FormInput type="file" onChange={onChange} accept="image/*" />
+        <FormButton disabled={uploading ? 'disabled' : false}>
+          {uploading ? 'Uploading...' : 'Update'}
+        </FormButton>
+        <FormInput
+          type="file"
+          onChange={onChange}
+          accept="image/*"
+          disabled={uploading ? 'disabled' : false}
+        />
       </FileInput>
     </ProfileImageContent>
   );
@@ -123,7 +130,8 @@ class Profile extends SC {
     this.state = {
       file: '',
       token: null,
-      user: { username }
+      user: { username },
+      avatarUploading: false
     };
   }
 
@@ -151,13 +159,18 @@ class Profile extends SC {
     e.preventDefault();
     const reader = new FileReader();
     const file = e.target.files[0];
-    reader.onloadend = () => {
-      const user = Object.assign({}, this.state.user, {
-        avatarURL: reader.result
+    this.setState({ avatarUploading: true }, () => {
+      reader.onloadend = () => {
+        const user = Object.assign({}, this.state.user, {
+          avatarURL: reader.result
+        });
+        this.setState({ file, user });
+      };
+      reader.readAsDataURL(file);
+      this.props.setProfilePhoto(file).then(() => {
+        this.setState({ avatarUploading: false });
       });
-      this.setState({ file, user });
-    };
-    reader.readAsDataURL(file);
+    });
   };
 
   onFormChange = e => {
@@ -199,7 +212,7 @@ class Profile extends SC {
   };
 
   render() {
-    const { user } = this.state;
+    const { user, avatarUploading } = this.state;
     return (
       <Wrapper>
         <Form onChange={this.onFormChange} onSubmit={this.onFormSubmit}>
@@ -209,6 +222,7 @@ class Profile extends SC {
             <ProfileImage
               onChange={this.onAvatarInputChange}
               src={user.avatarURL}
+              uploading={avatarUploading}
             />
             <ProfileFormGroup>
               <UsernameInputGroup>
@@ -219,7 +233,11 @@ class Profile extends SC {
                   value={user.username}
                 />
               </UsernameInputGroup>
-              <FormInput name="name" placeholder="Name" value={user.name} />
+              <FormInput
+                name="name"
+                placeholder="Name"
+                value={user.name || ''}
+              />
               <FormTextArea
                 name="description"
                 placeholder="Write something about yourself here..."
@@ -274,6 +292,6 @@ class Profile extends SC {
 }
 
 const mapStateToProps = ({ user }) => ({ user });
-const mapDispatchToProps = { getProfile, setProfile };
+const mapDispatchToProps = { getProfile, setProfile, setProfilePhoto };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);
