@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import ListItem from './ListItem';
 import Pager from './Pager';
+import SC from '../common/SC';
 import { hooks, getURLSegments } from '../../helpers/routes';
 import { PageService } from '../../services';
 import { URL_PREFIX, PAGE_TYPES } from '../../config';
@@ -17,7 +18,7 @@ const List = styled.div`
   margin-right: 16px;
 `;
 
-class PostList extends React.Component {
+class PostList extends SC {
   constructor(props) {
     super(props);
     this.state = {

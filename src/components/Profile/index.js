@@ -187,7 +187,7 @@ class Profile extends SC {
   onFormSubmit = e => {
     e.preventDefault();
     const { user } = this.state;
-    const profile = omit(user, 'stackexchange', 'github');
+    const profile = omit(user, 'stackexchange', 'github', 'avatarURL');
     this.props
       .setProfile(profile)
       .then(() => {
