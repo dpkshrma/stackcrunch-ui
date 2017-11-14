@@ -1,7 +1,8 @@
 import React from 'react';
+import RedirectComponent from '../common/Redirect';
 import logo from '../icons/logo.png';
 import GithubIcon from '../icons/Github';
-import { GH_CONTRIBUTION_URL } from '../../config';
+import { GH_CONTRIBUTION_URL, STACKCRUNCH_TOKEN_ID } from '../../config';
 import {
   Wrapper,
   Content,
@@ -13,11 +14,13 @@ import {
   Button,
   signUpCSS,
   ContributeTip,
-  Bullet
+  Tip
 } from './styled';
+import ProfilePopper from './ProfilePopper';
 
-class Topbar extends React.Component {
+class Topbar extends RedirectComponent {
   render() {
+    const token = localStorage.getItem(STACKCRUNCH_TOKEN_ID);
     return (
       <Wrapper>
         <Content>
@@ -29,14 +32,22 @@ class Topbar extends React.Component {
             </LogoText>
           </Logo>
           <ContributeTip href={GH_CONTRIBUTION_URL} target="_blank">
-            <Bullet className="bullet" />
+            <Tip />
             Contribute on <GithubIcon className="icon" height={16} />
           </ContributeTip>
           <RightNav>
-            <Button to={'/join?tab=signin'}>SignIn</Button>
-            <Button to={'/join?tab=signup'} css={signUpCSS}>
-              SignUp
-            </Button>
+            {token ? (
+              <ProfilePopper />
+            ) : (
+              [
+                <Button to={'/join?tab=signin'} key="signin">
+                  SignIn
+                </Button>,
+                <Button to={'/join?tab=signup'} css={signUpCSS} key="signup">
+                  SignUp
+                </Button>
+              ]
+            )}
           </RightNav>
         </Content>
       </Wrapper>

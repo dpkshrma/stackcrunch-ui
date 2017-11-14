@@ -1,6 +1,6 @@
 import { STACKCRUNCH_API_URL, STACKCRUNCH_TOKEN_ID } from '../config';
 
-export const fetchProfile = () => {
+const fetchProfile = () => {
   const url = `${STACKCRUNCH_API_URL}/profile`;
   const authToken = localStorage.getItem(STACKCRUNCH_TOKEN_ID);
   const opts = {
@@ -10,7 +10,7 @@ export const fetchProfile = () => {
   return fetch(url, opts).then(response => response.json());
 };
 
-export const updateProfile = profile => {
+const updateProfile = profile => {
   const url = `${STACKCRUNCH_API_URL}/profile`;
   const authToken = localStorage.getItem(STACKCRUNCH_TOKEN_ID);
   const opts = {
@@ -25,7 +25,7 @@ export const updateProfile = profile => {
   return fetch(url, opts).then(response => response.json());
 };
 
-export const uploadProfilePhoto = file => {
+const uploadProfilePhoto = file => {
   const url = `${STACKCRUNCH_API_URL}/profile/photo`;
   const authToken = localStorage.getItem(STACKCRUNCH_TOKEN_ID);
   const form = new FormData();
@@ -36,4 +36,10 @@ export const uploadProfilePhoto = file => {
     body: form
   };
   return fetch(url, opts).then(response => response.json());
+};
+
+export const profileAPI = {
+  fetch: fetchProfile,
+  update: updateProfile,
+  uploadPhoto: uploadProfilePhoto
 };

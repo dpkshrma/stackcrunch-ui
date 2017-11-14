@@ -58,6 +58,18 @@ export const signUpCSS = css`
     background: #0585e2;
   }
 `;
+export const Tip = styled.div`
+  height: 8px;
+  width: 8px;
+  transform: rotate(135deg);
+  position: absolute;
+  margin-left: -11px;
+  margin-top: 3px;
+  background: #fff;
+  border-right: 1px solid;
+  border-bottom: 1px solid;
+  border-color: #555;
+`;
 export const ContributeTip = styled.a`
   background: #fff;
   color: #555;
@@ -73,23 +85,11 @@ export const ContributeTip = styled.a`
     margin-left: 4px;
   }
   &:hover,
-  &:hover .bullet {
+  &:hover ${Tip} {
     background: #555;
     color: #fff;
     .icon {
       fill: #fff;
     }
   }
-`;
-export const Bullet = styled.div`
-  height: 8px;
-  width: 8px;
-  transform: rotate(135deg);
-  position: absolute;
-  margin-left: -11px;
-  margin-top: 3px;
-  background: #fff;
-  border-right: 1px solid;
-  border-bottom: 1px solid;
-  border-color: #555;
 `;

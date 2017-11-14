@@ -3,8 +3,11 @@ import { connect } from 'react-redux';
 import jwtDecode from 'jwt-decode';
 import queryString from 'query-string';
 import { omit } from '../../utils/object';
-import { getProfile, setProfile, setProfilePhoto } from '../../actions/user';
-import SC from '../common/SC';
+import {
+  fetchProfile,
+  updateRemoteProfile,
+  uploadPhoto
+} from '../../actions/user';
 import {
   Wrapper,
   Title,
@@ -122,7 +125,7 @@ const ConnectCard = ({ name, Img, link, profile, onClick }) => {
   );
 };
 
-class Profile extends SC {
+class Profile extends React.Component {
   constructor(props) {
     super(props);
     // decode token, set username to state, else redirect to login screen
@@ -140,7 +143,7 @@ class Profile extends SC {
       this.props.history.push('/join');
       return;
     }
-    this.props.getProfile().then(() => {
+    this.props.fetchProfile().then(() => {
       const { user } = this.props;
       this.setState({ user });
     });
@@ -167,7 +170,7 @@ class Profile extends SC {
         this.setState({ file, user });
       };
       reader.readAsDataURL(file);
-      this.props.setProfilePhoto(file).then(() => {
+      this.props.uploadPhoto(file).then(() => {
         this.setState({ avatarUploading: false });
       });
     });
@@ -202,7 +205,7 @@ class Profile extends SC {
     const { user } = this.state;
     const profile = omit(user, 'stackexchange', 'github', 'avatarURL');
     this.props
-      .setProfile(profile)
+      .updateRemoteProfile(profile)
       .then(() => {
         // TODO: show a success snackbar
       })
@@ -292,6 +295,6 @@ class Profile extends SC {
 }
 
 const mapStateToProps = ({ user }) => ({ user });
-const mapDispatchToProps = { getProfile, setProfile, setProfilePhoto };
+const mapDispatchToProps = { fetchProfile, updateRemoteProfile, uploadPhoto };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

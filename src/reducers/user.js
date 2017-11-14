@@ -10,13 +10,9 @@ export default (state = initialState, action) => {
     case ua.LOAD_PROFILE_FAILURE:
       // TODO: ???
       return state;
-    case ua.LOAD_PROFILE_PHOTO_SUCCESS:
-      return update(state, {
-        avatarURL: {
-          $set: action.avatarURL
-        }
-      });
-    case ua.LOAD_PROFILE_PHOTO_FAILURE:
+    case ua.UPDATE_PROFILE_SUCCESS:
+      return update(state, { $merge: action.user });
+    case ua.UPDATE_PROFILE_FAILURE:
       // TODO: ???
       return state;
     default:

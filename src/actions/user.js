@@ -1,14 +1,12 @@
 import { userActions as ua } from '../constants';
-import {
-  fetchProfile,
-  updateProfile,
-  uploadProfilePhoto
-} from '../api/profile';
+import { profileAPI } from '../api/user';
 
-export const getProfile = () => {
+export const fetchProfile = () => {
   return (dispatch, getState) => {
-    return fetchProfile()
-      .then(user => {
+    // TODO: return user if exists in store?? (cache first)
+    return profileAPI
+      .fetch()
+      .then(({ user }) => {
         dispatch({ type: ua.LOAD_PROFILE_SUCCESS, user });
       })
       .catch(err => {
@@ -18,28 +16,37 @@ export const getProfile = () => {
   };
 };
 
-export const setProfile = profile => {
+export const updateRemoteProfile = profile => {
   return (dispatch, getState) => {
-    return updateProfile(profile)
-      .then(user => {
-        dispatch({ type: ua.LOAD_PROFILE_SUCCESS, user });
+    return profileAPI
+      .update(profile)
+      .then(({ user }) => {
+        dispatch({ type: ua.UPDATE_PROFILE_SUCCESS, user });
       })
       .catch(err => {
         console.error(err);
-        dispatch({ type: ua.LOAD_PROFILE_FAILURE });
+        dispatch({ type: ua.UPDATE_PROFILE_FAILURE });
       });
   };
 };
 
-export const setProfilePhoto = file => {
+export const uploadPhoto = file => {
   return (dispatch, getState) => {
-    return uploadProfilePhoto(file)
+    return profileAPI
+      .uploadPhoto(file)
       .then(({ avatarURL }) => {
-        dispatch({ type: ua.LOAD_PROFILE_PHOTO_SUCCESS, avatarURL });
+        dispatch({ type: ua.UPDATE_PROFILE_SUCCESS, user: { avatarURL } });
       })
       .catch(err => {
         console.error(err);
-        dispatch({ type: ua.LOAD_PROFILE_PHOTO_FAILURE });
+        dispatch({ type: ua.UPDATE_PROFILE_FAILURE });
       });
+  };
+};
+
+export const updateProfile = user => {
+  return {
+    type: ua.UPDATE_PROFILE_SUCCESS,
+    user
   };
 };
