@@ -1,7 +1,8 @@
-import thunk from 'redux-thunk';
 import { createStore, applyMiddleware, compose } from 'redux';
+import promiseMiddleware from 'redux-promise-middleware';
+import thunk from 'redux-thunk';
 import rootReducer from './reducers';
-import { STORE_STATE_ID } from './config';
+import { STORE_STATE_ID, PROMISE_TYPE_SUFFIXES } from './config';
 
 // initialState
 const loadState = () => {
@@ -26,7 +27,12 @@ const saveState = state => {
 const initialState = loadState();
 
 // middlewares
-const middlewares = [thunk];
+const middlewares = [
+  promiseMiddleware({
+    promiseTypeSuffixes: PROMISE_TYPE_SUFFIXES
+  }),
+  thunk
+];
 if (process.env.NODE_ENV === 'development') {
   const { createLogger } = require('redux-logger');
   const logger = createLogger();

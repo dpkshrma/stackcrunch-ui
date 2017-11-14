@@ -27,3 +27,11 @@ export const WIDGET_TYPES = {
 };
 export const STACKCRUNCH_TOKEN_ID = 'stackcrunchToken';
 export const STORE_STATE_ID = 'state';
+export const ACTION_PENDING_SUFFIX = 'PENDING';
+export const ACTION_SUCCESS_SUFFIX = 'SUCCESS';
+export const ACTION_FAILURE_SUFFIX = 'FAILURE';
+export const PROMISE_TYPE_SUFFIXES = [
+  ACTION_PENDING_SUFFIX,
+  ACTION_SUCCESS_SUFFIX,
+  ACTION_FAILURE_SUFFIX
+];

@@ -1,41 +1,17 @@
-import { STACKCRUNCH_API_URL, STACKCRUNCH_TOKEN_ID } from '../config';
+import { req, jsonHeaders } from '../helpers/http';
 
 const fetchProfile = () => {
-  const url = `${STACKCRUNCH_API_URL}/profile`;
-  const authToken = localStorage.getItem(STACKCRUNCH_TOKEN_ID);
-  const opts = {
-    method: 'GET',
-    headers: { Authorization: authToken }
-  };
-  return fetch(url, opts).then(response => response.json());
+  return req('profile').get();
 };
 
-const updateProfile = profile => {
-  const url = `${STACKCRUNCH_API_URL}/profile`;
-  const authToken = localStorage.getItem(STACKCRUNCH_TOKEN_ID);
-  const opts = {
-    method: 'post',
-    headers: {
-      Authorization: authToken,
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ user: profile })
-  };
-  return fetch(url, opts).then(response => response.json());
+const updateProfile = user => {
+  return req('profile', jsonHeaders).post(JSON.stringify({ user }));
 };
 
 const uploadProfilePhoto = file => {
-  const url = `${STACKCRUNCH_API_URL}/profile/photo`;
-  const authToken = localStorage.getItem(STACKCRUNCH_TOKEN_ID);
   const form = new FormData();
   form.append('avatar', file);
-  const opts = {
-    method: 'post',
-    headers: { Authorization: authToken },
-    body: form
-  };
-  return fetch(url, opts).then(response => response.json());
+  return req('profile/photo').post(form);
 };
 
 export const profileAPI = {

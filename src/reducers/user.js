@@ -1,20 +1,17 @@
 import update from 'immutability-helper';
+import { success } from '../helpers/reducer';
 import { userActions as ua } from '../constants';
 
 const initialState = {};
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case ua.LOAD_PROFILE_SUCCESS:
-      return action.user;
-    case ua.LOAD_PROFILE_FAILURE:
-      // TODO: ???
-      return state;
-    case ua.UPDATE_PROFILE_SUCCESS:
-      return update(state, { $merge: action.user });
-    case ua.UPDATE_PROFILE_FAILURE:
-      // TODO: ???
-      return state;
+    case success(ua.LOAD_PROFILE):
+      return action.payload;
+
+    case success(ua.UPDATE_PROFILE):
+      return update(state, { $merge: action.payload });
+
     default:
       return state;
   }

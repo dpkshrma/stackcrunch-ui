@@ -6,15 +6,17 @@ export const Wrapper = styled.div`
 `;
 export const Target = styled.div`
   cursor: pointer;
+  display: flex;
 `;
 export const Img = styled.img`
-  height: 48px;
-  width: 48px;
+  height: 32px;
+  width: 32px;
   border-radius: 100%;
+  border: 1px solid #ccc;
 `;
 export const Menu = styled.div`
   position: absolute;
-  top: 54px;
+  top: 40px;
   border: 1px solid #ccc;
   border-radius: 4px;
   background: #fff;
@@ -49,8 +51,8 @@ export const Tip = styled.div`
   width: 8px;
   transform: rotate(135deg);
   position: absolute;
-  bottom: -6px;
-  right: 19px;
+  bottom: -11px;
+  right: 12px;
   background: #fff;
   border-left: 1px solid;
   border-bottom: 1px solid;
