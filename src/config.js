@@ -26,3 +26,4 @@ export const WIDGET_TYPES = {
   subscribe: 'subscribe'
 };
 export const STACKCRUNCH_TOKEN_ID = 'stackcrunchToken';
+export const STORE_STATE_ID = 'state';
