@@ -1,4 +1,5 @@
 import React from 'react';
+import { fromNow } from '../../../utils/time';
 import { Chip } from '../../common';
 import {
   Wrapper,
@@ -19,11 +20,19 @@ import {
 import { TWITTER_SHARE_URL, STACKCRUNCH_POST_URL } from '../../../config';
 import TwitterIcon from './icons/TwitterIcon';
 
-const ListItem = ({ id, title, abstract, author, tags, postedOn, ttr }) => {
+const ListItem = ({
+  id,
+  title,
+  abstract,
+  author = {},
+  tags,
+  createdOn,
+  ttr
+}) => {
   const tagList =
     tags &&
-    tags.map(tag => (
-      <Chip key={tag.id} text={tag.text} to={tag.link} css={tagCSS} />
+    tags.map((tag, i) => (
+      <Chip key={i} text={tag.text} to={tag.link} css={tagCSS} />
     ));
 
   // TODO: ellipsify shareText if char length overshot
@@ -44,7 +53,7 @@ const ListItem = ({ id, title, abstract, author, tags, postedOn, ttr }) => {
           css={authorCSS}
         />
         <HeaderMetaText>
-          {postedOn} <Separator space={8} delimiter="|" /> {ttr} read{' '}
+          {fromNow(createdOn)} <Separator space={8} delimiter="|" /> {ttr} read{' '}
         </HeaderMetaText>
       </Header>
       <Title to={`/post/${id}`}>{title}</Title>

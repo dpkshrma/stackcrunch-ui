@@ -14,3 +14,6 @@ export const userActions = {
   LOAD_PROFILE: 'LOAD_PROFILE',
   UPDATE_PROFILE: 'UPDATE_PROFILE'
 };
+export const postActions = {
+  LOAD_POSTS: 'LOAD_POSTS'
+};

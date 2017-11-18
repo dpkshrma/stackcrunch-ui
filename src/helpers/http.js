@@ -1,3 +1,4 @@
+import queryString from 'query-string';
 import { STACKCRUNCH_API_URL, STACKCRUNCH_TOKEN_ID } from '../config';
 
 export const jsonHeaders = {
@@ -5,8 +6,14 @@ export const jsonHeaders = {
   'Content-Type': 'application/json'
 };
 
-const fetchJSON = (url, opts) =>
-  fetch(url, opts).then(response => response.json());
+const fetchJSON = (url, opts) => {
+  return fetch(url, opts)
+    .then(response => response.json())
+    .catch(err => {
+      console.error(err);
+      throw err;
+    });
+};
 
 export const req = (path, headers = {}, auth = true) => {
   const url = `${STACKCRUNCH_API_URL}/${path}`;
@@ -16,9 +23,10 @@ export const req = (path, headers = {}, auth = true) => {
     opts.headers.Authorization = authToken;
   }
   return {
-    get: () => {
+    get: (queryParams = {}) => {
+      const query = queryString.stringify(queryParams);
       opts.method = 'GET';
-      return fetchJSON(url, opts);
+      return fetchJSON(`${url}?${query}`, opts);
     },
     post: body => {
       opts.method = 'POST';

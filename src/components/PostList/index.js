@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import styled from 'styled-components';
 import ListItem from './ListItem';
 import Pager from './Pager';
+import { fetchAllPosts } from '../../actions/post';
 import { hooks, getURLSegments } from '../../helpers/routes';
-import { PageService } from '../../services';
 import { URL_PREFIX, PAGE_TYPES } from '../../config';
 
 const Wrapper = styled.div`
@@ -37,17 +37,14 @@ class PostList extends React.Component {
   componentDidMount() {
     const { pageType } = this.state;
     const pageId = this.getCurrentPageId();
-    PageService.getPage(pageId || 1, pageType.type, pageType.id)
-      .then(({ data: posts }) => {
+    this.props
+      .fetchAllPosts(pageId)
+      .then(() => {
+        const { posts } = this.props;
         this.setState({ posts, pageType });
       })
       .catch(err => {
-        if (err.message.startsWith('Cannot find module')) {
-          // redirect to NotFound page
-          console.error(err);
-          this.props.history.push(`${URL_PREFIX}/404`);
-        }
-        // TODO: handle other errors
+        this.props.history.push(`${URL_PREFIX}/404`);
       });
   }
   componentWillUnmount() {
@@ -73,11 +70,14 @@ class PostList extends React.Component {
     return pageId;
   };
   render() {
-    const { pageType } = this.state;
+    const { posts, pageType } = this.state;
     return (
       <Wrapper>
         <List>
-          {this.state.posts.map(post => <ListItem {...post} key={post.id} />)}
+          {posts &&
+            posts.map((post, i) => {
+              return <ListItem {...post} key={i} />;
+            })}
           <Pager currentPageId={this.getCurrentPageId()} pageType={pageType} />
         </List>
       </Wrapper>
@@ -85,4 +85,12 @@ class PostList extends React.Component {
   }
 }
 
-export default connect()(PostList);
+const mapStateToProps = ({ posts }) => ({ posts });
+const mapDispatchToProps = dispatch => {
+  return {
+    dispatch,
+    fetchAllPosts: fetchAllPosts(dispatch)
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostList);
