@@ -6,6 +6,13 @@ const fetchAllPosts = page => {
     .then(({ posts }) => posts);
 };
 
+export const fetchOnePost = slug => {
+  return req(`posts/${slug}`)
+    .get()
+    .then(({ post }) => post);
+};
+
 export const postsAPI = {
-  fetchAll: fetchAllPosts
+  fetchAll: fetchAllPosts,
+  fetchOne: fetchOnePost
 };

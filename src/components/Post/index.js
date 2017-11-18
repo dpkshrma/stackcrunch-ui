@@ -14,10 +14,10 @@ import {
   Content,
   authorCSS
 } from './styled';
-// services
-import PostService from '../../services/Post';
+import { fetchPost } from '../../actions/post';
 // global helpers
-import { hooks, getURLSegments } from '../../helpers/routes';
+import { hooks } from '../../helpers/routes';
+import { fromNow } from '../../utils/time';
 // component helpers
 import { markdownToDraftOptions, blockRenderMap } from './helpers';
 import markdownToDraft from './helpers/markdownToDraft';
@@ -37,41 +37,38 @@ class PostPage extends React.Component {
     };
   }
   componentWillMount() {
-    const postId = this.getPostId();
-    // Load post in the editor
-    PostService.getPost(postId)
-      .then(({ post, metadata, refs }) => {
-        const contentState = markdownToDraft(post, markdownToDraftOptions);
-        const editorState = EditorState.createWithContent(
-          convertFromRaw(contentState),
-          comboDecorator
-        );
-        this.setState({ editorState, metadata, loaded: true });
-        // onEnter route hook
-        hooks.post.onEnter(this.props.dispatch, refs);
-      })
-      .catch(err => {
-        if (err.message.startsWith('Cannot find module')) {
-          // redirect to NotFound page
-          console.error(err);
+    const { slug } = this.props.match.params;
+    this.props
+      .fetchPost(slug)
+      .then(() => {
+        if (this.props.post && this.props.post.meta) {
+          const { text, meta = {} } = this.props.post;
+          const contentState = markdownToDraft(text, markdownToDraftOptions);
+          const editorState = EditorState.createWithContent(
+            convertFromRaw(contentState),
+            comboDecorator
+          );
+          this.setState({ editorState, metadata: meta, loaded: true });
+          // onEnter route hook
+          hooks.post.onEnter(this.props.dispatch, meta.refs);
+        } else {
+          console.error('Post not found in store');
           this.props.history.push(`${URL_PREFIX}/404`);
         }
-        // TODO: handle other errors
+      })
+      .catch(err => {
+        console.error(err);
+        this.props.history.push(`${URL_PREFIX}/404`);
       });
   }
   componentWillUnmount() {
     hooks.post.onLeave(this.props.dispatch);
   }
-  getPostId = () => {
-    const { path } = this.props.match;
-    const [, postId] = getURLSegments(path);
-    return postId;
-  };
   onChange = editorState => {
     this.setState({ editorState });
   };
   render() {
-    const { author = {}, postedOn, ttr, title } = this.state.metadata;
+    const { author = {}, createdOn = 0, ttr, title } = this.state.metadata;
     if (!this.state.loaded) {
       return <div>Loading the post...</div>;
     }
@@ -87,7 +84,7 @@ class PostPage extends React.Component {
                 css={authorCSS}
               />
               <HeaderMetaText>
-                {postedOn} <Separator space={8} delimiter="|" /> {ttr}
+                {fromNow(createdOn)} <Separator space={8} delimiter="|" /> {ttr}
               </HeaderMetaText>
             </HeaderMeta>
             <Title>{title}</Title>
@@ -106,4 +103,12 @@ class PostPage extends React.Component {
   }
 }
 
-export default connect()(PostPage);
+const mapStateToProps = ({ post }) => ({ post });
+const mapDispatchToProps = dispatch => {
+  return {
+    dispatch,
+    fetchPost: fetchPost(dispatch)
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(PostPage);

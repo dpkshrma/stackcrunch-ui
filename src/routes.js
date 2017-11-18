@@ -21,7 +21,6 @@ const Profile = asyncLoad({ loader: () => import(`./components/Profile`) });
 // post listing page config
 const mainPageIds = PageService.getMainPageIds();
 const [firstPageId] = mainPageIds;
-const postIds = PostService.getPostIds();
 
 // Routes
 const mainPageRoutes = mainPageIds.map(pageId => (
@@ -58,17 +57,6 @@ const specialPageRoutes = Object.values(PAGE_TYPES.SPECIAL).map(pageType => {
   });
 });
 
-const postRoutes = postIds.map(postId => {
-  return (
-    <Route
-      exact
-      key={postId}
-      component={Post}
-      path={`${URL_PREFIX}/post/${postId}`}
-    />
-  );
-});
-
 export default (
   <Provider store={store}>
     <App>
@@ -95,7 +83,7 @@ export default (
         />
         {mainPageRoutes}
         {specialPageRoutes}
-        {postRoutes}
+        <Route exact component={Post} path="/post/:slug" />
         <Route exact component={Profile} path="/profile" />
         <Route exact component={Join} path="/join" />
         <Route component={NotFound} />

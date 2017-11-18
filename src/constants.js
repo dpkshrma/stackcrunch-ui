@@ -15,5 +15,6 @@ export const userActions = {
   UPDATE_PROFILE: 'UPDATE_PROFILE'
 };
 export const postActions = {
-  LOAD_POSTS: 'LOAD_POSTS'
+  LOAD_POSTS: 'LOAD_POSTS',
+  LOAD_POST: 'LOAD_POST'
 };

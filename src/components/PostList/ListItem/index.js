@@ -23,6 +23,7 @@ import TwitterIcon from './icons/TwitterIcon';
 const ListItem = ({
   id,
   title,
+  slug,
   abstract,
   author = {},
   tags,
@@ -56,7 +57,7 @@ const ListItem = ({
           {fromNow(createdOn)} <Separator space={8} delimiter="|" /> {ttr} read{' '}
         </HeaderMetaText>
       </Header>
-      <Title to={`/post/${id}`}>{title}</Title>
+      <Title to={`/post/${slug}`}>{title}</Title>
       <Abstract>{abstract}</Abstract>
       <Footer>
         <Tags>{tagList}</Tags>

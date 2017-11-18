@@ -51,9 +51,11 @@ const store = createStore(
 );
 
 store.subscribe(() => {
-  const { user } = store.getState();
+  const { user, posts, post } = store.getState();
   saveState({
-    user
+    user,
+    posts,
+    post
   });
 });
 
