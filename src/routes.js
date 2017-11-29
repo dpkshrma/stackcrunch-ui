@@ -3,7 +3,7 @@ import React from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import App from './components/App';
-import { PageService, PostService } from './services';
+import { PageService } from './services';
 import { asyncLoad } from './helpers/routes';
 import store from './store';
 // import { routeAnimation } from './helpers/routes';

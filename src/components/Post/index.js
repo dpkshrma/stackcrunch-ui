@@ -14,6 +14,7 @@ import {
   Content,
   authorCSS
 } from './styled';
+import CommentThread from './CommentThread';
 import { fetchPost } from '../../actions/post';
 // global helpers
 import { hooks } from '../../helpers/routes';
@@ -69,6 +70,7 @@ class PostPage extends React.Component {
   };
   render() {
     const { author = {}, createdOn = 0, ttr, title } = this.state.metadata;
+    const { slug } = this.props.match.params;
     if (!this.state.loaded) {
       return <div>Loading the post...</div>;
     }
@@ -95,6 +97,12 @@ class PostPage extends React.Component {
               onChange={this.onChange}
               readOnly={true}
               blockRenderMap={blockRenderMap}
+            />
+            <CommentThread
+              shortname={'stackcrunch'}
+              identifier={slug}
+              title={title}
+              category_id={'post'}
             />
           </Content>
         </Post>
