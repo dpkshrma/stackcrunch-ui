@@ -2,12 +2,14 @@ import React from 'react';
 import RedirectComponent from '../common/Redirect';
 import logo from '../icons/logo.png';
 import GithubIcon from '../icons/Github';
+import PenIcon from '../icons/Pen';
 import { GH_CONTRIBUTION_URL, STACKCRUNCH_TOKEN_ID } from '../../config';
+import { Link } from 'react-router-dom';
 import {
   Wrapper,
   Content,
   Logo,
-  LogoThumb,
+  Thumb,
   LogoText,
   Text,
   RightNav,
@@ -25,7 +27,7 @@ class Topbar extends RedirectComponent {
       <Wrapper>
         <Content>
           <Logo to="/">
-            <LogoThumb src={logo} />
+            <Thumb src={logo} />
             <LogoText>
               <Text weight={300}>stack</Text>
               <Text weight={500}>crunch</Text>
@@ -36,18 +38,21 @@ class Topbar extends RedirectComponent {
             Contribute on <GithubIcon className="icon" height={16} />
           </ContributeTip>
           <RightNav>
-            {token ? (
-              <ProfilePopper />
-            ) : (
-              [
-                <Button to={'/join?tab=signin'} key="signin">
-                  SignIn
-                </Button>,
-                <Button to={'/join?tab=signup'} css={signUpCSS} key="signup">
-                  SignUp
-                </Button>
-              ]
-            )}
+            {token
+              ? [
+                  <Link to="/create" key="create">
+                    <PenIcon className="icon" height={26} />
+                  </Link>,
+                  <ProfilePopper key="profile" />
+                ]
+              : [
+                  <Button to={'/join?tab=signin'} key="signin">
+                    SignIn
+                  </Button>,
+                  <Button to={'/join?tab=signup'} css={signUpCSS} key="signup">
+                    SignUp
+                  </Button>
+                ]}
           </RightNav>
         </Content>
       </Wrapper>

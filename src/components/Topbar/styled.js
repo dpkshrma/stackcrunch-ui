@@ -20,7 +20,7 @@ export const Logo = styled(Link)`
   align-items: center;
   text-decoration: none;
 `;
-export const LogoThumb = styled.img`
+export const Thumb = styled.img`
   height: 28px;
 `;
 export const LogoText = styled.div`
@@ -34,6 +34,7 @@ export const Text = styled.span`
 `;
 export const RightNav = styled.div`
   margin-left: auto;
+  display: flex;
 `;
 export const Button = styled(Link)`
   text-decoration: none;
