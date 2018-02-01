@@ -39,6 +39,9 @@ export const DeleteFab = styled.div`
   opacity: 0.8;
   color: #aaa;
   border-radius: 50%;
+  &:hover {
+    opacity: 0.9;
+  }
 `;
 
 const DNDContainer = styled.div`
