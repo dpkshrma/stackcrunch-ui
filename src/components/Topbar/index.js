@@ -40,7 +40,7 @@ class Topbar extends RedirectComponent {
           <RightNav>
             {token
               ? [
-                  <Link to="/create" key="create">
+                  <Link to="/write" key="write">
                     <PenIcon className="icon" height={26} />
                   </Link>,
                   <ProfilePopper key="profile" />

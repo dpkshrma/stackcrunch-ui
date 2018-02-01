@@ -8,7 +8,7 @@ const SVG = styled.svg`
   fill: #555;
 `;
 
-const StackExchangeIcon = props => {
+const PenIcon = props => {
   return (
     <SVG
       {...props}
@@ -30,4 +30,4 @@ const StackExchangeIcon = props => {
   );
 };
 
-export default StackExchangeIcon;
+export default PenIcon;
