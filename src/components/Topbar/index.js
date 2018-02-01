@@ -1,7 +1,6 @@
 import React from 'react';
 import RedirectComponent from '../common/Redirect';
 import logo from '../icons/logo.png';
-import GithubIcon from '../icons/Github';
 import PenIcon from '../icons/Pen';
 import { GH_CONTRIBUTION_URL, STACKCRUNCH_TOKEN_ID } from '../../config';
 import { Link } from 'react-router-dom';
@@ -35,13 +34,13 @@ class Topbar extends RedirectComponent {
           </Logo>
           <ContributeTip href={GH_CONTRIBUTION_URL} target="_blank">
             <Tip />
-            Contribute on <GithubIcon className="icon" height={16} />
+            Contributions Welcome!
           </ContributeTip>
           <RightNav>
             {token
               ? [
                   <Link to="/write" key="write">
-                    <PenIcon className="icon" height={26} />
+                    <PenIcon className="icon" height={20} />
                   </Link>,
                   <ProfilePopper key="profile" />
                 ]
