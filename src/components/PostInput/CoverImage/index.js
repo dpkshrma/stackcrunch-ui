@@ -178,7 +178,11 @@ class CoverImage extends React.Component {
             axis="y"
           >
             <div ref="imagePreview">
-              <img src={imagePreviewBlob} style={{ width: '100%' }} />
+              <img
+                alt="cover preview"
+                src={imagePreviewBlob}
+                style={{ width: '100%' }}
+              />
               <ImagePreviewOverlay />
             </div>
           </Draggable>

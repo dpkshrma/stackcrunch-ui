@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import CoverImage from './CoverImage';
-import { EditorState, convertFromRaw, convertToRaw } from 'draft-js';
+import Editor from './Editor';
+import { EditorState } from 'draft-js';
 
 const Container = styled.div`
   width: 100%;
@@ -32,23 +33,38 @@ const DateString = styled.div`
   padding: 8px 0;
   letter-spacing: 2px;
 `;
+const EditorContainer = styled.div`
+  margin-top: 16px;
+  font-family: roboto;
+`;
 
 const Meta = () => <DateString>{new Date().toDateString()}</DateString>;
 
-class Editor extends React.Component {
+class PostInput extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      editorState: EditorState.createEmpty()
+    };
   }
+  onEditorChange = editorState => {
+    this.setState({ editorState });
+  };
   render() {
     return (
       <Container>
         <CoverImage />
         <TitleInput placeholder="Descriptive Title" />
         <Meta />
+        <EditorContainer>
+          <Editor
+            editorState={this.state.editorState}
+            onChange={this.onEditorChange}
+          />
+        </EditorContainer>
       </Container>
     );
   }
 }
 
-export default Editor;
+export default PostInput;
