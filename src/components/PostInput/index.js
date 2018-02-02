@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import CoverImage from './CoverImage';
+import { EditorState, convertFromRaw, convertToRaw } from 'draft-js';
 
 const Container = styled.div`
   width: 100%;

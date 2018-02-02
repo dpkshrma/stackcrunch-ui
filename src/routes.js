@@ -14,7 +14,7 @@ const Post = asyncLoad({ loader: () => import(`./components/Post`) });
 const NotFound = asyncLoad({ loader: () => import(`./components/NotFound`) });
 const Join = asyncLoad({ loader: () => import(`./components/Join`) });
 const Profile = asyncLoad({ loader: () => import(`./components/Profile`) });
-const Editor = asyncLoad({ loader: () => import(`./components/Editor`) });
+const PostInput = asyncLoad({ loader: () => import(`./components/PostInput`) });
 
 // route animation helper
 // const { bounceTransition, mapStyles } = routeAnimation;
@@ -87,7 +87,7 @@ export default (
         <Route exact component={Post} path="/post/:slug" />
         <Route exact component={Profile} path="/profile" />
         <Route exact component={Join} path="/join" />
-        <Route exact component={Editor} path="/write" />
+        <Route exact component={PostInput} path="/write" />
         <Route component={NotFound} />
       </Switch>
       {/* </AnimatedSwitch> */}

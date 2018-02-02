@@ -44,6 +44,7 @@ class PostList extends React.Component {
         this.setState({ posts, pageType });
       })
       .catch(err => {
+        console.error(err);
         this.props.history.push(`${URL_PREFIX}/404`);
       });
   }
