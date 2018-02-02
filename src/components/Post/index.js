@@ -25,8 +25,6 @@ import markdownToDraft from './helpers/markdownToDraft';
 import comboDecorator from './decorators';
 // sample data
 import { URL_PREFIX } from '../../config';
-// css
-import './decorators/custom/code/prism.css';
 
 class PostPage extends React.Component {
   constructor(props) {
