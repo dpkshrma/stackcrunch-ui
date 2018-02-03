@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Modal from '../../Modal';
 import {
   Bold,
   Italic,
@@ -19,6 +20,7 @@ const Container = styled.div`
   padding: 8px;
   display: flex;
   align-items: center;
+  position: relative;
 `;
 
 const Separator = styled.div`
@@ -34,18 +36,37 @@ const BLOCK_CONTROLS = [
   'ordered-list-item',
   'code-block'
 ];
+// Special Controls require an extra input step
 const SPECIAL_CONTROLS = ['link', 'image', 'video'];
+
+const ToolbarModal = ({ closeModal }) => {
+  const Container = styled.div`
+    background: #fff;
+    height: 200px;
+    width: 300px;
+  `;
+  return (
+    <Container>
+      <p>modal body</p>
+      <button onClick={closeModal}>close modal</button>
+    </Container>
+  );
+};
 
 class Toolbar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      activeControls: {}
+      activeControls: {},
+      isModalOpen: false
     };
   }
   onClick = control => e => {
     const { activeControls } = this.state;
-    this.props.editorRef && this.props.editorRef.focus();
+
+    SPECIAL_CONTROLS.indexOf(control) === -1 && // not a special control
+    this.props.editorRef && // editor ref is defined only after it is focussed atleast once FIXME
+      this.props.editorRef.focus();
 
     if (INLINE_CONTROLS.indexOf(control) !== -1) {
       this.setState(
@@ -73,7 +94,12 @@ class Toolbar extends React.Component {
           this.props.toggleBlockType(control);
         }
       );
+    } else if (SPECIAL_CONTROLS.indexOf(control) !== -1) {
+      this.setState({ isModalOpen: true });
     }
+  };
+  closeModal = () => {
+    this.setState({ isModalOpen: false });
   };
   render() {
     const { activeControls } = this.state;
@@ -110,6 +136,11 @@ class Toolbar extends React.Component {
           onClick={this.onClick('code-block')}
           active={activeControls['code-block']}
         />
+        <Modal isOpen={this.state.isModalOpen}>
+          <Modal.Backdrop onClick={this.closeModal}>
+            <ToolbarModal closeModal={this.closeModal} />
+          </Modal.Backdrop>
+        </Modal>
       </Container>
     );
   }
