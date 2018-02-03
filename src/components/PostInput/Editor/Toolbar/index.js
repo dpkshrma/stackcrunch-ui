@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import Modal from '../../Modal';
+import Modal from '../../../Modal';
+import InputModal from './InputModal';
 import {
   Bold,
   Italic,
@@ -12,7 +13,7 @@ import {
   Blockquote,
   Image,
   Video
-} from '../../icons/editor';
+} from '../../../icons/editor';
 
 const Container = styled.div`
   border: 1px solid #e0e0e0;
@@ -39,26 +40,13 @@ const BLOCK_CONTROLS = [
 // Special Controls require an extra input step
 const SPECIAL_CONTROLS = ['link', 'image', 'video'];
 
-const ToolbarModal = ({ closeModal }) => {
-  const Container = styled.div`
-    background: #fff;
-    height: 200px;
-    width: 300px;
-  `;
-  return (
-    <Container>
-      <p>modal body</p>
-      <button onClick={closeModal}>close modal</button>
-    </Container>
-  );
-};
-
 class Toolbar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       activeControls: {},
-      isModalOpen: false
+      isModalOpen: false,
+      inputModal: null
     };
   }
   onClick = control => e => {
@@ -138,7 +126,10 @@ class Toolbar extends React.Component {
         />
         <Modal isOpen={this.state.isModalOpen}>
           <Modal.Backdrop onClick={this.closeModal}>
-            <ToolbarModal closeModal={this.closeModal} />
+            <InputModal
+              closeModal={this.closeModal}
+              modalType={this.inputModal}
+            />
           </Modal.Backdrop>
         </Modal>
       </Container>
