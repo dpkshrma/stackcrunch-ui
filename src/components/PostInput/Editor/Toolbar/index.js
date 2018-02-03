@@ -46,7 +46,7 @@ class Toolbar extends React.Component {
     this.state = {
       activeControls: {},
       isModalOpen: false,
-      inputModal: null
+      activeInputControl: null
     };
   }
   onClick = control => e => {
@@ -83,14 +83,17 @@ class Toolbar extends React.Component {
         }
       );
     } else if (SPECIAL_CONTROLS.indexOf(control) !== -1) {
-      this.setState({ isModalOpen: true });
+      this.setState({
+        isModalOpen: true,
+        activeInputControl: control
+      });
     }
   };
   closeModal = () => {
     this.setState({ isModalOpen: false });
   };
   render() {
-    const { activeControls } = this.state;
+    const { activeControls, activeInputControl } = this.state;
     return (
       <Container>
         <Bold onClick={this.onClick('BOLD')} active={activeControls.BOLD} />
@@ -125,12 +128,8 @@ class Toolbar extends React.Component {
           active={activeControls['code-block']}
         />
         <Modal isOpen={this.state.isModalOpen}>
-          <Modal.Backdrop onClick={this.closeModal}>
-            <InputModal
-              closeModal={this.closeModal}
-              modalType={this.inputModal}
-            />
-          </Modal.Backdrop>
+          <Modal.Backdrop onClick={this.closeModal} />
+          <InputModal onSubmit={this.closeModal} control={activeInputControl} />
         </Modal>
       </Container>
     );
