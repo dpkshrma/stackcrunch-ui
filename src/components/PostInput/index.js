@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
+import { EditorState, convertToRaw } from 'draft-js';
 import CoverImage from './CoverImage';
 import Editor from './Editor';
-import { EditorState } from 'draft-js';
+import comboDecorator from '../Post/decorators';
 
 const Container = styled.div`
   width: 100%;
@@ -44,11 +45,15 @@ class PostInput extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      editorState: EditorState.createEmpty()
+      editorState: EditorState.createEmpty(comboDecorator)
     };
   }
-  onEditorChange = editorState => {
-    this.setState({ editorState });
+  onEditorChange = (editorState, afterChange) => {
+    if (afterChange) {
+      this.setState({ editorState }, afterChange);
+    } else {
+      this.setState({ editorState });
+    }
   };
   render() {
     return (

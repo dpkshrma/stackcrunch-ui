@@ -4,6 +4,7 @@ import styled from 'styled-components';
 const Wrapper = styled.div``;
 const Img = styled.img`
   max-width: 100%;
+  max-height: 480px;
 `;
 
 const imageStrategy = (contentBlock, callback, contentState) => {

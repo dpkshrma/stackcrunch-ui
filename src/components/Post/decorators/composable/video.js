@@ -26,6 +26,7 @@ const videoStrategy = (contentBlock, callback, contentState) => {
   }, callback);
 };
 
+// TODO: Add loader
 const Video = props => {
   const { contentState, entityKey } = props;
   const { src } = contentState.getEntity(entityKey).getData();
