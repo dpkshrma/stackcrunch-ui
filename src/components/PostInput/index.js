@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { EditorState } from 'draft-js';
+import { EditorState, convertToRaw } from 'draft-js';
 import CoverImage from './CoverImage';
 import Editor from './Editor';
 import comboDecorator from '../Post/decorators';
@@ -50,10 +50,13 @@ class PostInput extends React.Component {
   }
   onEditorChange = (editorState, afterChange) => {
     if (afterChange) {
-      this.setState({ editorState }, afterChange(this.state.editorState));
+      this.setState({ editorState }, afterChange);
     } else {
       this.setState({ editorState });
     }
+  };
+  logState = () => {
+    console.log(convertToRaw(this.state.editorState.getCurrentContent()));
   };
   render() {
     return (
@@ -67,6 +70,17 @@ class PostInput extends React.Component {
             onChange={this.onEditorChange}
           />
         </EditorContainer>
+        <button
+          style={{
+            marginTop: '50px',
+            padding: '16px',
+            cursor: 'pointer',
+            fontSize: '16px'
+          }}
+          onClick={this.logState}
+        >
+          Log State
+        </button>
       </Container>
     );
   }
