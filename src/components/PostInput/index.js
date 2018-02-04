@@ -55,9 +55,6 @@ class PostInput extends React.Component {
       this.setState({ editorState });
     }
   };
-  logState = () => {
-    console.log(convertToRaw(this.state.editorState.getCurrentContent()));
-  };
   render() {
     return (
       <Container>
@@ -70,17 +67,6 @@ class PostInput extends React.Component {
             onChange={this.onEditorChange}
           />
         </EditorContainer>
-        <button
-          style={{
-            marginTop: '50px',
-            padding: '16px',
-            cursor: 'pointer',
-            fontSize: '16px'
-          }}
-          onClick={this.logState}
-        >
-          Log State
-        </button>
       </Container>
     );
   }

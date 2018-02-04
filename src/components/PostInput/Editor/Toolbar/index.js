@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import Modal from '../../../Modal';
 import LinkInputModal from './LinkInputModal';
 import VideoInputModal from './VideoInputModal';
-import { ModalContainer, TextInput } from './styled';
+import ImageInputModal from './ImageInputModal';
+import { ModalContainer } from './styled';
 import {
   Bold,
   Italic,
@@ -40,10 +41,6 @@ const BLOCK_CONTROLS = [
 ];
 // Special Controls require an extra input step
 const SPECIAL_CONTROLS = ['link', 'image', 'video'];
-
-const ImageInputModal = () => (
-  <TextInput id="image-url-input" placeholder="Paste image URL here" />
-);
 
 class Toolbar extends React.Component {
   constructor(props) {
