@@ -43,6 +43,8 @@ class PostEditor extends React.Component {
           toggleBlockType={this.toggleBlockType}
           toggleInlineStyle={this.toggleInlineStyle}
           editorRef={this.editor}
+          editorState={editorState}
+          updateEditorState={onChange}
         />
         <div onClick={this.focus}>
           <Editor

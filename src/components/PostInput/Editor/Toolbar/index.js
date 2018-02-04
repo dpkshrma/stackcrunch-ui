@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import Modal from '../../../Modal';
-import InputModal from './InputModal';
+import LinkInputModal from './LinkInputModal';
+import { ModalContainer, TextInput } from './styled';
 import {
   Bold,
   Italic,
@@ -23,7 +24,6 @@ const Container = styled.div`
   align-items: center;
   position: relative;
 `;
-
 const Separator = styled.div`
   border-right: 1px solid #e0e0e0;
   height: 24px;
@@ -39,6 +39,17 @@ const BLOCK_CONTROLS = [
 ];
 // Special Controls require an extra input step
 const SPECIAL_CONTROLS = ['link', 'image', 'video'];
+
+const ImageInputModal = () => (
+  <TextInput id="image-url-input" placeholder="Paste image URL here" />
+);
+
+const VideoInputModal = () => (
+  <TextInput
+    id="video-url-input"
+    placeholder="Only Youtube/Vimeo video urls supported currently"
+  />
+);
 
 class Toolbar extends React.Component {
   constructor(props) {
@@ -92,6 +103,23 @@ class Toolbar extends React.Component {
   closeModal = () => {
     this.setState({ isModalOpen: false });
   };
+  onLinkInputSubmit = () => {
+    // FIXME: editor focus not working
+    this.props.editorRef && this.props.editorRef.focus(); // editor ref is defined only after it is focussed atleast once FIXME
+    this.closeModal();
+  };
+  renderControlModal = ({ control, ...props }) => {
+    switch (control) {
+      case 'image':
+        return <ImageInputModal {...props} />;
+      case 'video':
+        return <VideoInputModal {...props} />;
+      case 'link':
+        return <LinkInputModal onSubmit={this.onLinkInputSubmit} {...props} />;
+      default:
+        return null;
+    }
+  };
   render() {
     const { activeControls, activeInputControl } = this.state;
     return (
@@ -129,7 +157,13 @@ class Toolbar extends React.Component {
         />
         <Modal isOpen={this.state.isModalOpen}>
           <Modal.Backdrop onClick={this.closeModal} />
-          <InputModal onSubmit={this.closeModal} control={activeInputControl} />
+          <ModalContainer>
+            {this.renderControlModal({
+              editorState: this.props.editorState,
+              updateEditorState: this.props.updateEditorState,
+              control: activeInputControl
+            })}
+          </ModalContainer>
         </Modal>
       </Container>
     );

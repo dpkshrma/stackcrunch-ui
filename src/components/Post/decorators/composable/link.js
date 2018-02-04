@@ -6,6 +6,7 @@ const Anchor = styled.a`
   color: #07c;
   text-decoration: none;
   padding-bottom: 2px;
+  cursor: pointer;
   &:before {
     content: '';
     position: absolute;
@@ -37,12 +38,21 @@ const linkStrategy = (contentBlock, callback, contentState) => {
   }, callback);
 };
 
+const processUrl = href => {
+  // remove any starting fwd slashes
+  href = href.replace(/^\/*(.*)/, (match, url) => url);
+  if (!href.startsWith('http')) {
+    href = 'http://' + href;
+  }
+  return href;
+};
+
 const Link = props => {
-  const { contentState, entityKey } = props;
-  const { href, title } = contentState.getEntity(entityKey).getData();
+  const { contentState, entityKey, children } = props;
+  const { href } = contentState.getEntity(entityKey).getData();
   return (
-    <Anchor href={href} target="_blank">
-      {title || href}
+    <Anchor href={processUrl(href)} target="_blank" className="anchor">
+      {children}
     </Anchor>
   );
 };
