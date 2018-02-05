@@ -36,3 +36,11 @@ export const InLink = styled(Link)`
   ${contentCSS} text-decoration: none;
   ${({ css }) => css};
 `;
+
+export const CloseIcon = styled.div`
+  &::before {
+    content: '✕';
+  }
+  margin-right: 8px;
+  font-size: 12px;
+`;

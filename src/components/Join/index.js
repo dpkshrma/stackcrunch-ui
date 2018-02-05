@@ -43,6 +43,9 @@ export default class Join extends React.Component {
     if (uname.length < 3) {
       this.setState({ uname, inputMsg: '', inputState: INPUT_STATE.default });
     } else {
+      // TODO: debounce the api calls
+      // https://stackoverflow.com/a/28046731/2753940
+      // https://www.npmjs.com/package/lodash.debounce
       this.setState(
         {
           uname
