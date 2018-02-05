@@ -42,6 +42,7 @@ const BLOCK_CONTROLS = [
 // Special Controls require an extra input step
 const SPECIAL_CONTROLS = ['link', 'image', 'video'];
 
+// TODO: sync with editor state
 class Toolbar extends React.Component {
   constructor(props) {
     super(props);

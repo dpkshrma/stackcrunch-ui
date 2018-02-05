@@ -16,6 +16,7 @@ const IFrame = styled.iframe`
   height: 100%;
 `;
 
+// TODO: Process youtube/vimeo video urls
 const videoStrategy = (contentBlock, callback, contentState) => {
   contentBlock.findEntityRanges(character => {
     const entityKey = character.getEntity();

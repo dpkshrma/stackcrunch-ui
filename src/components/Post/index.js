@@ -41,8 +41,13 @@ class PostPage extends React.Component {
       .fetchPost(slug)
       .then(() => {
         if (this.props.post && this.props.post.meta) {
-          const { text, meta = {} } = this.props.post;
-          const contentState = markdownToDraft(text, markdownToDraftOptions);
+          const { text, content, meta = {} } = this.props.post;
+          let contentState;
+          if (content) {
+            contentState = content;
+          } else {
+            contentState = markdownToDraft(text, markdownToDraftOptions);
+          }
           const editorState = EditorState.createWithContent(
             convertFromRaw(contentState),
             comboDecorator

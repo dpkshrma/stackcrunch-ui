@@ -17,6 +17,8 @@ import postAPI from '../../api/post';
 
 const Meta = () => <DateString>{new Date().toDateString()}</DateString>;
 
+// TODO: font size, letter spacing, line height
+// TODO: keybindings
 class PostInput extends React.Component {
   constructor(props) {
     super(props);
