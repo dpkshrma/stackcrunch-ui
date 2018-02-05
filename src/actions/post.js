@@ -1,5 +1,5 @@
 import { postActions as pa } from '../constants';
-import { postsAPI } from '../api/post';
+import postsAPI from '../api/post';
 
 const formatPosts = p => {
   return p.then(posts => {

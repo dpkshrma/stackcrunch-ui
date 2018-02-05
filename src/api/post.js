@@ -1,18 +1,23 @@
 import { req } from '../helpers/http';
 
-const fetchAllPosts = page => {
+const fetchAll = page => {
   return req('posts')
     .get({ page })
     .then(({ posts }) => posts);
 };
 
-export const fetchOnePost = slug => {
+const fetchOne = slug => {
   return req(`posts/${slug}`)
     .get()
     .then(({ post }) => post);
 };
 
-export const postsAPI = {
-  fetchAll: fetchAllPosts,
-  fetchOne: fetchOnePost
+const create = postInput => {
+  return req('posts').post(postInput);
+};
+
+export default {
+  fetchAll,
+  fetchOne,
+  create
 };

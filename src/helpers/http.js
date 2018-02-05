@@ -30,6 +30,12 @@ export const req = (path, headers = {}, auth = true) => {
     },
     post: body => {
       opts.method = 'POST';
+      opts.body = JSON.stringify(body);
+      opts.headers = Object.assign({}, opts.headers, jsonHeaders);
+      return fetchJSON(url, opts);
+    },
+    postFormData: body => {
+      opts.method = 'POST';
       opts.body = body;
       return fetchJSON(url, opts);
     }

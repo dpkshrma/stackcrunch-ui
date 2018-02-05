@@ -1,70 +1,19 @@
 import React from 'react';
-import styled from 'styled-components';
-import { EditorState } from 'draft-js';
+import { EditorState, convertToRaw } from 'draft-js';
 import CoverImage from './CoverImage';
 import Editor from './Editor';
 import comboDecorator from '../Post/decorators';
 import TagInput from './TagInput';
-
-const Container = styled.div`
-  width: 100%;
-`;
-const TitleInput = styled.input`
-  font-size: 40px;
-  color: #555;
-  margin-top: 20px;
-  padding: 0;
-  outline: none;
-  border: none;
-  border-bottom: 1px solid #e0e0e0;
-  width: 100%;
-  font-family: roboto;
-  font-weight: 300;
-  &::placeholder {
-    font-weight: 100;
-    color: #777;
-  }
-  &:focus {
-    border-bottom: 2px solid #ffa000;
-  }
-`;
-const DateString = styled.div`
-  font-family: roboto;
-  font-weight: 300;
-  font-size: 12px;
-  padding: 8px 0;
-  letter-spacing: 2px;
-`;
-const EditorContainer = styled.div`
-  margin-top: 16px;
-  font-family: roboto;
-  min-height: 200px;
-`;
-const Actions = styled.div`
-  margin-top: 24px;
-`;
-const DraftButton = styled.button`
-  text-decoration: none;
-  font-size: 14px;
-  outline: none;
-  background: #fff;
-  border: 1px solid #0095ff;
-  border-radius: 2px;
-  padding: 8px 16px;
-  color: #07c;
-  cursor: pointer;
-  margin-right: 16px;
-  &:hover {
-    background: #eaf5fd;
-  }
-`;
-const PublishButton = DraftButton.extend`
-  background: #0095ff;
-  color: #fff;
-  &:hover {
-    background: #0585e2;
-  }
-`;
+import {
+  Container,
+  TitleInput,
+  DateString,
+  EditorContainer,
+  Actions,
+  DraftButton,
+  PublishButton
+} from './styled';
+import postAPI from '../../api/post';
 
 const Meta = () => <DateString>{new Date().toDateString()}</DateString>;
 
@@ -73,7 +22,9 @@ class PostInput extends React.Component {
     super(props);
     this.state = {
       editorState: EditorState.createEmpty(comboDecorator),
-      selectedTags: []
+      selectedTags: [],
+      coverImage: null,
+      title: ''
     };
   }
   onEditorChange = (editorState, afterChange) => {
@@ -82,6 +33,10 @@ class PostInput extends React.Component {
     } else {
       this.setState({ editorState });
     }
+  };
+  updateTitle = e => {
+    e.preventDefault();
+    this.setState({ title: e.target.value });
   };
   addTag = tag => {
     this.setState({
@@ -93,11 +48,39 @@ class PostInput extends React.Component {
       selectedTags: this.state.selectedTags.filter(tag => tag.name !== tagName)
     });
   };
+  setCoverImage = coverImage => {
+    this.setState({ coverImage });
+  };
+  draft = e => {
+    e.preventDefault();
+    this.submitPost();
+  };
+  publish = e => {
+    e.preventDefault();
+    this.submitPost(false);
+  };
+  submitPost = (isDraft = true) => {
+    const content = convertToRaw(this.state.editorState.getCurrentContent());
+    const { title, tagname } = this.state;
+    // TODO: store cover image on s3
+    postAPI
+      .create({
+        post: { content },
+        meta: { title, tagname, isDraft }
+      })
+      .then(data => {
+        console.log(data);
+      });
+  };
   render() {
     return (
       <Container>
-        <CoverImage />
-        <TitleInput placeholder="Descriptive Title" />
+        <CoverImage setDataURL={this.setCoverImage} />
+        <TitleInput
+          placeholder="Descriptive Title"
+          value={this.state.title}
+          onChange={this.updateTitle}
+        />
         <Meta />
         <EditorContainer>
           <Editor
@@ -111,8 +94,8 @@ class PostInput extends React.Component {
           removeTag={this.removeTag}
         />
         <Actions>
-          <DraftButton>Save as draft</DraftButton>
-          <PublishButton>Publish</PublishButton>
+          <DraftButton onClick={this.draft}>Save as draft</DraftButton>
+          <PublishButton onClick={this.publish}>Publish</PublishButton>
         </Actions>
       </Container>
     );

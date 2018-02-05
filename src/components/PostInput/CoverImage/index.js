@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Dropzone from 'react-dropzone';
 import Draggable from 'react-draggable';
 import DeleteIcon from '../../icons/Delete';
@@ -138,11 +139,7 @@ class CoverImage extends React.Component {
           imagePreviewWidth,
           imagePreviewHeight
         );
-        const croppedImageDataURL = canvas.toDataURL('image/png');
-        self.setState({ croppedImageDataURL }, () => {
-          // also send the data to Editor Component
-          // self.props.setDataURL(self.state.croppedImageDataURL);
-        });
+        self.props.setDataURL(canvas.toDataURL('image/png'));
       }
     };
   };
@@ -196,5 +193,9 @@ class CoverImage extends React.Component {
     );
   }
 }
+
+CoverImage.propTypes = {
+  setDataURL: PropTypes.func.isRequired
+};
 
 export default CoverImage;
