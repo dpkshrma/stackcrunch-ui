@@ -53,8 +53,8 @@ class ProfilePopper extends React.Component {
         {this.state.isOpen && [
           <Tip key="tip" />,
           <Menu key="menu" onClick={this.onMenuClick}>
-            <MenuItem to="/profile">My Profile</MenuItem>
-            <MenuItem to="/contribute">Contribute</MenuItem>
+            <MenuItem to="/profile">Profile</MenuItem>
+            <MenuItem to="/contributions">Contributions</MenuItem>
             <LogoutButton onClick={this.onLogout}>Logout</LogoutButton>
           </Menu>
         ]}

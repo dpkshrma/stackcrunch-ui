@@ -11,10 +11,12 @@ const formatPosts = p => {
           name: author.name,
           img: author.avatarURL
         },
-        tags: post.tags.map(({ name }) => ({
-          text: name,
-          id: name
-        }))
+        tags: !post.tags
+          ? []
+          : post.tags.map(({ name }) => ({
+              text: name,
+              id: name
+            }))
       });
     });
   });
@@ -39,10 +41,10 @@ const formatPost = p => {
 };
 
 export const fetchAllPosts = dispatch => {
-  return pageId => {
+  return page => {
     return dispatch({
       type: pa.LOAD_POSTS,
-      payload: formatPosts(postsAPI.fetchAll(pageId))
+      payload: formatPosts(postsAPI.fetchAll({ page }))
     });
   };
 };
@@ -52,6 +54,26 @@ export const fetchPost = dispatch => {
     return dispatch({
       type: pa.LOAD_POST,
       payload: formatPost(postsAPI.fetchOne(slug))
+    });
+  };
+};
+
+export const fetchDrafts = () => {
+  return (dispatch, getState) => {
+    const { user: { username } } = getState();
+    return dispatch({
+      type: pa.LOAD_DRAFTS,
+      payload: formatPosts(postsAPI.fetchAll({ username, isDraft: true }))
+    });
+  };
+};
+
+export const fetchUserPublishedPosts = pageId => {
+  return (dispatch, getState) => {
+    const { user: { username } } = getState();
+    return dispatch({
+      type: pa.LOAD_USER_PUBLISHED_POSTS,
+      payload: formatPosts(postsAPI.fetchAll())
     });
   };
 };

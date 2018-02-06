@@ -3,8 +3,6 @@ import styled from 'styled-components';
 
 const SVG = styled.svg`
   display: flex;
-  margin-right: 16px;
-  margin-top: 7px;
   fill: #555;
 `;
 

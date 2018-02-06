@@ -1,9 +1,10 @@
 import React from 'react';
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import RedirectComponent from '../common/Redirect';
 import logo from '../icons/logo.png';
 import PenIcon from '../icons/Pen';
 import { GH_CONTRIBUTION_URL, STACKCRUNCH_TOKEN_ID } from '../../config';
-import { Link } from 'react-router-dom';
 import {
   Wrapper,
   Content,
@@ -18,6 +19,11 @@ import {
   Tip
 } from './styled';
 import ProfilePopper from './ProfilePopper';
+
+const EditorLinkIcon = styled(PenIcon)`
+  margin-right: 16px;
+  margin-top: 7px;
+`;
 
 class Topbar extends RedirectComponent {
   render() {
@@ -40,7 +46,7 @@ class Topbar extends RedirectComponent {
             {token
               ? [
                   <Link to="/write" key="write">
-                    <PenIcon className="icon" height={20} />
+                    <EditorLinkIcon className="icon" height={20} />
                   </Link>,
                   <ProfilePopper key="profile" />
                 ]

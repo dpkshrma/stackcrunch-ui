@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import ListItem from './ListItem';
+import ListItem from '../ListItem';
 import Pager from './Pager';
 import { fetchAllPosts } from '../../actions/post';
 import { hooks, getURLSegments } from '../../helpers/routes';

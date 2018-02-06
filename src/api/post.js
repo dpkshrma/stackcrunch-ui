@@ -1,8 +1,12 @@
 import { req } from '../helpers/http';
 
-const fetchAll = page => {
-  return req('posts')
-    .get({ page })
+const fetchAll = ({ page, username, isDraft } = {}) => {
+  let endpoint = 'posts';
+  if (isDraft) {
+    endpoint = 'posts/drafts';
+  }
+  return req(endpoint)
+    .get({ page, username, isDraft })
     .then(({ posts }) => posts);
 };
 

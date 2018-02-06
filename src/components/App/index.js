@@ -11,7 +11,6 @@ const Wrapper = styled.div`
 `;
 const Content = styled.div`
   display: flex;
-  justify-content: center;
   max-width: 945px;
   margin: auto;
   margin-top: 24px;

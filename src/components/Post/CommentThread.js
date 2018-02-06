@@ -93,21 +93,18 @@ class CommentThread extends React.Component {
     // }
   };
   render() {
-    console.log(this.context);
     return (
       <div {...this.props}>
         <Thread id="disqus_thread" />
         <noscript>
           <span>
             Please enable JavaScript to view the
-            <a href="http://disqus.com/?ref_noscript">
-              comments powered by Disqus.
-            </a>
+            <a href="http://disqus.com/?ref_noscript">comments.</a>
           </span>
         </noscript>
-        <a href="http://disqus.com" className="dsq-brlink">
+        {/* <a href="http://disqus.com" className="dsq-brlink">
           Blog comments powered by <span className="logo-disqus">Disqus</span>.
-        </a>
+        </a> */}
       </div>
     );
   }

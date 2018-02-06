@@ -5,7 +5,11 @@ import styled, { css } from 'styled-components';
 export const Wrapper = styled.div`
   max-width: 682px;
   padding: 24px 16px;
-  border-bottom: 1px solid #ddd;
+  ${props =>
+    props.showBorder &&
+    css`
+      border-bottom: 1px solid #ddd;
+    `};
 `;
 
 export const Header = styled.div`
@@ -15,7 +19,6 @@ export const Header = styled.div`
 
 export const HeaderMetaText = styled.div`
   font-size: 12px;
-  margin-left: 8px;
   color: #777;
 `;
 
@@ -93,9 +96,11 @@ export const Footer = styled.div`
   justify-content: space-between;
 `;
 
-export const Separator = ({ space, delimiter }) => {
+export const Separator = ({ color = '#777', size = 12, space, delimiter }) => {
   const Span = styled.span`
+    font-size: ${size}px;
     margin: 0 ${space}px;
+    color: ${color};
   `;
   return <Span>{delimiter}</Span>;
 };
@@ -118,6 +123,7 @@ export const tagCSS = {
 export const authorCSS = {
   wrapper: css`
     margin-bottom: 4px;
+    margin-right: 8px;
   `,
   thumb: css`
     border-radius: 0;

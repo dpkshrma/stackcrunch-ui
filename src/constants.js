@@ -16,5 +16,7 @@ export const userActions = {
 };
 export const postActions = {
   LOAD_POSTS: 'LOAD_POSTS',
-  LOAD_POST: 'LOAD_POST'
+  LOAD_POST: 'LOAD_POST',
+  LOAD_DRAFTS: 'LOAD_DRAFTS',
+  LOAD_USER_PUBLISHED_POSTS: 'LOAD_USER_PUBLISHED_POSTS'
 };
