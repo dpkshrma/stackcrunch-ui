@@ -73,7 +73,7 @@ export const fetchUserPublishedPosts = pageId => {
     const { user: { username } } = getState();
     return dispatch({
       type: pa.LOAD_USER_PUBLISHED_POSTS,
-      payload: formatPosts(postsAPI.fetchAll())
+      payload: formatPosts(postsAPI.fetchAll({ username }))
     });
   };
 };
