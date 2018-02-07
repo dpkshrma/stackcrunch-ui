@@ -10,6 +10,7 @@ import {
   Tip,
   LogoutButton
 } from './styled';
+import UserIcon from '../../icons/User';
 import { STACKCRUNCH_TOKEN_ID } from '../../../config';
 
 class ProfilePopper extends React.Component {
@@ -48,7 +49,11 @@ class ProfilePopper extends React.Component {
         }}
       >
         <Target onClick={this.onTargetClick}>
-          <Img src={this.props.avatar} />
+          {this.props.avatar ? (
+            <Img src={this.props.avatar} />
+          ) : (
+            <UserIcon height="34" fill="#777" />
+          )}
         </Target>
         {this.state.isOpen && [
           <Tip key="tip" />,
