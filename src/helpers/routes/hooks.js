@@ -30,8 +30,8 @@ const authorPostList = {
   }
 };
 const Post = {
-  onEnter: (dispatch, postId) => {
-    dispatch(actions.showRefWidget(postId));
+  onEnter: (dispatch, refs = []) => {
+    refs.length && dispatch(actions.showRefWidget(refs));
   },
   onLeave: dispatch => {
     dispatch(actions.hideRefWidget());

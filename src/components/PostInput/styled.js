@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Alert } from '../common';
 
 export const Container = styled.div`
   width: 100%;
@@ -57,5 +58,13 @@ export const PublishButton = DraftButton.extend`
   color: #fff;
   &:hover {
     background: #0585e2;
+  }
+`;
+export const PostSaveAlert = styled(Alert)`
+  width: fit-content;
+  background-color: rgba(246, 155, 85, 0.2);
+  margin: 24px 0;
+  &:hover {
+    background-color: rgba(246, 155, 85, 0.3);
   }
 `;

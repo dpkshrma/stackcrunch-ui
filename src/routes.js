@@ -90,7 +90,7 @@ export default (
         <Route exact component={Post} path="/post/:slug" />
         <Route exact component={Profile} path="/profile" />
         <Route exact component={Join} path="/join" />
-        <Route exact component={PostInput} path="/write" />
+        <Route exact component={PostInput} path="/write/:slug?" />
         <Route exact component={Contributions} path="/contributions" />
         <Route component={NotFound} />
       </Switch>

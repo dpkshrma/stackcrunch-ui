@@ -43,7 +43,6 @@ const ListItem = ({
   showHeader = true,
   showShareLinks = true
 }) => {
-  console.log(tags);
   const tagList =
     tags &&
     tags.map((tag, i) => (

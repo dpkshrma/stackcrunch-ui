@@ -20,8 +20,13 @@ const create = postInput => {
   return req('posts').post(postInput);
 };
 
+const update = ({ slug, post }) => {
+  return req(`posts/${slug}`).put(post);
+};
+
 export default {
   fetchAll,
   fetchOne,
-  create
+  create,
+  update
 };

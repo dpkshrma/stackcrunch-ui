@@ -1,5 +1,5 @@
 import React from 'react';
-import { EditorState, convertToRaw } from 'draft-js';
+import { EditorState, convertToRaw, convertFromRaw } from 'draft-js';
 import CoverImage from './CoverImage';
 import Editor from './Editor';
 import comboDecorator from '../Post/decorators';
@@ -11,7 +11,8 @@ import {
   EditorContainer,
   Actions,
   DraftButton,
-  PublishButton
+  PublishButton,
+  PostSaveAlert
 } from './styled';
 import postAPI from '../../api/post';
 
@@ -26,8 +27,36 @@ class PostInput extends React.Component {
       editorState: EditorState.createEmpty(comboDecorator),
       selectedTags: [],
       coverImage: null,
-      title: ''
+      title: '',
+      editing: false,
+      fetchingEditPost: false,
+      isDraft: false
     };
+  }
+  componentWillMount() {
+    const { slug } = this.props.match.params;
+    slug &&
+      this.setState(
+        {
+          fetchingEditPost: true,
+          editing: true
+        },
+        () => {
+          postAPI.fetchOne(slug).then(result => {
+            if (!result) return;
+            const { content, meta } = result;
+            this.setState({
+              editorState: EditorState.createWithContent(
+                convertFromRaw(content),
+                comboDecorator
+              ),
+              title: meta.title,
+              selectedTags: meta.tags || [],
+              isDraft: meta.isDraft
+            });
+          });
+        }
+      );
   }
   onEditorChange = (editorState, afterChange) => {
     if (afterChange) {
@@ -55,49 +84,69 @@ class PostInput extends React.Component {
   };
   draft = e => {
     e.preventDefault();
-    this.submitPost();
+    this.state.editing ? this.submitPostEdit() : this.submitPost();
   };
   publish = e => {
     e.preventDefault();
-    this.submitPost(false);
+    this.state.editing ? this.submitPostEdit(false) : this.submitPost(false);
+  };
+  getRawPostInput = isDraft => {
+    const content = convertToRaw(this.state.editorState.getCurrentContent());
+    const { title, selectedTags } = this.state;
+    const tagname = selectedTags.map(({ name }) => name);
+    return {
+      post: { content },
+      meta: { title, tagname, isDraft }
+    };
   };
   submitPost = (isDraft = true) => {
-    const content = convertToRaw(this.state.editorState.getCurrentContent());
-    const { title, tagname } = this.state;
+    const rawPost = this.getRawPostInput(isDraft);
+    // TODO: update cover image on s3
+    postAPI.create(rawPost).then(data => {
+      console.log(data);
+    });
+  };
+  submitPostEdit = (isDraft = true) => {
+    const rawPost = this.getRawPostInput(isDraft);
+    const { slug } = this.props.match.params;
     // TODO: store cover image on s3
-    postAPI
-      .create({
-        post: { content },
-        meta: { title, tagname, isDraft }
-      })
-      .then(data => {
-        console.log(data);
-      });
+    postAPI.update({ slug, post: rawPost }).then(data => {
+      console.log(data);
+    });
   };
   render() {
+    const { fetchingEditPost, title, editorState, selectedTags } = this.state;
     return (
       <Container>
         <CoverImage setDataURL={this.setCoverImage} />
         <TitleInput
-          placeholder="Descriptive Title"
-          value={this.state.title}
+          placeholder="Add a descriptive Title"
+          value={title}
           onChange={this.updateTitle}
         />
         <Meta />
         <EditorContainer>
-          <Editor
-            editorState={this.state.editorState}
-            onChange={this.onEditorChange}
-          />
+          <Editor editorState={editorState} onChange={this.onEditorChange} />
         </EditorContainer>
         <TagInput
-          selectedTags={this.state.selectedTags}
+          selectedTags={selectedTags}
           addTag={this.addTag}
           removeTag={this.removeTag}
         />
+        {this.state.editing &&
+          !this.state.isDraft && (
+            <PostSaveAlert>
+              <b>Note:</b> Saving a published post as a draft will unpublish the
+              post.
+            </PostSaveAlert>
+          )}
         <Actions>
-          <DraftButton onClick={this.draft}>Save as draft</DraftButton>
-          <PublishButton onClick={this.publish}>Publish</PublishButton>
+          <DraftButton onClick={this.draft} disable={fetchingEditPost}>
+            Save as draft
+          </DraftButton>
+          <PublishButton onClick={this.publish} disable={fetchingEditPost}>
+            Publish
+          </PublishButton>
         </Actions>
       </Container>
     );

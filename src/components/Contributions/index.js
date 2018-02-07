@@ -24,6 +24,12 @@ const Heading = styled.h2`
   border-bottom: 1px solid #efefef;
 `;
 const EditButton = ({ onClick, to }) => {
+  const Text = styled.span`
+    margin-left: 4px;
+  `;
+  const EditIcon = styled(PenIcon)`
+    fill: #999;
+  `;
   const Container = styled(Link)`
     cursor: pointer;
     display: flex;
@@ -39,12 +45,6 @@ const EditButton = ({ onClick, to }) => {
         color: #777;
       }
     }
-  `;
-  const Text = styled.span`
-    margin-left: 4px;
-  `;
-  const EditIcon = styled(PenIcon)`
-    fill: #999;
   `;
   return (
     <Container onClick={onClick} to={to}>

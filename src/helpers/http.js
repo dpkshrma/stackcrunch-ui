@@ -15,7 +15,7 @@ const fetchJSON = (url, opts) => {
     });
 };
 
-export const req = (path, headers = {}, auth = true) => {
+export const req = (path, { headers = {}, auth = true } = {}) => {
   const url = `${STACKCRUNCH_API_URL}/${path}`;
   const opts = { headers };
   if (auth) {
@@ -37,6 +37,12 @@ export const req = (path, headers = {}, auth = true) => {
     postFormData: body => {
       opts.method = 'POST';
       opts.body = body;
+      return fetchJSON(url, opts);
+    },
+    put: body => {
+      opts.method = 'PUT';
+      opts.body = JSON.stringify(body);
+      opts.headers = Object.assign({}, opts.headers, jsonHeaders);
       return fetchJSON(url, opts);
     }
   };

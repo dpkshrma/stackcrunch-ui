@@ -1,10 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const Wrapper = styled.div``;
-const Quote = styled.blockquote`
+const Quote = styled.div`
   margin: 0;
-  margin: 8px 0;
   padding: 16px 0 16px 32px;
   border-left: 3px solid rgb(246, 155, 85);
   background: #eee;
@@ -20,11 +18,7 @@ const blockquoteStrategy = (contentBlock, callback, contentState) => {
 };
 
 const Blockquote = props => {
-  return (
-    <Wrapper>
-      <Quote>{props.children}</Quote>
-    </Wrapper>
-  );
+  return <Quote>{props.children}</Quote>;
 };
 
 export default {
