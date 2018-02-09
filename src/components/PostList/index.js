@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import promisifySetState from 'promisify-setstate';
 import styled from 'styled-components';
-import { fetchInitialPosts, fetchMorePosts } from '../../actions/post';
+import { fetchPosts } from '../../actions/post';
 import { URL_PREFIX } from '../../config';
 import EndOfList from './EndOfList';
 import LoadMore from './LoadMore';
@@ -32,7 +32,7 @@ class PostList extends React.Component {
   }
   componentDidMount() {
     this.props
-      .fetchInitialPosts()
+      .fetchPosts()
       .then(({ value: { nextPage, remaining } }) => {
         return this.setState({ nextPage, endOfList: remaining <= 0 });
       })
@@ -44,7 +44,7 @@ class PostList extends React.Component {
   loadMore = () => {
     const { nextPage } = this.state;
     this.setState({ isLoading: true })
-      .then(() => this.props.fetchMorePosts(nextPage))
+      .then(() => this.props.fetchPosts(nextPage))
       .then(({ value: { nextPage, remaining } }) => {
         return this.setState({
           isLoading: false,
@@ -77,8 +77,7 @@ class PostList extends React.Component {
 const mapStateToProps = ({ posts }) => ({ posts });
 const mapDispatchToProps = dispatch => ({
   dispatch,
-  fetchInitialPosts: fetchInitialPosts(dispatch),
-  fetchMorePosts: fetchMorePosts(dispatch)
+  fetchPosts: fetchPosts(dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(

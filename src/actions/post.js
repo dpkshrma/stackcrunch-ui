@@ -1,27 +1,6 @@
 import { postActions as pa } from '../constants';
 import postsAPI from '../api/post';
 
-const formatPosts = p => {
-  return p.then(({ posts }) => {
-    return posts.map(post => {
-      // assuming only 1 author
-      const [author = {}] = post.authors;
-      return Object.assign({}, post, {
-        author: {
-          name: author.name,
-          img: author.avatarURL
-        },
-        tags: !post.tags
-          ? []
-          : post.tags.map(({ name }) => ({
-              text: name,
-              id: name
-            }))
-      });
-    });
-  });
-};
-
 const formatPost = p => {
   return p.then(post => {
     if (post && post.meta) {
@@ -40,21 +19,13 @@ const formatPost = p => {
   });
 };
 
-export const fetchInitialPosts = dispatch => {
-  return () => {
-    return dispatch({
-      type: pa.LOAD_POSTS,
-      payload: postsAPI.fetchAll()
-    });
-  };
-};
-
-export const fetchMorePosts = dispatch => {
+export const fetchPosts = dispatch => {
   return page => {
-    return dispatch({
-      type: pa.LOAD_MORE_POSTS,
-      payload: postsAPI.fetchAll({ page })
-    });
+    let type = pa.LOAD_POSTS;
+    if (page) {
+      type = pa.LOAD_MORE_POSTS;
+    }
+    return dispatch({ type, payload: postsAPI.fetchAll({ page }) });
   };
 };
 
@@ -67,22 +38,27 @@ export const fetchPost = dispatch => {
   };
 };
 
-export const fetchDrafts = () => {
+export const fetchDrafts = page => {
   return (dispatch, getState) => {
+    let type = pa.LOAD_DRAFTS;
+    if (page) {
+      type = pa.LOAD_MORE_DRAFTS;
+    }
     const { user: { username } } = getState();
     return dispatch({
-      type: pa.LOAD_DRAFTS,
-      payload: formatPosts(postsAPI.fetchAll({ username, isDraft: true }))
+      type,
+      payload: postsAPI.fetchAll({ username, page, isDraft: true })
     });
   };
 };
 
-export const fetchUserPublishedPosts = pageId => {
+export const fetchUserPublishedPosts = page => {
   return (dispatch, getState) => {
+    let type = pa.LOAD_USER_PUBLISHED_POSTS;
+    if (page) {
+      type = pa.LOAD_MORE_USER_PUBLISHED_POSTS;
+    }
     const { user: { username } } = getState();
-    return dispatch({
-      type: pa.LOAD_USER_PUBLISHED_POSTS,
-      payload: formatPosts(postsAPI.fetchAll({ username }))
-    });
+    return dispatch({ type, payload: postsAPI.fetchAll({ username, page }) });
   };
 };

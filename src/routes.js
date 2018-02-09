@@ -23,10 +23,6 @@ const Contributions = asyncLoad({
 // route animation helper
 // const { bounceTransition, mapStyles } = routeAnimation;
 
-// post listing page config
-const mainPageIds = PageService.getMainPageIds();
-const [firstPageId] = mainPageIds;
-
 const specialPageRoutes = Object.values(PAGE_TYPES.SPECIAL).map(pageType => {
   return PageService.getSpecialPageTypeIds(pageType).map(pageTypeId => {
     return PageService.getSpecialPageIds(pageType, pageTypeId).map(pageId => {
