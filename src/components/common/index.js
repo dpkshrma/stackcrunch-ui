@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export { default as Chip } from './Chip';
 export { default as Loader } from './Loader';
+export { default as InfiniteList } from './InfiniteList';
 export { default as hooked } from './hooked';
 
 // TODO: Add success/failure/default colors
