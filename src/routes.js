@@ -11,6 +11,7 @@ import { URL_PREFIX, PAGE_TYPES } from './config';
 
 // route components
 const Post = asyncLoad({ loader: () => import(`./components/Post`) });
+const PostList = asyncLoad({ loader: () => import(`./components/PostList`) });
 const NotFound = asyncLoad({ loader: () => import(`./components/NotFound`) });
 const Join = asyncLoad({ loader: () => import(`./components/Join`) });
 const Profile = asyncLoad({ loader: () => import(`./components/Profile`) });
@@ -25,18 +26,6 @@ const Contributions = asyncLoad({
 // post listing page config
 const mainPageIds = PageService.getMainPageIds();
 const [firstPageId] = mainPageIds;
-
-// Routes
-const mainPageRoutes = mainPageIds.map(pageId => (
-  <Route
-    exact
-    key={pageId}
-    component={asyncLoad({
-      loader: () => import(`./components/PostList`)
-    })}
-    path={`${URL_PREFIX}/posts/${pageId}`}
-  />
-));
 
 const specialPageRoutes = Object.values(PAGE_TYPES.SPECIAL).map(pageType => {
   return PageService.getSpecialPageTypeIds(pageType).map(pageTypeId => {
@@ -71,22 +60,9 @@ export default (
         mapStyles={mapStyles}
       > */}
       <Switch>
-        <Route
-          exact
-          path="/"
-          render={({ location }) => (
-            <Redirect to={`/posts/${firstPageId}/${location.search}`} />
-          )}
-        />
-        <Route
-          exact
-          path="/posts"
-          render={({ location }) => (
-            <Redirect to={`/posts/${firstPageId}/${location.search}`} />
-          )}
-        />
-        {mainPageRoutes}
+        <Route exact path="/" render={() => <Redirect to="/posts" />} />
         {specialPageRoutes}
+        <Route exact component={PostList} path="/posts/" />
         <Route exact component={Post} path="/post/:slug" />
         <Route exact component={Profile} path="/profile" />
         <Route exact component={Join} path="/join" />
