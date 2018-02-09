@@ -2,7 +2,7 @@ import { postActions as pa } from '../constants';
 import postsAPI from '../api/post';
 
 const formatPosts = p => {
-  return p.then(posts => {
+  return p.then(({ posts }) => {
     return posts.map(post => {
       // assuming only 1 author
       const [author = {}] = post.authors;
@@ -40,11 +40,20 @@ const formatPost = p => {
   });
 };
 
-export const fetchAllPosts = dispatch => {
-  return page => {
+export const fetchInitialPosts = dispatch => {
+  return () => {
     return dispatch({
       type: pa.LOAD_POSTS,
-      payload: formatPosts(postsAPI.fetchAll({ page }))
+      payload: postsAPI.fetchAll()
+    });
+  };
+};
+
+export const fetchMorePosts = dispatch => {
+  return page => {
+    return dispatch({
+      type: pa.LOAD_MORE_POSTS,
+      payload: postsAPI.fetchAll({ page })
     });
   };
 };

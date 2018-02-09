@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Alert } from '../common';
+import { Alert, Button } from '../common';
 
 export const Container = styled.div`
   width: 100%;
@@ -38,22 +38,8 @@ export const EditorContainer = styled.div`
 export const Actions = styled.div`
   margin-top: 24px;
 `;
-export const DraftButton = styled.button`
-  text-decoration: none;
-  font-size: 14px;
-  outline: none;
-  background: #fff;
-  border: 1px solid #0095ff;
-  border-radius: 2px;
-  padding: 8px 16px;
-  color: #07c;
-  cursor: pointer;
-  margin-right: 16px;
-  &:hover {
-    background: #eaf5fd;
-  }
-`;
-export const PublishButton = DraftButton.extend`
+export const DraftButton = Button;
+export const PublishButton = Button.extend`
   background: #0095ff;
   color: #fff;
   &:hover {

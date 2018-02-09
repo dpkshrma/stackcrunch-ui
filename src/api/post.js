@@ -5,9 +5,7 @@ const fetchAll = ({ page, username, isDraft } = {}) => {
   if (isDraft) {
     endpoint = 'posts/drafts';
   }
-  return req(endpoint)
-    .get({ page, username, isDraft })
-    .then(({ posts }) => posts);
+  return req(endpoint).get({ page, username, isDraft });
 };
 
 const fetchOne = slug => {

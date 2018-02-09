@@ -1,9 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import promisifySetState from 'promisify-setstate';
 import styled from 'styled-components';
-import { getURLSegments } from '../../helpers/routes';
-import { fetchAllPosts } from '../../actions/post';
+import { fetchInitialPosts, fetchMorePosts } from '../../actions/post';
 import { URL_PREFIX } from '../../config';
+import EndOfList from './EndOfList';
+import LoadMore from './LoadMore';
 import ListItem from '../ListItem';
 import { hooked } from '../common';
 import hooks from './hooks';
@@ -20,27 +22,37 @@ const List = styled.div`
 `;
 
 class PostList extends React.Component {
-  componentDidMount() {
-    const pageId = this.getCurrentPageId();
-    this.props.fetchAllPosts(pageId).catch(err => {
-      console.error(err);
-      this.props.history.push(`${URL_PREFIX}/404`);
-    });
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoading: false,
+      nextPage: null,
+      endOfList: false
+    };
   }
-  getCurrentPageId = () => {
-    const { path } = this.props.match;
-    const pathParts = getURLSegments(path);
-    const pageId = pathParts[pathParts.length - 1];
-    return pageId;
-  };
+  componentDidMount() {
+    this.props
+      .fetchInitialPosts()
+      .then(({ value: { nextPage, remaining } }) => {
+        return this.setState({ nextPage, endOfList: remaining <= 0 });
+      })
+      .catch(err => {
+        console.error(err);
+        this.props.history.push(`${URL_PREFIX}/404`);
+      });
+  }
   loadMore = () => {
-    this.setState({ isLoading: true });
-    setTimeout(() => {
-      this.onLoadComplete();
-    }, 6000);
-  };
-  onLoadComplete = () => {
-    this.setState({ isLoading: false });
+    const { nextPage } = this.state;
+    this.setState({ isLoading: true })
+      .then(() => this.props.fetchMorePosts(nextPage))
+      .then(({ value: { nextPage, remaining } }) => {
+        return this.setState({
+          isLoading: false,
+          nextPage,
+          endOfList: remaining <= 0
+        });
+      })
+      .catch(console.error);
   };
   render() {
     const { posts } = this.props;
@@ -52,19 +64,23 @@ class PostList extends React.Component {
               return <ListItem {...post} key={post.slug} />;
             })}
         </List>
+        {this.state.endOfList ? (
+          <EndOfList />
+        ) : (
+          <LoadMore isLoading={this.state.isLoading} onClick={this.loadMore} />
+        )}
       </Wrapper>
     );
   }
 }
 
 const mapStateToProps = ({ posts }) => ({ posts });
-const mapDispatchToProps = dispatch => {
-  return {
-    dispatch,
-    fetchAllPosts: fetchAllPosts(dispatch)
-  };
-};
+const mapDispatchToProps = dispatch => ({
+  dispatch,
+  fetchInitialPosts: fetchInitialPosts(dispatch),
+  fetchMorePosts: fetchMorePosts(dispatch)
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(
-  hooked(PostList, hooks)
+  hooked(promisifySetState(PostList), hooks)
 );
