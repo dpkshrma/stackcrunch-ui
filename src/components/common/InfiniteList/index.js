@@ -8,7 +8,7 @@ class InfiniteList extends React.Component {
     nextPage: null
   };
   componentDidMount() {
-    this.loadNewItems(this.props);
+    this.triggerLoadMore(this.props);
   }
   componentWillReceiveProps(nextProps) {
     // if options change reload the list
@@ -16,13 +16,15 @@ class InfiniteList extends React.Component {
     const { opts: nextOpts = {} } = nextProps;
 
     if (opts.username !== nextOpts.username) {
-      this.loadNewItems(Object.assign({}, this.props, nextProps, { reload: true }));
+      this.triggerLoadMore(
+        Object.assign({}, this.props, nextProps, { reload: true })
+      );
     }
   }
-  loadNewItems = ({ loadMore, reload, onLoadFailure, opts }) => {
+  triggerLoadMore = ({ loadMore, reload, onLoadFailure, opts }) => {
     const { nextPage } = this.state;
     this.setState({ isLoading: true })
-      .then(() => reload ? loadMore(null, opts) : loadMore(nextPage, opts))
+      .then(() => (reload ? loadMore(null, opts) : loadMore(nextPage, opts)))
       .then(({ value: { nextPage, remaining } }) => {
         return this.setState({
           isLoading: false,
@@ -38,7 +40,7 @@ class InfiniteList extends React.Component {
       return React.cloneElement(child, {
         isLoading,
         endOfList,
-        loadNewItems: this.loadNewItems
+        loadNewItems: () => this.triggerLoadMore(this.props)
       });
     });
     return <div>{children}</div>;
