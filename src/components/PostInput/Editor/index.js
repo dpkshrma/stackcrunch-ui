@@ -7,15 +7,7 @@ import Toolbar from './Toolbar';
 const Container = styled.div``;
 
 class PostEditor extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      showToolbar: false
-    };
-  }
-  onEditorFocus = () => {
-    this.setState({ showToolbar: true });
-  };
+  focus = () => this.editor.focus();
   handleKeyCommand = (command, editorState) => {
     const newState = RichUtils.handleKeyCommand(editorState, command);
     if (newState) {
@@ -24,24 +16,11 @@ class PostEditor extends React.Component {
     }
     return false;
   };
-  toggleBlockType = blockType => {
-    this.props.onChange(
-      RichUtils.toggleBlockType(this.props.editorState, blockType)
-    );
-  };
-  toggleInlineStyle = inlineStyle => {
-    this.props.onChange(
-      RichUtils.toggleInlineStyle(this.props.editorState, inlineStyle)
-    );
-  };
   render() {
     const { editorState, onChange } = this.props;
     return (
       <Container>
         <Toolbar
-          show={this.state.showToolbar}
-          toggleBlockType={this.toggleBlockType}
-          toggleInlineStyle={this.toggleInlineStyle}
           editorRef={this.editor}
           editorState={editorState}
           updateEditorState={onChange}
@@ -51,7 +30,6 @@ class PostEditor extends React.Component {
             ref={editor => {
               this.editor = editor;
             }}
-            onFocus={this.onEditorFocus}
             placeholder="Write your article here..."
             editorState={editorState}
             handleKeyCommand={this.handleKeyCommand}

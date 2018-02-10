@@ -4,12 +4,9 @@ import { TextInput, Button } from './styled';
 
 // TODO: when selection is collapsed use the link url as value for the anchor entity
 class LinkInputModal extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      urlValue: ''
-    };
-  }
+  state = {
+    urlValue: ''
+  };
   componentWillMount() {
     const { editorState } = this.props;
     const selection = editorState.getSelection();

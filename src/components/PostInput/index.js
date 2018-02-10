@@ -1,5 +1,6 @@
 import React from 'react';
 import { EditorState, convertToRaw, convertFromRaw } from 'draft-js';
+import promisifySetState from 'promisify-setstate';
 import CoverImage from './CoverImage';
 import Editor from './Editor';
 import comboDecorator from '../Post/decorators';
@@ -60,9 +61,9 @@ class PostInput extends React.Component {
   }
   onEditorChange = (editorState, afterChange) => {
     if (afterChange) {
-      this.setState({ editorState }, afterChange);
+      return this.setState({ editorState }, afterChange);
     } else {
-      this.setState({ editorState });
+      return this.setState({ editorState });
     }
   };
   updateTitle = e => {
@@ -153,4 +154,4 @@ class PostInput extends React.Component {
   }
 }
 
-export default PostInput;
+export default promisifySetState(PostInput);

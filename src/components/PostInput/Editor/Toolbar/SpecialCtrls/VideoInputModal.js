@@ -3,12 +3,9 @@ import { AtomicBlockUtils } from 'draft-js';
 import { TextInput, Button } from './styled';
 
 class VideoInputModal extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      src: ''
-    };
-  }
+  state = {
+    src: ''
+  };
   componentDidMount() {
     this.input.focus();
   }

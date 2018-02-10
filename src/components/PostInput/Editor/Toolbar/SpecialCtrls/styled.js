@@ -1,17 +1,5 @@
 import styled from 'styled-components';
 
-export const ModalContainer = styled.div`
-  background: #fff;
-  padding: 32px;
-  max-height: 104px;
-  max-width: calc(945px - 64px);
-  position: absolute;
-  margin: auto;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-`;
 export const TextInput = styled.input`
   font-size: 20px;
   color: #555;

@@ -14,7 +14,7 @@ import {
 
 const { EndOfList, LoadMore, Loader } = InfiniteList;
 
-const PostList = (props) => {
+const PostList = props => {
   const { posts, fetchPosts, match } = props;
   const { username } = match.params;
 
@@ -41,7 +41,7 @@ const PostList = (props) => {
 const mapStateToProps = ({ posts }) => ({ posts });
 const mapDispatchToProps = dispatch => ({
   dispatch,
-  fetchPosts: fetchPosts(dispatch),
+  fetchPosts: fetchPosts(dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(
