@@ -20,12 +20,12 @@ const formatPost = p => {
 };
 
 export const fetchPosts = dispatch => {
-  return page => {
+  return (page, opts={}) => {
     let type = pa.LOAD_POSTS;
-    if (page) {
-      type = pa.LOAD_MORE_POSTS;
-    }
-    return dispatch({ type, payload: postsAPI.fetchAll({ page }) });
+    if (page) type = pa.LOAD_MORE_POSTS;
+
+    const q = Object.assign({}, { page }, (opts || {}));
+    return dispatch({ type, payload: postsAPI.fetchAll(q) });
   };
 };
 

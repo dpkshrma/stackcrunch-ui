@@ -8,13 +8,21 @@ class InfiniteList extends React.Component {
     nextPage: null
   };
   componentDidMount() {
-    this.loadNewItems();
+    this.loadNewItems(this.props);
   }
-  loadNewItems = () => {
-    const { loadMore, onLoadFailure } = this.props;
+  componentWillReceiveProps(nextProps) {
+    // if options change reload the list
+    const { opts = {} } = this.props;
+    const { opts: nextOpts = {} } = nextProps;
+
+    if (opts.username !== nextOpts.username) {
+      this.loadNewItems(Object.assign({}, this.props, nextProps, { reload: true }));
+    }
+  }
+  loadNewItems = ({ loadMore, reload, onLoadFailure, opts }) => {
     const { nextPage } = this.state;
     this.setState({ isLoading: true })
-      .then(() => loadMore(nextPage))
+      .then(() => reload ? loadMore(null, opts) : loadMore(nextPage, opts))
       .then(({ value: { nextPage, remaining } }) => {
         return this.setState({
           isLoading: false,

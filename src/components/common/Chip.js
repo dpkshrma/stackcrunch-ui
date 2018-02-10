@@ -16,7 +16,7 @@ const Chip = ({ img, text, to, href, css = {}, onCloseClick }) => {
     ${contentCSS} ${({ css }) => css};
   `;
   if (to) {
-    Content = decorateComponentWithProps(InLink, { to, target: '_blank' });
+    Content = decorateComponentWithProps(InLink, { to });
   } else if (href) {
     Content = decorateComponentWithProps(OutLink, { href, target: '_blank' });
   }

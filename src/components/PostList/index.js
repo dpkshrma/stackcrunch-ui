@@ -14,10 +14,13 @@ import {
 
 const { EndOfList, LoadMore, Loader } = InfiniteList;
 
-const PostList = ({ posts, fetchPosts }) => {
+const PostList = (props) => {
+  const { posts, fetchPosts, match } = props;
+  const { username } = match.params;
+
   return (
     <Wrapper>
-      <InfiniteList loadMore={fetchPosts}>
+      <InfiniteList loadMore={fetchPosts} opts={{ username }}>
         <List>{posts.map(post => <ListItem {...post} key={post.slug} />)}</List>
         <EndOfList>
           <EndOfListMsg>No more posts to show</EndOfListMsg>
@@ -38,7 +41,7 @@ const PostList = ({ posts, fetchPosts }) => {
 const mapStateToProps = ({ posts }) => ({ posts });
 const mapDispatchToProps = dispatch => ({
   dispatch,
-  fetchPosts: fetchPosts(dispatch)
+  fetchPosts: fetchPosts(dispatch),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(
