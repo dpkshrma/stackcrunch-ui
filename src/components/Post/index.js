@@ -45,6 +45,9 @@ class PostPage extends React.Component {
           let contentState;
           if (content) {
             contentState = content;
+            if (Object.keys(content).indexOf('entityMap') === -1) {
+              contentState = Object.assign({}, content, { entityMap: true });
+            }
           } else {
             contentState = markdownToDraft(text, markdownToDraftOptions);
           }
@@ -61,8 +64,7 @@ class PostPage extends React.Component {
         }
       })
       .catch(err => {
-        console.error(err);
-        this.props.history.push(`${URL_PREFIX}/404`);
+        throw err;
       });
   }
   componentWillUnmount() {
