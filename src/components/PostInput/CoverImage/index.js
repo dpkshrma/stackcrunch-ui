@@ -139,7 +139,7 @@ class CoverImage extends React.Component {
           imagePreviewWidth,
           imagePreviewHeight
         );
-        self.props.setDataURL(canvas.toDataURL('image/png'));
+        self.props.setDataUri(canvas.toDataURL('image/png'));
       }
     };
   };
@@ -195,7 +195,7 @@ class CoverImage extends React.Component {
 }
 
 CoverImage.propTypes = {
-  setDataURL: PropTypes.func.isRequired
+  setDataUri: PropTypes.func.isRequired
 };
 
 export default CoverImage;

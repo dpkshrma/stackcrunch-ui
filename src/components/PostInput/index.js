@@ -1,6 +1,7 @@
 import React from 'react';
 import { EditorState, convertToRaw, convertFromRaw } from 'draft-js';
 import promisifySetState from 'promisify-setstate';
+import postAPI from '../../api/post';
 import CoverImage from './CoverImage';
 import Editor from './Editor';
 import comboDecorator from '../Post/decorators';
@@ -15,25 +16,21 @@ import {
   PublishButton,
   PostSaveAlert
 } from './styled';
-import postAPI from '../../api/post';
 
 const Meta = () => <DateString>{new Date().toDateString()}</DateString>;
 
 // TODO: font size, letter spacing, line height
 // TODO: keybindings
 class PostInput extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      editorState: EditorState.createEmpty(comboDecorator),
-      selectedTags: [],
-      coverImage: null,
-      title: '',
-      editing: false,
-      fetchingEditPost: false,
-      isDraft: false
-    };
-  }
+  state = {
+    editorState: EditorState.createEmpty(comboDecorator),
+    selectedTags: [],
+    coverDataUri: null,
+    title: '',
+    editing: false,
+    fetchingEditPost: false,
+    isDraft: false
+  };
   componentWillMount() {
     const { slug } = this.props.match.params;
     slug &&
@@ -80,8 +77,8 @@ class PostInput extends React.Component {
       selectedTags: this.state.selectedTags.filter(tag => tag.name !== tagName)
     });
   };
-  setCoverImage = coverImage => {
-    this.setState({ coverImage });
+  setCoverDataUri = coverDataUri => {
+    this.setState({ coverDataUri });
   };
   draft = e => {
     e.preventDefault();
@@ -100,26 +97,43 @@ class PostInput extends React.Component {
       meta: { title, tagname, isDraft }
     };
   };
-  submitPost = (isDraft = true) => {
-    const rawPost = this.getRawPostInput(isDraft);
-    // TODO: update cover image on s3
-    postAPI.create(rawPost).then(data => {
-      console.log(data);
+  uploadCover = () => {
+    const { coverDataUri } = this.state;
+    if (coverDataUri) return postAPI.uploadCoverImage(coverDataUri);
+    return Promise.resolve();
+  };
+  uploadCoverAndGetRawPostInput = isDraft => {
+    return this.uploadCover().then(coverResponse => {
+      const rawPost = this.getRawPostInput(isDraft);
+      if (coverResponse && coverResponse.location) {
+        rawPost.meta.coverImageUrl = coverResponse.location;
+      }
+      return rawPost;
     });
   };
+  submitPost = (isDraft = true) => {
+    this.uploadCoverAndGetRawPostInput(isDraft)
+      .then(postAPI.create)
+      .then(data => {
+        // TODO: show a snackbar
+        console.log('submitPost final response: ', data);
+      });
+  };
   submitPostEdit = (isDraft = true) => {
-    const rawPost = this.getRawPostInput(isDraft);
     const { slug } = this.props.match.params;
-    // TODO: store cover image on s3
-    postAPI.update({ slug, post: rawPost }).then(data => {
-      console.log(data);
-    });
+    this.uploadCoverAndGetRawPostInput(isDraft)
+      .then(rawPost => ({ slug, post: rawPost }))
+      .then(postAPI.update)
+      .then(data => {
+        // TODO: show a snackbar
+        console.log('submitPostEdit final response: ', data);
+      });
   };
   render() {
     const { fetchingEditPost, title, editorState, selectedTags } = this.state;
     return (
       <Container>
-        <CoverImage setDataURL={this.setCoverImage} />
+        <CoverImage setDataUri={this.setCoverDataUri} />
         <TitleInput
           placeholder="Add a descriptive Title"
           value={title}
@@ -142,10 +156,10 @@ class PostInput extends React.Component {
             </PostSaveAlert>
           )}
         <Actions>
-          <DraftButton onClick={this.draft} disable={fetchingEditPost}>
+          <DraftButton onClick={this.draft} disabled={fetchingEditPost}>
             Save as draft
           </DraftButton>
-          <PublishButton onClick={this.publish} disable={fetchingEditPost}>
+          <PublishButton onClick={this.publish} disabled={fetchingEditPost}>
             Publish
           </PublishButton>
         </Actions>

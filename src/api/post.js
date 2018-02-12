@@ -1,4 +1,5 @@
 import { req } from '../helpers/http';
+import { dataURItoBlob } from '../utils/image';
 
 const fetchAll = ({ page, username, isDraft } = {}) => {
   let endpoint = 'posts';
@@ -22,9 +23,18 @@ const update = ({ slug, post }) => {
   return req(`posts/${slug}`).put(post);
 };
 
+const uploadCoverImage = dataUri => {
+  const form = new FormData();
+  const blob = dataURItoBlob(dataUri);
+  const file = new File([blob], 'coverImage.png', { type: 'image/png' });
+  form.append('coverImage', file);
+  return req('posts/cover').postFormData(form);
+};
+
 export default {
   fetchAll,
   fetchOne,
   create,
-  update
+  update,
+  uploadCoverImage
 };
