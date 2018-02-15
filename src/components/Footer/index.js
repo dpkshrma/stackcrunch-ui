@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
-import logo from './icons/logo_white.png';
+import logo from '../icons/logo_white.png';
 import StackExchangeIcon from './icons/stackexchange';
 
 const Wrapper = styled.div`
