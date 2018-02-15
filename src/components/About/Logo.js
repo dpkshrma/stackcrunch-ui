@@ -7,6 +7,7 @@ const Text = () => {
     color: #fff;
     font-size: 26px;
     font-family: roboto;
+    letter-spacing: 1px;
   `;
   const Stack = () => {
     const Span = LogoSpan.extend`

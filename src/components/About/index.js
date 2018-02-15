@@ -4,6 +4,7 @@ import Header from './Header';
 import KnowMore from './KnowMore';
 import EmailInput from './EmailInput';
 import TextSwitcher from './TextSwitcher';
+import VitaminPlayground from './VitaminPlayground';
 
 const Container = styled.div`
   background-color: #202126;
@@ -70,7 +71,7 @@ class About extends React.Component {
                   'Weekend Ninjas!'
                 ]}
               />
-              <div>Get your Vitamins today!</div>
+              <div>Supercharge your skills!</div>
             </Title>
             <Subtitle>
               Learn from solutions to bugs, performance issues, vulnerabilities<br />
@@ -88,7 +89,9 @@ class About extends React.Component {
             <EmailInput placeholder="Your Email Address" />
             <KnowMore />
           </SectionLeft>
-          <SectionRight />
+          <SectionRight>
+            <VitaminPlayground />
+          </SectionRight>
         </Content>
       </Container>
     );
