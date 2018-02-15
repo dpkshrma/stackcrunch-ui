@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Logo from './Logo';
 
 const Container = styled.div`
-  padding: 12px 80px;
+  padding: 20px 80px;
   background-color: rgba(0, 0, 0, 0);
   display: flex;
   align-items: center;
@@ -28,11 +28,15 @@ const ContributeTip = styled.a`
   border-radius: 2px;
   font-size: 14px;
   padding: 6px;
+  padding-right: 0;
   text-decoration: none;
   display: flex;
   margin-left: 16px;
   border: 1px solid #555;
   font-family: roboto;
+  font-weight: 300;
+  letter-spacing: 1px;
+  line-height: 16px;
   & svg {
     margin-top: -2px;
     margin-left: 4px;
@@ -56,7 +60,7 @@ const Header = () => (
     <Logo.Text />
     <ContributeTip href="/posts" target="_blank">
       <Tip />
-      Contributions Welcome!
+      ⚡Get Early Access! ⚡
     </ContributeTip>
   </Container>
 );
