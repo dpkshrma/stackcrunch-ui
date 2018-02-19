@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Motion, spring, presets } from 'react-motion';
+import { StaggeredMotion, spring, presets } from 'react-motion';
 
 // const randFloat = (to, from = 1) => Math.random() * (to - from) + from;
 // const getBounceAnimation = ({ maxBounce = 8 }) => keyframes`
@@ -68,27 +68,44 @@ const FocusCircle = ({ children, radius = 20, percent }) => {
 };
 
 const ClickableBox = props => {
-  const defaultStyle = {
-    opacity: 1,
-    top: props.moveToBase ? props.top : 0,
-    left: props.moveToBase ? props.left : 0,
-    borderPercent: 0
-  };
-  const finalStyle = {
-    opacity: spring(props.hide ? 0 : 1),
-    top: spring(
-      props.moveToBase ? props.basePosition.top : props.top,
-      presets.gentle
-    ),
-    left: spring(
-      props.moveToBase ? props.basePosition.left : props.left,
-      presets.gentle
-    ),
-    borderPercent: spring(props.moveToBase ? 1 : 0)
+  const defaultStyles = [
+    {
+      opacity: 1,
+      top: props.moveToBase ? props.top : 0,
+      left: props.moveToBase ? props.left : 0
+    },
+    {
+      focusCircle: 0
+    },
+    {
+      focusLine: 0
+    }
+  ];
+  const finalStyles = prevStyles => {
+    const nearToBase = prevStyles[0].top / props.basePosition.top > 0.99;
+    return [
+      {
+        opacity: spring(props.hide ? 0 : 1),
+        top: spring(
+          props.moveToBase ? props.basePosition.top : props.top,
+          presets.gentle
+        ),
+        left: spring(
+          props.moveToBase ? props.basePosition.left : props.left,
+          presets.gentle
+        )
+      },
+      {
+        focusCircle: spring(nearToBase ? 1 : 0)
+      },
+      {
+        focusLine: spring(nearToBase ? 1 : 0)
+      }
+    ];
   };
   return (
-    <Motion defaultStyle={defaultStyle} style={finalStyle}>
-      {({ opacity, top, left, borderPercent }) => (
+    <StaggeredMotion defaultStyles={defaultStyles} styles={finalStyles}>
+      {([{ opacity, top, left }, { focusCircle }, { focusLine }]) => (
         <Container
           top={props.top}
           left={props.left}
@@ -99,11 +116,11 @@ const ClickableBox = props => {
           <FocusCircle
             show={props.moveToBase}
             radius={40}
-            percent={borderPercent}
+            percent={focusCircle}
           />
         </Container>
       )}
-    </Motion>
+    </StaggeredMotion>
   );
 };
 
