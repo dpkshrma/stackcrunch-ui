@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { StaggeredMotion, spring, presets } from 'react-motion';
 
 // const randFloat = (to, from = 1) => Math.random() * (to - from) + from;
@@ -34,7 +34,7 @@ const Container = styled.div`
     box-shadow: 0 0 8px 2px #ccc;
   }
 `;
-const FocusCircle = ({ children, radius = 20, percent }) => {
+const FocusCircle = ({ radius = 20, percent }) => {
   const Figure = styled.figure`
     position: absolute;
     top: 0;
@@ -55,14 +55,36 @@ const FocusCircle = ({ children, radius = 20, percent }) => {
     <Figure>
       <Svg width={radius * 2 + 2} height={radius * 2 + 2}>
         <Circle
-          className="outer"
           cx={radius + 1}
           cy={radius + 1}
           r={radius}
           transform={circleTransform}
         />
       </Svg>
-      {children}
+    </Figure>
+  );
+};
+const FocusLine = ({ percent, css = '', length = 200, reverse = false }) => {
+  const Figure = styled.figure`
+    position: absolute;
+    top: 0;
+    margin: 0;
+    ${css};
+  `;
+  const Svg = styled.svg``;
+  const dashOffset = (1 - percent) * length;
+  const Line = styled.line`
+    fill: transparent;
+    stroke: #fff;
+    stroke-width: 1;
+    stroke-dasharray: ${length}px;
+    stroke-dashoffset: ${reverse ? -1 * dashOffset : dashOffset};
+  `;
+  return (
+    <Figure>
+      <Svg width={length} height={41}>
+        <Line x1={0} y1={40} x2={length} y2={40} />
+      </Svg>
     </Figure>
   );
 };
@@ -83,6 +105,7 @@ const ClickableBox = props => {
   ];
   const finalStyles = prevStyles => {
     const nearToBase = prevStyles[0].top / props.basePosition.top > 0.99;
+    const circleAlmostComplete = prevStyles[1].focusCircle > 0.99;
     return [
       {
         opacity: spring(props.hide ? 0 : 1),
@@ -99,7 +122,7 @@ const ClickableBox = props => {
         focusCircle: spring(nearToBase ? 1 : 0)
       },
       {
-        focusLine: spring(nearToBase ? 1 : 0)
+        focusLine: spring(nearToBase && circleAlmostComplete ? 1 : 0)
       }
     ];
   };
@@ -117,6 +140,19 @@ const ClickableBox = props => {
             show={props.moveToBase}
             radius={40}
             percent={focusCircle}
+          />
+          <FocusLine
+            css={css`
+              left: -199px;
+            `}
+            percent={focusLine}
+            reverse
+          />
+          <FocusLine
+            css={css`
+              left: 81px;
+            `}
+            percent={focusLine}
           />
         </Container>
       )}
