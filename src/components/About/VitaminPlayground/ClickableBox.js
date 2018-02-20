@@ -89,6 +89,18 @@ const FocusLine = ({ percent, css = '', length = 200, reverse = false }) => {
   );
 };
 
+const Description = ({ percent }) => {
+  const Container = styled.div`
+    height: ${percent * 400}px;
+    width: 480px;
+    position: absolute;
+    left: -199px;
+    top: 41px;
+    background: rgba(255, 255, 255, 0.3);
+  `;
+  return <Container />;
+};
+
 const ClickableBox = props => {
   const defaultStyles = [
     {
@@ -101,11 +113,15 @@ const ClickableBox = props => {
     },
     {
       focusLine: 0
+    },
+    {
+      description: 0
     }
   ];
   const finalStyles = prevStyles => {
     const nearToBase = prevStyles[0].top / props.basePosition.top > 0.99;
     const circleAlmostComplete = prevStyles[1].focusCircle > 0.99;
+    const lineAlmostComplete = prevStyles[2].focusLine > 0.99;
     return [
       {
         opacity: spring(props.hide ? 0 : 1),
@@ -122,13 +138,23 @@ const ClickableBox = props => {
         focusCircle: spring(nearToBase ? 1 : 0)
       },
       {
-        focusLine: spring(nearToBase && circleAlmostComplete ? 1 : 0)
+        focusLine: spring(circleAlmostComplete ? 1 : 0)
+      },
+      {
+        description: spring(lineAlmostComplete ? 1 : 0)
       }
     ];
   };
   return (
     <StaggeredMotion defaultStyles={defaultStyles} styles={finalStyles}>
-      {([{ opacity, top, left }, { focusCircle }, { focusLine }]) => (
+      {(
+        [
+          { opacity, top, left },
+          { focusCircle },
+          { focusLine },
+          { description }
+        ]
+      ) => (
         <Container
           top={props.top}
           left={props.left}
@@ -154,6 +180,7 @@ const ClickableBox = props => {
             `}
             percent={focusLine}
           />
+          <Description percent={description} />
         </Container>
       )}
     </StaggeredMotion>

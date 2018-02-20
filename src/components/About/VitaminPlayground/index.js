@@ -81,7 +81,7 @@ class VitaminPlayground extends React.Component {
                   onClick={this.onClick(data.id)}
                   hide={selectedCommunity && data.id !== selectedCommunity}
                   moveToBase={data.id === selectedCommunity}
-                  basePosition={{ top: -1 * bounds.height / 2 + 60, left: 0 }}
+                  basePosition={{ top: -1 * bounds.height / 2, left: 0 }}
                 />
               ))}
             </Container>
