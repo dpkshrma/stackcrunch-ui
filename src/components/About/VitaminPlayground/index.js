@@ -46,9 +46,13 @@ class VitaminPlayground extends React.Component {
     });
     return boxes;
   };
-  onClick = selectedCommunity => e => {
+  toggleCommunityFocus = selectedCommunity => e => {
     e.preventDefault();
-    this.setState({ selectedCommunity });
+    if (this.state.selectedCommunity !== selectedCommunity) {
+      this.setState({ selectedCommunity });
+    } else {
+      this.setState({ selectedCommunity: null });
+    }
   };
   render() {
     const { selectedCommunity } = this.state;
@@ -78,7 +82,7 @@ class VitaminPlayground extends React.Component {
                 <ClickableBox
                   {...data}
                   key={data.id}
-                  onClick={this.onClick(data.id)}
+                  onClick={this.toggleCommunityFocus(data.id)}
                   hide={selectedCommunity && data.id !== selectedCommunity}
                   moveToBase={data.id === selectedCommunity}
                   basePosition={{ top: -1 * bounds.height / 2, left: 0 }}

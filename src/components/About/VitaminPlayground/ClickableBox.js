@@ -13,6 +13,8 @@ const Box = styled.div`
   width: ${({ size = 40 }) => `${size}px`};
   height: ${({ size = 40 }) => `${size}px`};
   background-color: #eee;
+  cursor: pointer;
+  z-index: 101;
   ${'' /* animation: ${getBounceAnimation} ${() => randFloat(2.5, 1.5)}s infinite alternate; */};
 `;
 const Container = styled.div`
@@ -29,7 +31,6 @@ const Container = styled.div`
   ${'' /* visual */} border-radius: 50%;
   width: 80px;
   height: 80px;
-  cursor: pointer;
   &:hover ${Box} {
     box-shadow: 0 0 8px 2px #ccc;
   }
@@ -96,7 +97,7 @@ const Description = ({ percent }) => {
     position: absolute;
     left: -199px;
     top: 41px;
-    background: rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.1);
   `;
   return <Container />;
 };
@@ -158,29 +159,32 @@ const ClickableBox = props => {
         <Container
           top={props.top}
           left={props.left}
-          onClick={props.onClick}
           style={{ opacity, top, left }}
         >
-          <Box maxBounce={props.maxBounce} />
-          <FocusCircle
-            show={props.moveToBase}
-            radius={40}
-            percent={focusCircle}
-          />
-          <FocusLine
-            css={css`
-              left: -199px;
-            `}
-            percent={focusLine}
-            reverse
-          />
-          <FocusLine
-            css={css`
-              left: 81px;
-            `}
-            percent={focusLine}
-          />
-          <Description percent={description} />
+          <Box maxBounce={props.maxBounce} onClick={props.onClick} />
+          {!props.moveToBase ? null : (
+            <div>
+              <FocusCircle
+                show={props.moveToBase}
+                radius={40}
+                percent={focusCircle}
+              />
+              <FocusLine
+                css={css`
+                  left: -199px;
+                `}
+                percent={focusLine}
+                reverse
+              />
+              <FocusLine
+                css={css`
+                  left: 81px;
+                `}
+                percent={focusLine}
+              />
+              <Description percent={description} />
+            </div>
+          )}
         </Container>
       )}
     </StaggeredMotion>
