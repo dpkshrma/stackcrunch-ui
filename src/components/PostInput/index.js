@@ -34,27 +34,28 @@ class PostInput extends React.Component {
   componentWillMount() {
     const { slug } = this.props.match.params;
     slug &&
-      this.setState(
-        {
-          fetchingEditPost: true,
-          editing: true
-        },
-        () => {
-          postAPI.fetchOne(slug).then(result => {
-            if (!result) return;
-            const { content, meta } = result;
-            this.setState({
-              editorState: EditorState.createWithContent(
-                convertFromRaw(content),
-                comboDecorator
-              ),
-              title: meta.title,
-              selectedTags: meta.tags || [],
-              isDraft: meta.isDraft
-            });
+      this.setState({ fetchingEditPost: true, editing: true })
+        .then(() => postAPI.fetchOne(slug))
+        .then(result => {
+          if (!result) return;
+          const { content, meta } = result;
+          let rawContentState;
+          if (Object.keys(content).indexOf('entityMap') === -1) {
+            rawContentState = Object.assign({}, content, { entityMap: true });
+          }
+          this.setState({
+            editorState: EditorState.createWithContent(
+              convertFromRaw(rawContentState),
+              comboDecorator
+            ),
+            title: meta.title,
+            selectedTags: meta.tags || [],
+            isDraft: meta.isDraft
           });
-        }
-      );
+        })
+        .catch(err => {
+          throw err;
+        });
   }
   onEditorChange = (editorState, afterChange) => {
     if (afterChange) {

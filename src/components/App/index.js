@@ -8,6 +8,7 @@ import ErrorBoundary from './ErrorBoundary';
 const Wrapper = styled.div`
   min-height: 100vh;
   font-family: roboto;
+  background: #fff;
 `;
 const Content = styled.div`
   display: flex;
