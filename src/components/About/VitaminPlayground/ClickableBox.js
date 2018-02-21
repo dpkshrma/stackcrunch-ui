@@ -1,22 +1,8 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
 import { StaggeredMotion, spring, presets } from 'react-motion';
+import Cube from './Cube';
 
-// const randFloat = (to, from = 1) => Math.random() * (to - from) + from;
-// const getBounceAnimation = ({ maxBounce = 8 }) => keyframes`
-//   0% { transform: translateY(-${maxBounce/2}px); }
-//   100% { transform: translateY(${maxBounce/2}px);); }
-// `;
-
-const Box = styled.div`
-  border-radius: 2px;
-  width: ${({ size = 40 }) => `${size}px`};
-  height: ${({ size = 40 }) => `${size}px`};
-  background-color: #eee;
-  cursor: pointer;
-  z-index: 101;
-  ${'' /* animation: ${getBounceAnimation} ${() => randFloat(2.5, 1.5)}s infinite alternate; */};
-`;
 const Container = styled.div`
   ${'' /* positioning */} position: absolute;
   top: ${({ top = 0 }) => `${top}px`};
@@ -31,9 +17,7 @@ const Container = styled.div`
   ${'' /* visual */} border-radius: 50%;
   width: 80px;
   height: 80px;
-  &:hover ${Box} {
-    box-shadow: 0 0 8px 2px #ccc;
-  }
+  box-shadow: 0 0 32px 0 #fff;
 `;
 const FocusCircle = ({ radius = 20, percent }) => {
   const Figure = styled.figure`
@@ -47,7 +31,7 @@ const FocusCircle = ({ radius = 20, percent }) => {
   const Circle = styled.circle`
     fill: transparent;
     stroke: #fff;
-    stroke-width: 1;
+    stroke-width: 2;
     stroke-dasharray: ${circumference}px;
     stroke-dashoffset: ${(1 - percent) * circumference};
   `;
@@ -97,7 +81,7 @@ const Description = ({ percent }) => {
     position: absolute;
     left: -199px;
     top: 41px;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
   `;
   return <Container />;
 };
@@ -161,7 +145,11 @@ const ClickableBox = props => {
           left={props.left}
           style={{ opacity, top, left }}
         >
-          <Box maxBounce={props.maxBounce} onClick={props.onClick} />
+          <Cube
+            id={props.id}
+            onClick={props.onClick}
+            color={props.icon.color}
+          />
           {!props.moveToBase ? null : (
             <div>
               <FocusCircle

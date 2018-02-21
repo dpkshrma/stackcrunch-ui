@@ -16,7 +16,7 @@ const generateRandomPoint = bounds => {
   };
 };
 
-class VitaminPlayground extends React.Component {
+class Playground extends React.Component {
   state = {
     selectedCommunity: null
   };
@@ -59,7 +59,7 @@ class VitaminPlayground extends React.Component {
     return (
       <ContainerDimensions>
         {bounds => {
-          if (!this.backBoxes) this.backBoxes = this.renderBackBoxes(bounds);
+          // if (!this.backBoxes) this.backBoxes = this.renderBackBoxes(bounds);
           if (!this.containerBounds) this.containerBounds = bounds;
           return (
             <Container
@@ -96,4 +96,4 @@ class VitaminPlayground extends React.Component {
   }
 }
 
-export default VitaminPlayground;
+export default Playground;

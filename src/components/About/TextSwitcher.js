@@ -5,7 +5,7 @@ const Container = styled.div`
   margin-bottom: 16px;
 `;
 const Span = styled.div`
-  color: #ddd;
+  color: #fff;
   font-size: 48px;
   border-bottom: 3px solid #777777cc;
   width: fit-content;
