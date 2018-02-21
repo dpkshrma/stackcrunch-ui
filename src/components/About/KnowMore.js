@@ -12,7 +12,7 @@ const bounceAnimation = keyframes`
     transform: translateY(-24px);
   }
   to {
-    transform: translateY(-20px);
+    transform: translateY(-14px);
   }
 `;
 const JumpingArrow = styled.div`
