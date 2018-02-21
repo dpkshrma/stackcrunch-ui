@@ -5,9 +5,11 @@ import KnowMore from './KnowMore';
 import EmailInput from './EmailInput';
 import TextSwitcher from './TextSwitcher';
 import VitaminPlayground from './VitaminPlayground';
+import bg from './sc_bg.svg';
 
 const Container = styled.div`
-  background-color: #202126;
+  background: #202126 url(${bg}) no-repeat;
+  background-size: cover;
   height: 100vh;
   font-family: roboto;
 `;
