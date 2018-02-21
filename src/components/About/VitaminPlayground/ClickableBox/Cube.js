@@ -7,7 +7,7 @@ const Container = styled.div`
   width: 60px;
   height: 60px;
   cursor: pointer;
-  z-index: 101;
+  z-index: 111;
 `;
 
 class Cube extends React.Component {

@@ -2,6 +2,9 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import { StaggeredMotion, spring, presets } from 'react-motion';
 import Cube from './Cube';
+import FocusLine from './FocusLine';
+import FocusCircle from './FocusCircle';
+import Description from './Description';
 
 const Container = styled.div`
   ${'' /* positioning */} position: absolute;
@@ -19,72 +22,6 @@ const Container = styled.div`
   height: 80px;
   box-shadow: 0 0 32px 0 #fff;
 `;
-const FocusCircle = ({ radius = 20, percent }) => {
-  const Figure = styled.figure`
-    position: absolute;
-    top: 0;
-    left: 0;
-    margin: 0;
-  `;
-  const Svg = styled.svg``;
-  const circumference = Math.round(Math.PI * 2 * radius);
-  const Circle = styled.circle`
-    fill: transparent;
-    stroke: #fff;
-    stroke-width: 2;
-    stroke-dasharray: ${circumference}px;
-    stroke-dashoffset: ${(1 - percent) * circumference};
-  `;
-  const circleTransform = `rotate(-90, ${radius + 1}, ${radius + 1})`;
-  return (
-    <Figure>
-      <Svg width={radius * 2 + 2} height={radius * 2 + 2}>
-        <Circle
-          cx={radius + 1}
-          cy={radius + 1}
-          r={radius}
-          transform={circleTransform}
-        />
-      </Svg>
-    </Figure>
-  );
-};
-const FocusLine = ({ percent, css = '', length = 200, reverse = false }) => {
-  const Figure = styled.figure`
-    position: absolute;
-    top: 0;
-    margin: 0;
-    ${css};
-  `;
-  const Svg = styled.svg``;
-  const dashOffset = (1 - percent) * length;
-  const Line = styled.line`
-    fill: transparent;
-    stroke: #fff;
-    stroke-width: 1;
-    stroke-dasharray: ${length}px;
-    stroke-dashoffset: ${reverse ? -1 * dashOffset : dashOffset};
-  `;
-  return (
-    <Figure>
-      <Svg width={length} height={41}>
-        <Line x1={0} y1={40} x2={length} y2={40} />
-      </Svg>
-    </Figure>
-  );
-};
-
-const Description = ({ percent }) => {
-  const Container = styled.div`
-    height: ${percent * 400}px;
-    width: 480px;
-    position: absolute;
-    left: -199px;
-    top: 41px;
-    background: rgba(255, 255, 255, 0.05);
-  `;
-  return <Container />;
-};
 
 const ClickableBox = props => {
   const defaultStyles = [
