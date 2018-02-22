@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Header from './Header';
 import KnowMore from './KnowMore';
 import EmailInput from './EmailInput';
-import TextSwitcher from './TextSwitcher';
+import Switcher from './Switcher';
 import VitaminPlayground from './VitaminPlayground';
 import bg from './sc_bg.svg';
 
@@ -36,7 +36,7 @@ const Title = styled.div`
   font-size: 48px;
   color: #fff;
   font-weight: 300;
-  margin-top: 120px;
+  margin-top: 200px;
   letter-spacing: 1px;
 `;
 const Subtitle = styled.div`
@@ -52,6 +52,10 @@ const LaunchText = Subtitle.extend`
   color: #eee;
   margin-top: 60px;
 `;
+const UserType = styled.div`
+  margin-bottom: 8px;
+  border-bottom: 3px dashed #888;
+`;
 
 class About extends React.Component {
   componentDidMount() {
@@ -65,14 +69,11 @@ class About extends React.Component {
         <Content>
           <SectionLeft>
             <Title>
-              <TextSwitcher
-                data={[
-                  'Developers!',
-                  'Hackers!',
-                  'Engineers!',
-                  'Weekend Ninjas!'
-                ]}
-              />
+              <Switcher top={220}>
+                <UserType>Developers!</UserType>
+                <UserType>Hackers!</UserType>
+                <UserType>Weekend Ninjas!</UserType>
+              </Switcher>
               <div>Supercharge your skills!</div>
             </Title>
             <Subtitle>
