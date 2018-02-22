@@ -4,7 +4,7 @@ import Header from './Header';
 import KnowMore from './KnowMore';
 import EmailInput from './EmailInput';
 import Switcher from './Switcher';
-import VitaminPlayground from './VitaminPlayground';
+import Playground from './Playground';
 import bg from './sc_bg.svg';
 
 const Container = styled.div`
@@ -93,7 +93,7 @@ class About extends React.Component {
             <KnowMore />
           </SectionLeft>
           <SectionRight>
-            <VitaminPlayground />
+            <Playground />
           </SectionRight>
         </Content>
       </Container>

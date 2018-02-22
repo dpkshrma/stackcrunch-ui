@@ -36,19 +36,16 @@ class Cube extends React.Component {
     dLight3.position.set(0.5, 0.5, 1);
     scene.add(dLight3);
 
-    const texture = new THREE.TextureLoader().load( boxImg );
-		const geometry = new THREE.BoxGeometry( 1, 1, 1 );
-    const materials = Array.from(
-      { length: 6 },
-      (v, i) => {
-        const options = { map: texture };
-        if (i===2 || i===3) {
-          options.map = null;
-        }
-        return new THREE.MeshLambertMaterial(options);
+    const texture = new THREE.TextureLoader().load(boxImg);
+    const geometry = new THREE.BoxGeometry(1, 1, 1);
+    const materials = Array.from({ length: 6 }, (v, i) => {
+      const options = { map: texture };
+      if (i === 2 || i === 3) {
+        options.map = null;
       }
-    );
-		const cube = new THREE.Mesh( geometry, materials);
+      return new THREE.MeshLambertMaterial(options);
+    });
+    const cube = new THREE.Mesh(geometry, materials);
 
     camera.position.z = 4;
     scene.add(cube);

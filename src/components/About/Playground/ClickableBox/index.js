@@ -1,6 +1,6 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { StaggeredMotion, spring, presets } from 'react-motion';
+import { StaggeredMotion, spring } from 'react-motion';
 import Cube from './Cube';
 import FocusLine from './FocusLine';
 import FocusCircle from './FocusCircle';
@@ -47,14 +47,12 @@ const ClickableBox = props => {
     return [
       {
         opacity: spring(props.hide ? 0 : 1),
-        top: spring(
-          props.moveToBase ? props.basePosition.top : props.top,
-          { damping: 40 }
-        ),
-        left: spring(
-          props.moveToBase ? props.basePosition.left : props.left,
-          { damping: 40 }
-        )
+        top: spring(props.moveToBase ? props.basePosition.top : props.top, {
+          damping: 40
+        }),
+        left: spring(props.moveToBase ? props.basePosition.left : props.left, {
+          damping: 40
+        })
       },
       {
         focusCircle: spring(nearToBase ? 1 : 0)

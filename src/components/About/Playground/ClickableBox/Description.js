@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Motion, spring, presets } from 'react-motion';
+import { Motion, spring } from 'react-motion';
 import stackoverflow from '../../../icons/so-icon.svg';
 import Switcher from '../../Switcher';
 
@@ -103,23 +103,23 @@ class Description extends React.Component {
     `;
     return (
       <Container>
-          <Motion
-            defaultStyle={{
-              marginTop: 120,
-              opacity: 0
-            }}
-            style={{
-              marginTop: spring(60, { stiffness: 110, damping: 40 }),
-              opacity: spring(1, { stiffness: 110, damping: 40 })
-            }}
-          >
-            {
-              style =>
-                <CommunityDescription style={style}>
-                  Read up on articles based on crunching from more than a million questions answered on StackOverflow.
-                </CommunityDescription>
-            }
-          </Motion>
+        <Motion
+          defaultStyle={{
+            marginTop: 120,
+            opacity: 0
+          }}
+          style={{
+            marginTop: spring(60, { stiffness: 110, damping: 40 }),
+            opacity: spring(1, { stiffness: 110, damping: 40 })
+          }}
+        >
+          {style => (
+            <CommunityDescription style={style}>
+              Read up on articles based on crunching from more than a million
+              questions answered on StackOverflow.
+            </CommunityDescription>
+          )}
+        </Motion>
         <Questions timeout={7000}>
           <Question
             q={{
@@ -154,7 +154,11 @@ class Description extends React.Component {
         </Questions>
         <Footer>
           Source:{' '}
-          <a href="https://www.stackoverflow.com" target="_blank">
+          <a
+            href="https://www.stackoverflow.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             www.stackoverflow.com
           </a>
         </Footer>
