@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Motion, spring, presets } from 'react-motion';
 import stackoverflow from '../../../icons/so-icon.svg';
+import Switcher from '../../Switcher';
 
 const communityImages = {
   stackoverflow
@@ -72,7 +74,7 @@ class Description extends React.Component {
         margin-top: 52px;
       }
     `;
-    const Questions = styled.div`
+    const Questions = styled(Switcher)`
       height: 100%;
       overflow-y: scroll;
     `;
@@ -91,9 +93,34 @@ class Description extends React.Component {
         text-decoration: none;
       }
     `;
+    const CommunityDescription = styled.div`
+      margin-top: 60px;
+      padding: 20px;
+      color: #bbb;
+      font-family: roboto;
+      letter-spacing: 1px;
+      font-weight: 300;
+    `;
     return (
       <Container>
-        <Questions>
+          <Motion
+            defaultStyle={{
+              marginTop: 120,
+              opacity: 0
+            }}
+            style={{
+              marginTop: spring(60, { stiffness: 110, damping: 40 }),
+              opacity: spring(1, { stiffness: 110, damping: 40 })
+            }}
+          >
+            {
+              style =>
+                <CommunityDescription style={style}>
+                  Read up on articles based on crunching from more than a million questions answered on StackOverflow.
+                </CommunityDescription>
+            }
+          </Motion>
+        <Questions timeout={7000}>
           <Question
             q={{
               text: 'How to use threejs in a React App?',
@@ -127,7 +154,7 @@ class Description extends React.Component {
         </Questions>
         <Footer>
           Source:{' '}
-          <a href="www.stackoverflow.com" target="_blank">
+          <a href="https://www.stackoverflow.com" target="_blank">
             www.stackoverflow.com
           </a>
         </Footer>
