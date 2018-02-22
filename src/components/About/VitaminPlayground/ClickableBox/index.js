@@ -49,11 +49,11 @@ const ClickableBox = props => {
         opacity: spring(props.hide ? 0 : 1),
         top: spring(
           props.moveToBase ? props.basePosition.top : props.top,
-          presets.gentle
+          { damping: 40 }
         ),
         left: spring(
           props.moveToBase ? props.basePosition.left : props.left,
-          presets.gentle
+          { damping: 40 }
         )
       },
       {

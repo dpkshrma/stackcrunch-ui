@@ -14,7 +14,7 @@ export const clickables = [
     left: -190,
     maxBounce: 8,
     icon: {
-      color: 'yellow'
+      color: 'blue'
     }
   },
   {

@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import * as THREE from 'three';
+import boxImg from './box.png';
 
 const Container = styled.div`
   border-radius: 2px;
@@ -35,17 +36,19 @@ class Cube extends React.Component {
     dLight3.position.set(0.5, 0.5, 1);
     scene.add(dLight3);
 
-    const geometry = new THREE.BoxGeometry(1, 1, 1);
-    const color = this.props.color || '#61dafb';
-    const material = new THREE.MeshPhongMaterial({
-      flatShading: true,
-      side: THREE.DoubleSide,
-      color,
-      specular: 0xffffff,
-      transparent: true,
-      opacity: 0.9
-    });
-    const cube = new THREE.Mesh(geometry, material);
+    const texture = new THREE.TextureLoader().load( boxImg );
+		const geometry = new THREE.BoxGeometry( 1, 1, 1 );
+    const materials = Array.from(
+      { length: 6 },
+      (v, i) => {
+        const options = { map: texture };
+        if (i===2 || i===3) {
+          options.map = null;
+        }
+        return new THREE.MeshLambertMaterial(options);
+      }
+    );
+		const cube = new THREE.Mesh( geometry, materials);
 
     camera.position.z = 4;
     scene.add(cube);
@@ -54,7 +57,7 @@ class Cube extends React.Component {
     this.scene = scene;
     this.camera = camera;
     this.renderer = renderer;
-    this.material = material;
+    // this.material = material;
     this.cube = cube;
 
     this.mount.appendChild(this.renderer.domElement);
