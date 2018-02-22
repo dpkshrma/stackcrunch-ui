@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Motion, spring } from 'react-motion';
-import stackoverflow from '../../../icons/so-icon.svg';
+import stackoverflow from '../../../../icons/so-icon.svg';
 import Switcher from '../../Switcher';
 
 const communityImages = {
