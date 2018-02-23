@@ -7,7 +7,7 @@ const Container = styled.div`
   background-color: rgba(0, 0, 0, 0);
   display: flex;
   align-items: center;
-  border-top: 4px solid #ff6f00;
+  ${'' /* border-top: 4px solid #f48022; */};
 `;
 
 const Tip = styled.div`
@@ -60,7 +60,8 @@ const Header = () => (
     <Logo.Text />
     <ContributeTip href="/posts" target="_blank">
       <Tip />
-      ⚡Get Early Access! ⚡
+      {/* ⚡Get Early Access! ⚡ */}
+      ⚡Launching soon! ⚡
     </ContributeTip>
   </Container>
 );

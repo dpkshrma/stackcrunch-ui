@@ -1,12 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Motion, spring } from 'react-motion';
-import stackoverflow from '../../../../icons/so-icon.svg';
 import Switcher from '../../Switcher';
-
-const communityImages = {
-  stackoverflow
-};
 
 const QContainer = styled.div`
   background-color: rgba(255, 255, 255, 0.1);
@@ -17,8 +12,8 @@ const QContainer = styled.div`
   left: 8px;
 `;
 const QImage = styled.img`
-  max-height: 40px;
-  max-width: 40px;
+  max-height: 60px;
+  max-width: 60px;
   position: absolute;
   left: -24px;
   top: -24px;
@@ -28,6 +23,9 @@ const QImage = styled.img`
   border: 6px solid #2b2c32;
   padding: 8px;
   background: #55565e;
+`;
+const QLink = styled.a`
+  text-decoration: none;
 `;
 const QText = styled.div`
   font-family: roboto;
@@ -48,19 +46,21 @@ const QDesc = styled.div`
   letter-spacing: 1px;
 `;
 
-const Question = ({ q: { text, href, description }, community }) => {
+const Question = ({ q: { text, link, description }, communityIcon }) => {
   return (
     <QContainer>
-      <QImage src={communityImages[community]} />
-      <QText>{text}</QText>
-      <QDesc>{description}</QDesc>
+      <QImage src={communityIcon} />
+      <QLink href={link} target="_blank">
+        <QText>{text}</QText>
+        <QDesc>{description}</QDesc>
+      </QLink>
     </QContainer>
   );
 };
 
 class Description extends React.Component {
   render() {
-    const { percent } = this.props;
+    const { percent, questions, community = {} } = this.props;
     const Container = styled.div`
       height: ${percent * 400}px;
       width: 480px;
@@ -109,58 +109,37 @@ class Description extends React.Component {
             opacity: 0
           }}
           style={{
-            marginTop: spring(60, { stiffness: 110, damping: 40 }),
-            opacity: spring(1, { stiffness: 110, damping: 40 })
+            marginTop: spring(60, { damping: 35 }),
+            opacity: spring(1, { damping: 35 })
           }}
         >
           {style => (
             <CommunityDescription style={style}>
-              Read up on articles based on crunching from more than a million
-              questions answered on StackOverflow.
+              Learn from articles based on more than a million questions
+              answered on open communities.
             </CommunityDescription>
           )}
         </Motion>
         <Questions timeout={7000}>
-          <Question
-            q={{
-              text: 'How to use threejs in a React App?',
-              description:
-                'Using threejs can seem pretty difficult for beginners with React, and they often resort to big libraries for simple use-cases. This discussion covers how to easily create a React Component to render a simple 3d cube.',
-              href:
-                'https://stackoverflow.com/questions/41248287/how-to-connect-threejs-to-react'
-            }}
-            community="stackoverflow"
-          />
-          <Question
-            q={{
-              text: 'What are closures and how to use them?',
-              description:
-                'Closure is a widely used javascript design pattern. It allows for scoping variable within a region of interest so that they are available to the user when required.',
-              href:
-                'https://stackoverflow.com/questions/111102/how-do-javascript-closures-work'
-            }}
-            community="stackoverflow"
-          />
-          <Question
-            q={{
-              text: 'Guaging importance of optimistic updates in Apollo',
-              description:
-                'Optimistic UI is a pattern that you can use to simulate the results of a mutation and update the UI even before receiving a response from the server. Once the response is received from the server, optimistic result is thrown away and replaced with the actual result',
-              href:
-                'https://stackoverflow.com/questions/48901765/worth-using-apollos-optimisticresponse-with-redux'
-            }}
-            community="stackoverflow"
-          />
+          {questions
+            ? questions.map((q, i) => (
+                <Question key={`${i}`} q={q} communityIcon={community.icon} />
+              ))
+            : null}
         </Questions>
         <Footer>
-          Source:{' '}
-          <a
-            href="https://www.stackoverflow.com"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            www.stackoverflow.com
-          </a>
+          {community.name && (
+            <div>
+              Source:{' '}
+              <a
+                href={community.link}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {community.name}
+              </a>
+            </div>
+          )}
         </Footer>
       </Container>
     );

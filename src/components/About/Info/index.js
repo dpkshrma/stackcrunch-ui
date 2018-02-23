@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import KnowMore from './KnowMore';
 import EmailInput from './EmailInput';
 import Switcher from './Switcher';
 import Playground from './Playground';
@@ -9,6 +8,7 @@ const Content = styled.div`
   display: flex;
   flex-direction: row;
   width: 100vw;
+  height: calc(100vh - 86px);
 `;
 const SectionLeft = styled.div`
   padding: 12px 80px;
@@ -80,7 +80,6 @@ class Info extends React.Component {
             Be the first one to know!
           </LaunchText>
           <EmailInput placeholder="Your Email Address" />
-          <KnowMore />
         </SectionLeft>
         <SectionRight>
           <Playground />

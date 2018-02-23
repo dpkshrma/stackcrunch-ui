@@ -4,10 +4,11 @@ import { TransitionMotion, spring } from 'react-motion';
 class InfiniteSwitcher extends React.Component {
   constructor(props) {
     super(props);
-    const items = React.Children.map(this.props.children, (element, key) => ({
-      element,
-      key: `${key}`
-    }));
+    const items =
+      React.Children.map(this.props.children, (element, key) => ({
+        element,
+        key: `${key}`
+      })) || [];
     this.state = {
       items: [],
       allItems: items
@@ -26,11 +27,15 @@ class InfiniteSwitcher extends React.Component {
   };
   setNextItem = () => {
     const { allItems } = this.state;
-    const [firstItem, ...restItems] = allItems;
-    this.setState({
-      items: [firstItem],
-      allItems: [...restItems, firstItem]
-    });
+    if (allItems.length > 0) {
+      const [firstItem, ...restItems] = allItems;
+      this.setState({
+        items: [firstItem],
+        allItems: [...restItems, firstItem]
+      });
+    } else {
+      window.clearTimeout(this.timerId);
+    }
   };
   getElement = key => {
     const item = this.state.allItems.find(item => item.key === key);

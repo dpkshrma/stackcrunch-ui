@@ -105,7 +105,11 @@ const ClickableBox = props => {
                 `}
                 percent={focusLine}
               />
-              <Description percent={description} />
+              <Description
+                percent={description}
+                questions={props.questions}
+                community={props.community}
+              />
             </div>
           )}
         </Container>
