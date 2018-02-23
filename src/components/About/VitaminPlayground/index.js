@@ -16,7 +16,7 @@ const generateRandomPoint = bounds => {
   };
 };
 
-class VitaminPlayground extends React.Component {
+class Playground extends React.Component {
   state = {
     selectedCommunity: null
   };
@@ -46,16 +46,20 @@ class VitaminPlayground extends React.Component {
     });
     return boxes;
   };
-  onClick = selectedCommunity => e => {
+  toggleCommunityFocus = selectedCommunity => e => {
     e.preventDefault();
-    this.setState({ selectedCommunity });
+    if (this.state.selectedCommunity !== selectedCommunity) {
+      this.setState({ selectedCommunity });
+    } else {
+      this.setState({ selectedCommunity: null });
+    }
   };
   render() {
     const { selectedCommunity } = this.state;
     return (
       <ContainerDimensions>
         {bounds => {
-          if (!this.backBoxes) this.backBoxes = this.renderBackBoxes(bounds);
+          // if (!this.backBoxes) this.backBoxes = this.renderBackBoxes(bounds);
           if (!this.containerBounds) this.containerBounds = bounds;
           return (
             <Container
@@ -78,7 +82,7 @@ class VitaminPlayground extends React.Component {
                 <ClickableBox
                   {...data}
                   key={data.id}
-                  onClick={this.onClick(data.id)}
+                  onClick={this.toggleCommunityFocus(data.id)}
                   hide={selectedCommunity && data.id !== selectedCommunity}
                   moveToBase={data.id === selectedCommunity}
                   basePosition={{ top: -1 * bounds.height / 2, left: 0 }}
@@ -92,4 +96,4 @@ class VitaminPlayground extends React.Component {
   }
 }
 
-export default VitaminPlayground;
+export default Playground;

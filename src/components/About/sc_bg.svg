@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="414 -104 1440 1000" style="enable-background:new 414 -104 1440 1000;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#202126;}
+	.st1{filter:url(#OpacityMaskFilter);}
+	.st2{fill:#FFFFFF;}
+	.st3{mask:url(#mask-3);}
+	.st4{fill:url(#Rectangle-7-Copy-8_1_);}
+	.st5{fill:url(#Rectangle-7-Copy-4_1_);}
+	.st6{fill:url(#Rectangle-7-Copy-7_1_);}
+	.st7{fill:url(#Rectangle-7-Copy-6_1_);}
+	.st8{fill:url(#Rectangle-7-Copy-9_1_);}
+	.st9{fill:url(#Rectangle-7-Copy_1_);}
+	.st10{fill:url(#Rectangle-3_1_);}
+</style>
+<g id="Symbols">
+	<g id="background">
+		<g id="Block">
+			<g id="Background-Gradient">
+				<rect id="path-2_1_" x="414" y="-104" class="st0" width="1440" height="1000"/>
+			</g>
+			<defs>
+				<filter id="OpacityMaskFilter" filterUnits="userSpaceOnUse" x="414" y="120" width="1440.7" height="776">
+					<feColorMatrix  type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0"/>
+				</filter>
+			</defs>
+			<mask maskUnits="userSpaceOnUse" x="414" y="120" width="1440.7" height="776" id="mask-3">
+				<g class="st1">
+					<rect id="path-2" x="414" y="-104" class="st2" width="1440" height="1000"/>
+				</g>
+			</mask>
+			<g id="Group-2" class="st3">
+
+					<g transform="translate(792.255267, 821.174036) rotate(-19.000000) translate(-792.255267, -821.174036) translate(-15.244733, 441.174036)">
+
+						<linearGradient id="Rectangle-7-Copy-8_1_" gradientUnits="userSpaceOnUse" x1="851.0488" y1="364.1715" x2="851.0488" y2="364.3665" gradientTransform="matrix(1526.2446 247.3394 525.5274 -718.3279 -1489058.125 51343.5977)">
+						<stop  offset="0" style="stop-color:#271449"/>
+						<stop  offset="1" style="stop-color:#2B1847;stop-opacity:0.519"/>
+					</linearGradient>
+					<path id="Rectangle-7-Copy-8" class="st4" d="M425.5,327.6L525.7,36.7c75.1,7.9,173.9,21.5,296.6,45.3
+						c325.9,63.1,582.1,26.3,886.4,9.2c133.9-7.5,247.4-18.2,331-28.5L1787,796.4L425.5,327.6z"/>
+
+						<linearGradient id="Rectangle-7-Copy-4_1_" gradientUnits="userSpaceOnUse" x1="851.0287" y1="364.2055" x2="851.0287" y2="364.4579" gradientTransform="matrix(1473.923 205.8573 507.5117 -597.8549 -1437984.375 42905.3242)">
+						<stop  offset="0" style="stop-color:#3A195D"/>
+						<stop  offset="1" style="stop-color:#301555;stop-opacity:0.645"/>
+					</linearGradient>
+					<path id="Rectangle-7-Copy-4" class="st5" d="M425.5,327.6l40-116.1c120.9,13.8,317.6,27.7,486.4-0.9
+						c280.6-47.6,524.4-68.4,824.6-14.8c81.5,14.6,150.9,23.1,207.9,27.6l-197.3,573L425.5,327.6z"/>
+
+						<linearGradient id="Rectangle-7-Copy-7_1_" gradientUnits="userSpaceOnUse" x1="851.0495" y1="364.1363" x2="851.0495" y2="364.4075" gradientTransform="matrix(1455.4435 177.3362 501.1488 -515.0237 -1419945.75 37103.6016)">
+						<stop  offset="0" style="stop-color:#481479"/>
+						<stop  offset="1" style="stop-color:#3D136E"/>
+					</linearGradient>
+					<path id="Rectangle-7-Copy-7" class="st6" d="M425.5,327.6l26.7-75.9c77,14.8,203.1,34,394.5,49.5
+						c365.2,29.5,585.7,51.9,921.2,5.4c77.3-10.7,142.8-19.4,196.8-26.4L1787,796.4L425.5,327.6z"/>
+
+						<linearGradient id="Rectangle-7-Copy-6_1_" gradientUnits="userSpaceOnUse" x1="851.5552" y1="364.1176" x2="851.5552" y2="364.5783" gradientTransform="matrix(-1409.8976 151.0458 -485.4664 -438.6679 1378558.25 31754.6016)">
+						<stop  offset="0" style="stop-color:#511098"/>
+						<stop  offset="1" style="stop-color:#6513AA;stop-opacity:0.654"/>
+					</linearGradient>
+					<path id="Rectangle-7-Copy-6" class="st7" d="M1787,796.4l144.3-416.9c-64.2,12.5-138.6,27-222,43.2
+						c-325.9,63.1-555.3-36.4-859.6-53.5c-182-10.2-324.4-25.8-409.5-36.7L1787,796.4z"/>
+
+						<radialGradient id="Rectangle-7-Copy-9_1_" cx="851.4444" cy="364.7703" r="0.4596" gradientTransform="matrix(-354.5448 299.2367 -299.237 -354.5444 412496.75 -124994.0547)" gradientUnits="userSpaceOnUse">
+						<stop  offset="0" style="stop-color:#6513AA;stop-opacity:0.15"/>
+						<stop  offset="1" style="stop-color:#48167D"/>
+					</radialGradient>
+					<path id="Rectangle-7-Copy-9" class="st8" d="M1787,796.4l144.3-416.9c-64.2,12.5-138.6,27-222,43.2
+						c-325.9,63.1-555.3-36.4-859.6-53.5c-182-10.2-324.4-25.8-409.5-36.7L1787,796.4z"/>
+
+						<linearGradient id="Rectangle-7-Copy_1_" gradientUnits="userSpaceOnUse" x1="851.0097" y1="363.9464" x2="851.0097" y2="364.7161" gradientTransform="matrix(1019.2756 108.8083 350.9643 -316.0035 -993784.375 23163.3438)">
+						<stop  offset="0" style="stop-color:#B21CD7;stop-opacity:0.7"/>
+						<stop  offset="0.4263" style="stop-color:#A619D2;stop-opacity:0.873"/>
+						<stop  offset="1" style="stop-color:#8410C3;stop-opacity:0.764"/>
+					</linearGradient>
+					<path id="Rectangle-7-Copy" class="st9" d="M822.3,462c325.9,63.1,580.2,34.3,884.5,17.2c70.8-4,135.7-8.8,193.5-13.8
+						l-113.9,330.8C1786.4,796.2,819.1,461.4,822.3,462z"/>
+				</g>
+			</g>
+		</g>
+
+			<linearGradient id="Rectangle-3_1_" gradientUnits="userSpaceOnUse" x1="828.2816" y1="791.4978" x2="828.5704" y2="791.021" gradientTransform="matrix(1440 0 0 -929 -1191492 735839)">
+			<stop  offset="0" style="stop-color:#311655;stop-opacity:0"/>
+			<stop  offset="0.6694" style="stop-color:#FF8700;stop-opacity:0.846"/>
+			<stop  offset="0.8193" style="stop-color:#FF9E15;stop-opacity:0.769"/>
+			<stop  offset="1" style="stop-color:#FF7800"/>
+		</linearGradient>
+		<rect id="Rectangle-3" x="414" y="-33" class="st10" width="1440" height="929"/>
+	</g>
+</g>
+</svg>
