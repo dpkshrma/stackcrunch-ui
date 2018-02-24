@@ -94,7 +94,11 @@ class EmailInput extends React.Component {
     e.preventDefault();
     subscribeApi
       .submit(this.state.value)
-      .then(() => {
+      .then(({ errors }) => {
+        if (errors) {
+          this.input.focus();
+          throw errors;
+        }
         this.setState({ submitSuccess: true });
       })
       .catch(console.error);
@@ -116,6 +120,9 @@ class EmailInput extends React.Component {
     </LaunchText>,
     <Form key="form">
       <Input
+        innerRef={el => {
+          this.input = el;
+        }}
         value={this.state.value}
         onChange={this.update}
         id="email-input"
