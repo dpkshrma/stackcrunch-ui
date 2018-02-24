@@ -30,6 +30,9 @@ const Title = styled.div`
   font-weight: 300;
   margin-top: 200px;
   letter-spacing: 1px;
+  & .line2 {
+    text-shadow: 0 0 12px orange;
+  }
 `;
 const Subtitle = styled.div`
   color: #ccc;
@@ -64,7 +67,7 @@ class Info extends React.Component {
               <UserType>Hackers!</UserType>
               <UserType>Weekend Ninjas!</UserType>
             </Switcher>
-            <div>Supercharge your skills!</div>
+            <div className="line2">Supercharge your skills!⚡</div>
           </Title>
           <Subtitle>
             Learn from solutions to bugs, performance issues, vulnerabilities<br />
