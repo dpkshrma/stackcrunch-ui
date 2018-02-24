@@ -4,21 +4,30 @@ import facebookIcon from '../../icons/fb.png';
 import linkedIcon from '../../icons/linkedin.png';
 import twitterIcon from '../../icons/twitter.png';
 
+const shareText =
+  'Join stackcrunch today, a platform built to make it easy to learn & stay updated through huge knowledge-bases of open QnA communities';
+const shareUrl = 'https://stackcrunch.io/';
+const shareTweet =
+  'Learn through huge knowledge-bases of open QnA communities on StackCrunch';
+
 const icons = [
   {
     id: 'facebook',
     icon: facebookIcon,
-    text: 'share'
+    text: 'share',
+    href: `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}&t=${shareText}`
   },
   {
     id: 'twitter',
     icon: twitterIcon,
-    text: 'tweet'
+    text: 'tweet',
+    href: `https://twitter.com/share?text=${shareTweet}&url=${shareUrl}`
   },
   {
     id: 'linkedIn',
     icon: linkedIcon,
-    text: 'share'
+    text: 'share',
+    href: `http://www.linkedin.com/shareArticle?mini=true&url=${shareUrl}`
   }
 ];
 
@@ -31,7 +40,7 @@ const Image = ({ src }) => {
   return <Img src={src} />;
 };
 
-const ShareIcon = ({ icon, text }) => {
+const ShareIcon = ({ icon, text, href }) => {
   const Container = styled.a`
     display: flex;
     align-items: center;
@@ -52,7 +61,7 @@ const ShareIcon = ({ icon, text }) => {
     }
   `;
   return (
-    <Container>
+    <Container href={href} target="_blank">
       <Image src={icon} /> {text}
     </Container>
   );
