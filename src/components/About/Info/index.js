@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import EmailInput from './EmailInput';
 import Switcher from './Switcher';
 import Playground from './Playground';
+import ShareIcons from './ShareIcons';
 
 const Content = styled.div`
   display: flex;
@@ -42,11 +43,6 @@ const Subtitle = styled.div`
   letter-spacing: 1px;
   line-height: 2em;
 `;
-const LaunchText = Subtitle.extend`
-  font-size: 22px;
-  color: #eee;
-  margin-top: 60px;
-`;
 const UserType = styled.div`
   margin-bottom: 8px;
   border-bottom: 3px dashed #888;
@@ -75,14 +71,8 @@ class Info extends React.Component {
             {/* StackCrunch is a place where you can find solution-centric articles<br />
             to cater all your development needs. */}
           </Subtitle>
-          <LaunchText>
-            Launching soon!{' '}
-            <span role="img" aria-label="launch">
-              🚀
-            </span>{' '}
-            Be the first one to know!
-          </LaunchText>
           <EmailInput placeholder="Your Email Address" />
+          <ShareIcons />
         </SectionLeft>
         <SectionRight>
           <Playground />
