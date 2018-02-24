@@ -9,6 +9,7 @@ export const clickables = [
     id: 'serverfault',
     community: {
       name: 'ServerFault',
+      description: '',
       link: 'https://serverfault.com/',
       icon: sfIcon
     },
@@ -54,6 +55,8 @@ export const clickables = [
     id: 'stackoverflow',
     community: {
       name: 'StackOverflow',
+      description:
+        'With over 10 million questions answered, StackOverflow stands to be one of the largest Q&A community. Read, write & learn from short articles based on this highly moderated content on StackCrunch.',
       link: 'https://stackoverflow.com/',
       icon: soIcon
     },
@@ -106,6 +109,7 @@ export const clickables = [
     id: 'superuser',
     community: {
       name: 'SuperUser',
+      // description: 'High Productivity becomes necessary when it comes to delivering high quality products quickly. ',
       link: 'https://superuser.com/',
       icon: suIcon
     },
@@ -142,6 +146,7 @@ export const clickables = [
     id: 'security',
     community: {
       name: 'Information Security',
+      // description: 'This community contains vast amount of solutions from highly experienced security professionals'
       link: 'https://security.stackexchange.com/',
       icon: secIcon
     },

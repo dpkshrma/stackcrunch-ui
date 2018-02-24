@@ -89,8 +89,9 @@ class Description extends React.Component {
       min-height: 20px;
       text-align: right;
       & a {
-        color: #00b9ff;
+        color: #fff;
         text-decoration: none;
+        text-shadow: 0 0 16px ${community.color};
       }
     `;
     const CommunityDescription = styled.div`
@@ -98,7 +99,9 @@ class Description extends React.Component {
       padding: 20px;
       color: #bbb;
       font-family: roboto;
+      font-size: 14px;
       letter-spacing: 1px;
+      line-height: 1.4;
       font-weight: 300;
     `;
     return (
@@ -109,14 +112,18 @@ class Description extends React.Component {
             opacity: 0
           }}
           style={{
-            marginTop: spring(60, { damping: 35 }),
+            marginTop: spring(48, { damping: 35 }),
             opacity: spring(1, { damping: 35 })
           }}
         >
           {style => (
             <CommunityDescription style={style}>
-              Learn from articles based on more than a million questions
-              answered on open communities.
+              {community.description || (
+                <span>
+                  Learn from intersting bite-sized stories based on millions of
+                  questions answered on open Q&A communities.
+                </span>
+              )}
             </CommunityDescription>
           )}
         </Motion>

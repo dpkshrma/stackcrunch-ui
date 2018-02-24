@@ -105,7 +105,9 @@ const ClickableBox = props => {
               <Description
                 percent={description}
                 questions={props.questions}
-                community={props.community}
+                community={Object.assign({}, props.community, {
+                  color: props.icon.color
+                })}
               />
             </div>
           )}
