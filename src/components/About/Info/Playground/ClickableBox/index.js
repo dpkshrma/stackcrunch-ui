@@ -26,9 +26,9 @@ const Container = styled.div`
 const ClickableBox = props => {
   const defaultStyles = [
     {
-      opacity: 1,
       top: props.moveToBase ? props.top : 0,
-      left: props.moveToBase ? props.left : 0
+      left: props.moveToBase ? props.left : 0,
+      scale: 0.6
     },
     {
       focusCircle: 0
@@ -46,11 +46,13 @@ const ClickableBox = props => {
     const lineAlmostComplete = prevStyles[2].focusLine > 0.99;
     return [
       {
-        opacity: spring(props.hide ? 0 : 1),
         top: spring(props.moveToBase ? props.basePosition.top : props.top, {
           damping: 40
         }),
         left: spring(props.moveToBase ? props.basePosition.left : props.left, {
+          damping: 40
+        }),
+        scale: spring(props.moveToBase ? 1 : 0.6, {
           damping: 40
         })
       },
@@ -68,17 +70,12 @@ const ClickableBox = props => {
   return (
     <StaggeredMotion defaultStyles={defaultStyles} styles={finalStyles}>
       {(
-        [
-          { opacity, top, left },
-          { focusCircle },
-          { focusLine },
-          { description }
-        ]
+        [{ top, left, scale }, { focusCircle }, { focusLine }, { description }]
       ) => (
         <Container
           top={props.top}
           left={props.left}
-          style={{ opacity, top, left }}
+          style={{ top, left, transform: `scale(${scale})` }}
         >
           <Cube
             id={props.id}

@@ -12,11 +12,11 @@ export const clickables = [
       link: 'https://serverfault.com/',
       icon: sfIcon
     },
-    top: 240,
-    left: 220,
+    top: 520,
+    left: 150,
     maxBounce: 12,
     icon: {
-      color: '#CC00FF'
+      color: '#C0F'
     },
     questions: [
       {
@@ -57,8 +57,8 @@ export const clickables = [
       link: 'https://stackoverflow.com/',
       icon: soIcon
     },
-    top: -210,
-    left: -190,
+    top: 520,
+    left: 0,
     maxBounce: 8,
     icon: {
       color: '#FD5F00'
@@ -109,11 +109,11 @@ export const clickables = [
       link: 'https://superuser.com/',
       icon: suIcon
     },
-    top: 110,
+    top: 520,
     left: -300,
     maxBounce: 14,
     icon: {
-      color: 'cyan'
+      color: '#0ff'
     },
     questions: [
       {
@@ -145,8 +145,8 @@ export const clickables = [
       link: 'https://security.stackexchange.com/',
       icon: secIcon
     },
-    top: 350,
-    left: -120,
+    top: 520,
+    left: -150,
     maxBounce: 8,
     icon: {
       color: '#39FF14'
@@ -183,11 +183,11 @@ export const clickables = [
       link: 'https://softwareengineering.stackexchange.com/',
       icon: seIcon
     },
-    top: -170,
-    left: 230,
+    top: 520,
+    left: 300,
     maxBounce: 4,
     icon: {
-      color: 'blue'
+      color: '#00f'
     },
     questions: [
       {
@@ -214,14 +214,5 @@ export const clickables = [
           "Writing good quality & maintainable code isn't always the single job of a developer, being on right side of things is also an important decision to make. This involves making some tough calls while designing/configuring a software"
       }
     ]
-  },
-  {
-    id: 'stackcrunch',
-    top: 20,
-    left: -20,
-    maxBounce: 6,
-    icon: {
-      color: 'white'
-    }
   }
 ];
