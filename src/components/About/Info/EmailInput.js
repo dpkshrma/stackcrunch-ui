@@ -2,8 +2,21 @@ import React from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
+  margin-top: 60px;
+`;
+const Form = styled.form`
   display: flex;
   margin-top: 20px;
+`;
+const LaunchText = styled.div`
+  color: #ccc;
+  font-size: 18px;
+  font-weight: 300;
+  margin-top: 24px;
+  letter-spacing: 1px;
+  line-height: 2em;
+  font-size: 22px;
+  color: #eee;
 `;
 const Input = styled.input`
   font-size: 16px;
@@ -44,13 +57,80 @@ const Submit = styled.div`
   }
 `;
 
-const EmailInput = () => {
-  return (
-    <Container>
-      <Input id="email-input" placeholder="Your Email Address" />
-      <Submit>Subscribe</Submit>
-    </Container>
+const Message = styled.div`
+  color: #fff;
+  font-size: 20px;
+  font-family: roboto;
+  font-weight: 300;
+  letter-spacing: 1px;
+  margin-top: 8px;
+  line-height: 1.2;
+`;
+const Heart = () => {
+  const Container = styled.span`
+    color: #d00404;
+  `;
+  return <Container role="img">&hearts;</Container>;
+};
+const Smile = () => {
+  const Container = styled.span`
+    color: #ffd400;
+    font-size: 28px;
+  `;
+  return <Container role="img">&#9787;</Container>;
+};
+
+class EmailInput extends React.Component {
+  state = {
+    value: '',
+    submitSuccess: false
+  };
+  update = e => {
+    e.preventDefault();
+    this.setState({ value: e.target.value });
+  };
+  submit = e => {
+    e.preventDefault();
+    this.setState({ submitSuccess: true });
+  };
+  renderSuccessMsg = () => (
+    <Message>
+      Thanks for subscribing! <Heart />
+      <br />
+      We'll notify we as soon as we go live! <Smile />
+    </Message>
   );
+  renderForm = () => [
+    <LaunchText key="launch">
+      Launching soon!{' '}
+      <span role="img" aria-label="launch">
+        🚀
+      </span>{' '}
+      Be the first one to know!
+    </LaunchText>,
+    <Form key="form">
+      <Input
+        value={this.state.value}
+        onChange={this.update}
+        id="email-input"
+        placeholder="Your Email Address"
+      />
+      <Submit onClick={this.submit}>Subscribe</Submit>
+    </Form>
+  ];
+  render() {
+    return (
+      <Container>
+        {this.state.submitSuccess ? this.renderSuccessMsg() : this.renderForm()}
+      </Container>
+    );
+  }
+}
+
+EmailInput.defaultProps = {
+  value: '',
+  onUpdate: () => {},
+  onSubmit: () => {}
 };
 
 export default EmailInput;
