@@ -29,7 +29,7 @@ const Title = styled.div`
   font-size: 48px;
   color: #fff;
   font-weight: 300;
-  margin-top: 200px;
+  margin-top: 168px;
   letter-spacing: 1px;
   & .line2 {
     text-shadow: 0 0 12px orange;
@@ -58,18 +58,21 @@ class Info extends React.Component {
       <Content>
         <SectionLeft>
           <Title>
-            <Switcher top={220}>
+            <Switcher top={188}>
               <UserType>Developers!</UserType>
               <UserType>Hackers!</UserType>
               <UserType>Weekend Ninjas!</UserType>
             </Switcher>
-            <div className="line2">Supercharge your skills!⚡</div>
+            <div className="line2">
+              Supercharge your skills!
+              <span role="img" aria-label="Supercharge your skills">
+                ⚡
+              </span>
+            </div>
           </Title>
           <Subtitle>
             Learn from solutions to bugs, performance issues, vulnerabilities<br />
             that developers around the world face everyday.
-            {/* StackCrunch is a place where you can find solution-centric articles<br />
-            to cater all your development needs. */}
           </Subtitle>
           <EmailInput placeholder="Your Email Address" />
           <ShareIcons />

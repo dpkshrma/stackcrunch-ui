@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import subscribeApi from '../../../api/subscribe';
 
 const Container = styled.div`
   margin-top: 60px;
@@ -91,7 +92,12 @@ class EmailInput extends React.Component {
   };
   submit = e => {
     e.preventDefault();
-    this.setState({ submitSuccess: true });
+    subscribeApi
+      .submit(this.state.value)
+      .then(() => {
+        this.setState({ submitSuccess: true });
+      })
+      .catch(console.error);
   };
   renderSuccessMsg = () => (
     <Message>
