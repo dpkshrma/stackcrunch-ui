@@ -58,7 +58,7 @@ const Header = () => (
   <Container>
     <Logo.Icon />
     <Logo.Text />
-    <ContributeTip href="/posts" target="_blank">
+    <ContributeTip href="/" target="_blank">
       <Tip />
       {/* ⚡Get Early Access! ⚡ */}
       ⚡Launching soon! ⚡
