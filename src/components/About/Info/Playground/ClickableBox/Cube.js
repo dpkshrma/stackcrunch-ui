@@ -1,6 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
-import * as THREE from 'three';
+import {
+  Scene,
+  PerspectiveCamera,
+  WebGLRenderer,
+  AmbientLight,
+  DirectionalLight,
+  TextureLoader,
+  BoxGeometry,
+  MeshLambertMaterial,
+  Mesh
+} from 'three';
 import boxImg from './box.png';
 
 const Container = styled.div`
@@ -16,36 +26,36 @@ class Cube extends React.Component {
     const width = this.mount.clientWidth;
     const height = this.mount.clientHeight;
 
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(25, width / height, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    const scene = new Scene();
+    const camera = new PerspectiveCamera(25, width / height, 0.1, 1000);
+    const renderer = new WebGLRenderer({ antialias: true, alpha: true });
 
     // Add lights
-    const aLight = new THREE.AmbientLight(this.props.color);
+    const aLight = new AmbientLight(this.props.color);
     scene.add(aLight);
 
-    const dLight1 = new THREE.DirectionalLight(0xffffff, 0.5);
+    const dLight1 = new DirectionalLight(0xffffff, 0.5);
     dLight1.position.set(1, 0.8, 1);
     scene.add(dLight1);
 
-    const dLight2 = new THREE.DirectionalLight(0xffffff, 0.2);
+    const dLight2 = new DirectionalLight(0xffffff, 0.2);
     dLight2.position.set(-1, -0.5, 1);
     scene.add(dLight2);
 
-    const dLight3 = new THREE.DirectionalLight(0xffffff, 0.1);
+    const dLight3 = new DirectionalLight(0xffffff, 0.1);
     dLight3.position.set(0.5, 0.5, 1);
     scene.add(dLight3);
 
-    const texture = new THREE.TextureLoader().load(boxImg);
-    const geometry = new THREE.BoxGeometry(1, 1, 1);
+    const texture = new TextureLoader().load(boxImg);
+    const geometry = new BoxGeometry(1, 1, 1);
     const materials = Array.from({ length: 6 }, (v, i) => {
       const options = { map: texture };
       if (i === 2 || i === 3) {
         options.map = null;
       }
-      return new THREE.MeshLambertMaterial(options);
+      return new MeshLambertMaterial(options);
     });
-    const cube = new THREE.Mesh(geometry, materials);
+    const cube = new Mesh(geometry, materials);
 
     camera.position.z = 4;
     scene.add(cube);
