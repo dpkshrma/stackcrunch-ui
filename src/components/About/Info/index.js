@@ -17,6 +17,14 @@ const SectionLeft = styled.div`
   display: flex;
   flex-direction: column;
   flex: 0 0 auto;
+  @media (max-width: 800px) {
+    flex: 1;
+  }
+  @media (max-width: 642px) {
+    & #email-input {
+      min-width: 240px !important;
+    }
+  }
 `;
 const SectionRight = styled.div`
   padding: 12px 80px;
@@ -24,6 +32,9 @@ const SectionRight = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1 1 auto;
+  @media (max-width: 1100px) {
+    display: none;
+  }
 `;
 const Title = styled.div`
   font-size: 48px;
@@ -56,7 +67,7 @@ class Info extends React.Component {
   render() {
     return (
       <Content>
-        <SectionLeft>
+        <SectionLeft className="section">
           <Title>
             <Switcher top={188}>
               <UserType>Developers!</UserType>
@@ -77,7 +88,7 @@ class Info extends React.Component {
           <EmailInput placeholder="Your Email Address" />
           <ShareIcons />
         </SectionLeft>
-        <SectionRight>
+        <SectionRight className="section">
           <Playground />
         </SectionRight>
       </Content>
