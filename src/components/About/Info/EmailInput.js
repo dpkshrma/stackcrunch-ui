@@ -107,7 +107,7 @@ class EmailInput extends React.Component {
     <Message>
       Thanks for subscribing! <Heart />
       <br />
-      We'll notify we as soon as we go live! <Smile />
+      We'll notify you as soon as we go live! <Smile />
     </Message>
   );
   renderForm = () => [

@@ -2,6 +2,7 @@
   "name": "stackcrunch",
   "version": "0.2.0",
   "private": true,
+  "homepage": "http://dpkshrma.github.io/stackcrunch-ui/",
   "dependencies": {
     "decorate-component-with-props": "^1.0.2",
     "draft-js": "^0.10.3",
@@ -10,7 +11,7 @@
     "jwt-decode": "^2.2.0",
     "markdown-draft-js": "^0.4.1",
     "prismjs": "^1.6.0",
-    "promisify-setstate": "^0.1.0",
+    "promisify-setstate": "^0.3.0",
     "prop-types": "^15.6.0",
     "query-string": "^5.0.0",
     "react": "^16.0.0",
@@ -39,7 +40,8 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "precommit": "lint-staged",
-    "prettier": "prettier --single-quote --write 'src/**/*.{js,json,css}'"
+    "prettier": "prettier --single-quote --write 'src/**/*.{js,json,css}'",
+    "deploy": "gh-pages -d build"
   },
   "lint-staged": {
     "src/**/*.{js,json,css}": [
@@ -48,6 +50,7 @@
     ]
   },
   "devDependencies": {
+    "gh-pages": "^1.1.0",
     "husky": "^0.14.3",
     "lint-staged": "^4.2.3",
     "prettier": "^1.7.4",

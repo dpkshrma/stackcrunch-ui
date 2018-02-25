@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import App from './components/App';
 import { asyncLoad } from './helpers/routes';
 import store from './store';
+import { URL_PREFIX } from './config';
 // import { routeAnimation } from './helpers/routes';
 
 // route components
@@ -19,6 +20,8 @@ const Contributions = asyncLoad({
   loader: () => import(`./components/Contributions`)
 });
 
+const uri = path => `${URL_PREFIX}/${path}`;
+
 // route animation helper
 // const { bounceTransition, mapStyles } = routeAnimation;
 
@@ -31,16 +34,16 @@ export default (
         mapStyles={mapStyles}
       > */}
     <Switch>
-      <Route exact path="/" component={About} />
+      <Route exact path={uri('/')} component={About} />
       <App>
         <Switch>
-          <Route exact component={PostList} path="/@:username" />
-          <Route exact component={PostList} path="/posts/" />
-          <Route exact component={Post} path="/post/:slug" />
-          <Route exact component={Profile} path="/profile" />
-          <Route exact component={Join} path="/join" />
-          <Route exact component={PostInput} path="/write/:slug?" />
-          <Route exact component={Contributions} path="/contributions" />
+          <Route exact component={PostList} path={uri('@:username')} />
+          <Route exact component={PostList} path={uri('posts/')} />
+          <Route exact component={Post} path={uri('post/:slug')} />
+          <Route exact component={Profile} path={uri('profile')} />
+          <Route exact component={Join} path={uri('join')} />
+          <Route exact component={PostInput} path={uri('write/:slug?')} />
+          <Route exact component={Contributions} path={uri('contributions')} />
           <Route component={NotFound} />
         </Switch>
       </App>
