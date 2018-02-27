@@ -12,6 +12,7 @@ const Text = () => {
   const Stack = () => {
     const Span = LogoSpan.extend`
       font-weight: 300;
+      margin-left: 12px;
     `;
     return <Span>stack</Span>;
   };
@@ -29,10 +30,10 @@ const Text = () => {
   );
 };
 
-const Icon = () => {
+const Icon = ({ css }) => {
   const Img = styled.img`
     height: 28px;
-    margin-right: 12px;
+    ${css};
   `;
 
   return <Img src={LogoImage} />;

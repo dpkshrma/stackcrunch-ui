@@ -7,9 +7,13 @@ import { asyncLoad } from './helpers/routes';
 import store from './store';
 import { URL_PREFIX } from './config';
 // import { routeAnimation } from './helpers/routes';
+import AboutLoading from './components/About/Loading';
 
 // route components
-const About = asyncLoad({ loader: () => import(`./components/About`) });
+const About = asyncLoad({
+  loader: () => import(`./components/About`),
+  loading: AboutLoading
+});
 const Post = asyncLoad({ loader: () => import(`./components/Post`) });
 const PostList = asyncLoad({ loader: () => import(`./components/PostList`) });
 const NotFound = asyncLoad({ loader: () => import(`./components/NotFound`) });
