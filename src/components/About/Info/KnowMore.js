@@ -32,11 +32,12 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  z-index: 120;
   & * {
-    color: #aaa;
+    color: #fff;
   }
   &:hover * {
-    color: #fff;
+    text-shadow: 0 0 10px #fff;
   }
 `;
 const KnowMore = () => {

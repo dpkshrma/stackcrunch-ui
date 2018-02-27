@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import LogoImage from '../icons/logo.png';
+import LogoImage from '../icons/logo.svg';
 
 const Text = () => {
   const LogoSpan = styled.span`
@@ -31,7 +31,7 @@ const Text = () => {
 
 const Icon = () => {
   const Img = styled.img`
-    height: 42px;
+    height: 28px;
     margin-right: 12px;
   `;
 

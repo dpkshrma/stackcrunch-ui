@@ -18,7 +18,7 @@ const generateRandomPoint = bounds => {
 
 class Playground extends React.Component {
   state = {
-    selectedCommunity: null
+    selectedCommunity: 'stackoverflow'
   };
   backBoxes = null;
   containerBounds = null;
