@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import EmailInput from './EmailInput';
 import Switcher from './Switcher';
-import Playground from './Playground';
 import ShareIcons from './ShareIcons';
+import Loading from '../Loading';
 
 const Content = styled.div`
   display: flex;
@@ -32,6 +32,7 @@ const SectionRight = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1 1 auto;
+  position: relative;
   @media (max-width: 1100px) {
     display: none;
   }
@@ -60,11 +61,33 @@ const UserType = styled.div`
 `;
 
 class Info extends React.Component {
+  state = {
+    Playground: null
+  };
   componentDidMount() {
     const emailInputElement = document.querySelector('#email-input');
     emailInputElement.focus();
+    const importStart = Date.now();
+    import('./Playground')
+      .then(({ default: Playground }) => {
+        const importEnd = Date.now();
+        const importTime = importEnd - importStart;
+        const minLoadTime = 3000;
+        // delay showing playground in case of a fast load
+        if (importTime < minLoadTime) {
+          setTimeout(() => {
+            this.setState({ Playground });
+          }, minLoadTime - importTime);
+        } else {
+          this.setState({ Playground });
+        }
+      })
+      .catch(err => {
+        console.error(err);
+      });
   }
   render() {
+    const { Playground } = this.state;
     return (
       <Content>
         <SectionLeft className="section">
@@ -89,7 +112,11 @@ class Info extends React.Component {
           <ShareIcons />
         </SectionLeft>
         <SectionRight className="section">
-          <Playground />
+          {Playground ? (
+            <Playground />
+          ) : (
+            <Loading text="Loading Communities..." />
+          )}
         </SectionRight>
       </Content>
     );
