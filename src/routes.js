@@ -7,9 +7,18 @@ import { asyncLoad } from './helpers/routes';
 import store from './store';
 import { URL_PREFIX } from './config';
 // import { routeAnimation } from './helpers/routes';
+import AboutLoading from './components/About/Loading';
+import Loadable from './components/Loadable';
 
 // route components
-const About = asyncLoad({ loader: () => import(`./components/About`) });
+const rc = ({ component, loader }) => props => (
+  <Loadable loader={loader} component={component} {...props} />
+);
+
+const About = rc({
+  component: import(`./components/About`),
+  loader: AboutLoading
+});
 const Post = asyncLoad({ loader: () => import(`./components/Post`) });
 const PostList = asyncLoad({ loader: () => import(`./components/PostList`) });
 const NotFound = asyncLoad({ loader: () => import(`./components/NotFound`) });
@@ -34,7 +43,7 @@ export default (
         mapStyles={mapStyles}
       > */}
     <Switch>
-      <Route exact path={uri('/')} component={About} />
+      <Route exact path={uri('/')} render={About} />
       <App>
         <Switch>
           <Route exact component={PostList} path={uri('@:username')} />

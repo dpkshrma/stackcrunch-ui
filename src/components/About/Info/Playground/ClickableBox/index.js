@@ -44,17 +44,18 @@ const ClickableBox = props => {
     const nearToBase = prevStyles[0].top / props.basePosition.top > 0.99;
     const circleAlmostComplete = prevStyles[1].focusCircle > 0.99;
     const lineAlmostComplete = prevStyles[2].focusLine > 0.99;
+    const cubeSpringConfig = { damping: 40 };
     return [
       {
-        top: spring(props.moveToBase ? props.basePosition.top : props.top, {
-          damping: 40
-        }),
-        left: spring(props.moveToBase ? props.basePosition.left : props.left, {
-          damping: 40
-        }),
-        scale: spring(props.moveToBase ? 1 : 0.6, {
-          damping: 40
-        })
+        top: spring(
+          props.moveToBase ? props.basePosition.top : props.top,
+          cubeSpringConfig
+        ),
+        left: spring(
+          props.moveToBase ? props.basePosition.left : props.left,
+          cubeSpringConfig
+        ),
+        scale: spring(props.moveToBase ? 1 : 0.6, cubeSpringConfig)
       },
       {
         focusCircle: spring(nearToBase ? 1 : 0)
