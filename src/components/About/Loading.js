@@ -46,7 +46,9 @@ const LoadText = styled.div`
   letter-spacing: 1px;
   font-family: roboto;
 `;
-const Loading = () => {
+const Loading = props => {
+  const defaultText = 'Nice things come to those who wait :)';
+  const { text = defaultText } = props;
   return (
     <Container>
       <Floater>
@@ -54,7 +56,7 @@ const Loading = () => {
       </Floater>
       <Shadow />
       <LoadText>
-        <span className="text">Nice things come to those who wait :)</span>
+        <span className="text">{text}</span>
       </LoadText>
     </Container>
   );
