@@ -120,7 +120,7 @@ class Description extends React.Component {
             <CommunityDescription style={style}>
               {community.description || (
                 <span>
-                  Learn from intersting bite-sized stories based on millions of
+                  Learn from interesting bite-sized stories based on millions of
                   questions answered on open Q&A communities.
                 </span>
               )}
