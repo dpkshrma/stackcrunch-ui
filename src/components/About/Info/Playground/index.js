@@ -18,34 +18,39 @@ const generateRandomPoint = bounds => {
 
 class Playground extends React.Component {
   state = {
-    selectedCommunity: 'stackoverflow'
+    selectedCommunity: null
   };
   backBoxes = null;
   containerBounds = null;
-  renderBackBoxes = containerBounds => {
-    const { width, height } = containerBounds;
-    const maxBoxes = 70;
-    const BackBox = Box.extend`
-      opacity: 0.6;
-      z-index: 90;
-    `;
-    const boxes = Array.from({ length: maxBoxes }, (v, i) => {
-      const randomPoint = generateRandomPoint({
-        x: [-1 * width / 2, width / 2],
-        y: [-1 * height / 2, height / 2]
-      });
-      return (
-        <BackBox
-          key={i}
-          className="box back"
-          top={randomPoint.y}
-          left={randomPoint.x}
-          size={randInt(10, 4)}
-        />
-      );
-    });
-    return boxes;
-  };
+  componentDidMount() {
+    setTimeout(() => {
+      this.setState({ selectedCommunity: 'stackoverflow' });
+    }, 1000);
+  }
+  // renderBackBoxes = containerBounds => {
+  //   const { width, height } = containerBounds;
+  //   const maxBoxes = 70;
+  //   const BackBox = Box.extend`
+  //     opacity: 0.6;
+  //     z-index: 90;
+  //   `;
+  //   const boxes = Array.from({ length: maxBoxes }, (v, i) => {
+  //     const randomPoint = generateRandomPoint({
+  //       x: [-1 * width / 2, width / 2],
+  //       y: [-1 * height / 2, height / 2]
+  //     });
+  //     return (
+  //       <BackBox
+  //         key={i}
+  //         className="box back"
+  //         top={randomPoint.y}
+  //         left={randomPoint.x}
+  //         size={randInt(10, 4)}
+  //       />
+  //     );
+  //   });
+  //   return boxes;
+  // };
   toggleCommunityFocus = selectedCommunity => e => {
     e.preventDefault();
     if (this.state.selectedCommunity !== selectedCommunity) {
@@ -68,7 +73,7 @@ class Playground extends React.Component {
               }}
               id="play"
             >
-              <Motion
+              {/* <Motion
                 defaultStyle={{ opacity: 1 }}
                 style={{ opacity: spring(selectedCommunity ? 0 : 1) }}
               >
@@ -77,7 +82,7 @@ class Playground extends React.Component {
                     {this.backBoxes}
                   </div>
                 )}
-              </Motion>
+              </Motion> */}
               {clickables.map(data => (
                 <ClickableBox
                   {...data}
