@@ -1,5 +1,5 @@
 import React from 'react';
-import { TransitionMotion, spring, presets } from 'react-motion';
+import { TransitionMotion, spring } from 'react-motion';
 import styled from 'styled-components';
 
 /**

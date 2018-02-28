@@ -1,20 +1,27 @@
 import React from 'react';
 import ContainerDimensions from 'react-container-dimensions';
-import { Motion, spring } from 'react-motion';
+import styled from 'styled-components';
+// import { Motion, spring } from 'react-motion';
 import { clickables } from './config';
-import { Container, Box } from './styled';
 import ClickableBox from './ClickableBox';
 
-const randFloat = (to, from = 1) => Math.random() * (to - from) + from;
-const randInt = (to, from = 1) => Math.round(randFloat(to, from));
-const generateRandomPoint = bounds => {
-  const [fromX, toX] = bounds.x;
-  const [fromY, toY] = bounds.y;
-  return {
-    x: randInt(toX, fromX),
-    y: randInt(toY, fromY)
-  };
-};
+const Container = styled.div`
+  position: relative;
+  width: 100%;
+  height: 100%;
+  top: -48px;
+`;
+
+// const randFloat = (to, from = 1) => Math.random() * (to - from) + from;
+// const randInt = (to, from = 1) => Math.round(randFloat(to, from));
+// const generateRandomPoint = bounds => {
+//   const [fromX, toX] = bounds.x;
+//   const [fromY, toY] = bounds.y;
+//   return {
+//     x: randInt(toX, fromX),
+//     y: randInt(toY, fromY)
+//   };
+// };
 
 class Playground extends React.Component {
   state = {
