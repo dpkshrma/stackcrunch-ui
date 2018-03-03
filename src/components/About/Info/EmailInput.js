@@ -3,21 +3,10 @@ import styled from 'styled-components';
 import subscribeApi from '../../../api/subscribe';
 
 const Container = styled.div`
-  margin-top: 60px;
-`;
-const Form = styled.form`
-  display: flex;
-  margin-top: 20px;
-`;
-const LaunchText = styled.div`
-  color: #ccc;
-  font-size: 18px;
-  font-weight: 300;
-  margin-top: 24px;
-  letter-spacing: 1px;
-  line-height: 2em;
-  font-size: 22px;
-  color: #eee;
+  margin-top: 84px;
+  @media (max-width: 479px) {
+    margin-top: 56px;
+  }
 `;
 const Input = styled.input`
   font-size: 16px;
@@ -25,8 +14,6 @@ const Input = styled.input`
   outline: none;
   border: none;
   border-bottom: 1px solid #e0e0e0;
-  min-width: 320px;
-  max-width: 400px;
   font-family: roboto;
   font-weight: 300;
   background: rgba(0, 0, 0, 0);
@@ -39,6 +26,12 @@ const Input = styled.input`
   }
   &:focus {
     border-bottom: 1px solid #ffa000;
+  }
+  @media (min-width: 1025px) {
+    width: 200px;
+  }
+  @media (min-width: 1280px) {
+    width: 320px;
   }
 `;
 const Submit = styled.div`
@@ -56,6 +49,20 @@ const Submit = styled.div`
   &:hover {
     background-color: #07c;
   }
+`;
+const Form = styled.form`
+  display: flex;
+  margin-top: 20px;
+`;
+const LaunchText = styled.div`
+  color: #ccc;
+  font-size: 18px;
+  font-weight: 300;
+  margin-top: 24px;
+  letter-spacing: 1px;
+  line-height: 2em;
+  font-size: 22px;
+  color: #eee;
 `;
 
 const Message = styled.div`

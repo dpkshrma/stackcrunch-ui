@@ -4,10 +4,11 @@ import Header from './Header';
 import Info from './Info';
 
 const Container = styled.div`
-  background: #202126;
-  background-size: cover;
-  height: 100vh;
+  background-color: #202126;
   font-family: roboto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 class About extends React.Component {

@@ -5,10 +5,9 @@ import { clickables } from './config';
 import ClickableBox from './ClickableBox';
 
 const Container = styled.div`
-  position: relative;
-  width: 100%;
-  height: 100%;
-  top: -48px;
+  @media (max-width: 1023px) {
+    margin-top: 560px;
+  }
 `;
 
 class Playground extends React.Component {
@@ -45,7 +44,7 @@ class Playground extends React.Component {
                 onClick={this.toggleCommunityFocus(data.id)}
                 hide={selectedCommunity && data.id !== selectedCommunity}
                 moveToBase={data.id === selectedCommunity}
-                basePosition={{ top: -1 * bounds.height / 2, left: 0 }}
+                basePosition={{ top: -1 * bounds.height / 2 - 80, left: 0 }}
               />
             ))}
           </Container>

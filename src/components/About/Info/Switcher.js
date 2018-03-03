@@ -72,6 +72,7 @@ class InfiniteSwitcher extends React.Component {
                     position: 'absolute',
                     top: `${config.style.top}px`
                   }}
+                  {...this.props}
                 >
                   {this.getElement(config.key)}
                 </div>

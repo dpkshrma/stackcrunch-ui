@@ -2,14 +2,6 @@ import React from 'react';
 import styled from 'styled-components';
 import Logo from './Logo';
 
-const Container = styled.div`
-  padding: 20px 80px;
-  background-color: rgba(0, 0, 0, 0);
-  display: flex;
-  align-items: center;
-  ${'' /* border-top: 4px solid #f48022; */};
-`;
-
 const Tip = styled.div`
   height: 8px;
   width: 8px;
@@ -51,6 +43,26 @@ const ContributeTip = styled.a`
   }
   &:hover {
     box-shadow: 1px 0px 2px 1px #222;
+  }
+`;
+const Container = styled.div`
+  padding: 20px 80px;
+  background-color: rgba(0, 0, 0, 0);
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  @media (max-width: 1439px) {
+    max-width: calc(100vw - 160px);
+  }
+  @media (min-width: 1440px) {
+    max-width: calc(1440px - 160px);
+  }
+  @media (max-width: 479px) {
+    max-width: calc(100vw - 40px);
+    padding: 12px 20px;
+    & ${ContributeTip} {
+      display: none;
+    }
   }
 `;
 
