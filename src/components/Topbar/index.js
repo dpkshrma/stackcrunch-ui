@@ -31,7 +31,7 @@ class Topbar extends RedirectComponent {
     return (
       <Wrapper>
         <Content>
-          <Logo to="/">
+          <Logo to="/posts">
             <Thumb src={logo} />
             <LogoText>
               <Text weight={300}>stack</Text>
