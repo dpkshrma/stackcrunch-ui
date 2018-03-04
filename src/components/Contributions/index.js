@@ -19,7 +19,7 @@ const renderPost = post => (
       <ListItem.Header.Container>
         <ListItem.Header.CreatedOn timeStamp={post.createdOn} />
         <ListItem.Separator delimiter="|" space={8} />
-        <ListItem.Header.TimeToRead ttr={post.ttr} />
+        <ListItem.Header.TimeToRead ttr={post.ttr.text} />
         <EditButton to={`write/${post.slug}`} />
       </ListItem.Header.Container>
     }

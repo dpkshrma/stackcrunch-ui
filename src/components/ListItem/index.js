@@ -84,7 +84,7 @@ const ListItem = ({
     <Wrapper>
       {showHeader && header}
       <Title to={`/post/${slug}`}>{title}</Title>
-      <Abstract>{abstract}</Abstract>
+      <Abstract>{abstract}&hellip;</Abstract>
       <Footer>
         <Tags>{tagList}</Tags>
         <Meta>
