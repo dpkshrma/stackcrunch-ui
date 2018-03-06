@@ -7,7 +7,10 @@ import Toolbar from './Toolbar';
 const Container = styled.div``;
 
 class PostEditor extends React.Component {
-  focus = () => this.editor.focus();
+  componentDidMount() {
+    this.editor.focus();
+  }
+  getEditorState = () => this.props.editorState;
   handleKeyCommand = (command, editorState) => {
     const newState = RichUtils.handleKeyCommand(editorState, command);
     if (newState) {
@@ -21,21 +24,18 @@ class PostEditor extends React.Component {
     return (
       <Container>
         <Toolbar
-          editorRef={this.editor}
-          editorState={editorState}
+          getEditorState={this.getEditorState}
           updateEditorState={onChange}
         />
-        <div onClick={this.focus}>
-          <Editor
-            ref={editor => {
-              this.editor = editor;
-            }}
-            placeholder="Write your article here..."
-            editorState={editorState}
-            handleKeyCommand={this.handleKeyCommand}
-            onChange={onChange}
-          />
-        </div>
+        <Editor
+          ref={editor => {
+            this.editor = editor;
+          }}
+          placeholder="Write your article here..."
+          editorState={editorState}
+          handleKeyCommand={this.handleKeyCommand}
+          onChange={onChange}
+        />
       </Container>
     );
   }

@@ -1,26 +1,26 @@
 import React from 'react';
 import { AtomicBlockUtils } from 'draft-js';
-import { TextInput, Button } from './styled';
+import { Image as ImageIcon } from '../../../../icons/editor';
+import { IMAGE_CTRL } from '../../../../../constants';
+import Ctrl from './Ctrl';
 
-class VideoInputModal extends React.Component {
+class ImageCtrl extends React.Component {
   state = {
     src: ''
   };
-  componentDidMount() {
-    this.input.focus();
-  }
-  onInputChange = e => {
+  onChange = e => {
     e.preventDefault();
     this.setState({ src: e.target.value });
   };
   onSubmit = e => {
     e.preventDefault();
     const { src } = this.state;
-    const { editorState } = this.props;
+    const { getEditorState } = this.props;
+    const editorState = getEditorState();
     // create entity
     const contentState = editorState.getCurrentContent();
     const contentStateWithEntity = contentState.createEntity(
-      'video',
+      'IMAGE',
       'IMMUTABLE',
       { src }
     );
@@ -34,21 +34,18 @@ class VideoInputModal extends React.Component {
     this.props.updateEditorState(newEditorState, this.props.onSubmit);
   };
   render() {
-    return [
-      <TextInput
-        innerRef={input => {
-          this.input = input;
-        }}
-        placeholder="Only Youtube/Vimeo video urls supported currently"
-        key="text-input"
-        value={this.state.src}
-        onChange={this.onInputChange}
-      />,
-      <Button onClick={this.onSubmit} key="submit-button">
-        Submit
-      </Button>
-    ];
+    const data = {
+      Icon: ImageIcon,
+      ctrlKey: IMAGE_CTRL,
+      url: this.state.src,
+      updateUrl: this.onChange,
+      submitUrl: this.onSubmit,
+      onIconClick: this.props.toggleCtrl,
+      activeCtrl: this.props.activeCtrl,
+      inputPlaceholder: 'Paste an image url (Imgur, Flickr, etc.)'
+    };
+    return <Ctrl data={data} />;
   }
 }
 
-export default VideoInputModal;
+export default ImageCtrl;

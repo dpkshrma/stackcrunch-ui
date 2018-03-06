@@ -12,6 +12,10 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   position: relative;
+  position: sticky;
+  top: 0;
+  background: #fff;
+  z-index: 300;
 `;
 const Separator = styled.div`
   border-right: 1px solid #e0e0e0;
@@ -19,21 +23,21 @@ const Separator = styled.div`
   margin: 0 8px;
 `;
 
-const Toolbar = ({ editorState, updateEditorState, editorRef }) => {
+const Toolbar = ({ getEditorState, updateEditorState }) => {
   return (
     <Container>
       <InlineStyleControls
-        editorState={editorState}
+        getEditorState={getEditorState}
         updateEditorState={updateEditorState}
       />
       <Separator />
       <BlockTypeControls
-        editorState={editorState}
+        getEditorState={getEditorState}
         updateEditorState={updateEditorState}
       />
       <Separator />
       <SpecialControls
-        editorState={editorState}
+        getEditorState={getEditorState}
         updateEditorState={updateEditorState}
       />
     </Container>

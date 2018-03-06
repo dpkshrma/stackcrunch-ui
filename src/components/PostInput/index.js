@@ -39,7 +39,7 @@ class PostInput extends React.Component {
         .then(result => {
           if (!result) return;
           const { content, meta } = result;
-          let rawContentState;
+          let rawContentState = content;
           if (Object.keys(content).indexOf('entityMap') === -1) {
             rawContentState = Object.assign({}, content, { entityMap: true });
           }
