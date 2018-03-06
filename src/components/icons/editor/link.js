@@ -6,6 +6,7 @@ const SVG = styled.svg`
   margin: 0 4px;
   cursor: pointer;
   fill: #777;
+  transform: rotate(-45deg);
 `;
 
 const LinkIcon = props => {

@@ -8,3 +8,4 @@ export { default as Code } from './code';
 export { default as Blockquote } from './blockquote';
 export { default as Image } from './image';
 export { default as Video } from './video';
+export { default as QnALink } from './QnALink';

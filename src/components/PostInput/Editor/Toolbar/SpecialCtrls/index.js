@@ -1,75 +1,47 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Link, Image, Video } from '../../../../icons/editor';
-import Modal from '../../../../Modal';
-import LinkInputModal from './LinkInputModal';
-import VideoInputModal from './VideoInputModal';
-import ImageInputModal from './ImageInputModal';
+import controls from './controls';
 
-const ModalContainer = styled.div`
-  background: #fff;
-  padding: 32px;
-  max-height: 104px;
-  max-width: calc(945px - 64px);
-  position: absolute;
-  margin: auto;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
+const ControlsContainer = styled.div`
+  display: flex;
+  flex: 1;
 `;
 
 class SpecialControls extends React.Component {
   state = {
-    isModalOpen: false,
-    activeInputControl: null
+    activeCtrlKey: null,
+    url: ''
   };
-  onCtrlClick = control => e => {
-    this.setState({
-      isModalOpen: true,
-      activeInputControl: control
+  onUrlSubmit = () => this.setState({ activeCtrlKey: null });
+  setActiveCtrl = activeCtrlKey => {
+    this.setState({ activeCtrlKey }, () => {
+      this.urlInput && this.urlInput.focus();
     });
   };
-  closeModal = () => {
-    this.setState({ isModalOpen: false });
-  };
-  onSpecialInputSubmit = () => {
-    // FIXME focussing editor does not work, (** works when not closing modal **)
-    this.props.editorRef && this.props.editorRef.focus();
-    this.closeModal();
-  };
-  renderControlModal = ({ control, ...props }) => {
-    switch (control) {
-      case 'image':
-        return <ImageInputModal {...props} />;
-      case 'video':
-        return <VideoInputModal {...props} />;
-      case 'link':
-        return <LinkInputModal {...props} />;
-      default:
-        return null;
-    }
+  renderControls = () => {
+    const { activeCtrlKey } = this.state;
+    const { getEditorState, updateEditorState } = this.props;
+    return Object.entries(controls).map(([_, control]) => {
+      const { key, Component } = control;
+      return (
+        <Component
+          key={key}
+          activeCtrl={activeCtrlKey}
+          toggleCtrl={e => {
+            e && e.preventDefault();
+            // toggle active control
+            if (activeCtrlKey) this.setActiveCtrl(null);
+            else this.setActiveCtrl(key);
+          }}
+          onSubmit={this.onUrlSubmit}
+          getEditorState={getEditorState}
+          updateEditorState={updateEditorState}
+        />
+      );
+    });
   };
   render() {
-    const { activeInputControl } = this.state;
-    const { editorState, updateEditorState } = this.props;
-
-    return [
-      <Image key="image" onClick={this.onCtrlClick('image')} />,
-      <Video key="video" onClick={this.onCtrlClick('video')} />,
-      <Link key="link" onClick={this.onCtrlClick('link')} />,
-      <Modal key="modal" isOpen={this.state.isModalOpen}>
-        <Modal.Backdrop onClick={this.closeModal} />
-        <ModalContainer>
-          {this.renderControlModal({
-            control: activeInputControl,
-            editorState: editorState,
-            updateEditorState: updateEditorState,
-            onSubmit: this.onSpecialInputSubmit
-          })}
-        </ModalContainer>
-      </Modal>
-    ];
+    return <ControlsContainer>{this.renderControls()}</ControlsContainer>;
   }
 }
 

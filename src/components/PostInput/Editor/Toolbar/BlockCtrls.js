@@ -3,7 +3,8 @@ import { RichUtils } from 'draft-js';
 import { Bullets, Numbering, Code, Blockquote } from '../../../icons/editor';
 
 const BlockTypeControls = props => {
-  const { editorState, updateEditorState } = props;
+  const { getEditorState, updateEditorState } = props;
+  const editorState = getEditorState();
   const selection = editorState.getSelection();
   const currentBlockType = editorState
     .getCurrentContent()

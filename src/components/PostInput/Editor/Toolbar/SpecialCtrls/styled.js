@@ -1,10 +1,10 @@
 import styled from 'styled-components';
+import { Button as DefaultButton } from '../../../../common';
 
 export const TextInput = styled.input`
-  font-size: 20px;
-  color: #555;
-  margin-top: 20px;
-  margin-bottom: 20px;
+  font-size: 12px;
+  color: #111;
+  letter-spacing: 1px;
   padding: 0;
   outline: none;
   border: none;
@@ -20,17 +20,7 @@ export const TextInput = styled.input`
     border-bottom: 2px solid #ffa000;
   }
 `;
-export const Button = styled.button`
-  text-decoration: none;
-  font-size: 14px;
-  outline: none;
-  background: #fff;
-  border: 1px solid #0095ff;
-  border-radius: 2px;
-  padding: 8px 16px;
-  color: #07c;
-  cursor: pointer;
-  &:hover {
-    background: #eaf5fd;
-  }
+export const Button = styled(DefaultButton)`
+  padding: 0 8px;
+  font-size: 12px;
 `;
