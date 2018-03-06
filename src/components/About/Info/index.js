@@ -7,33 +7,32 @@ import Loading from '../Loading';
 
 const Content = styled.div`
   display: flex;
-  flex-direction: row;
-  width: 100vw;
-  height: calc(100vh - 86px);
+  justify-content: center;
+  width: 100%;
+  @media (max-width: 1439px) {
+    max-width: 100vw;
+  }
+  @media (min-width: 1440px) {
+    max-width: 1440px;
+  }
+  @media (max-width: 1023px) {
+    display: block;
+  }
 `;
 const SectionLeft = styled.div`
   padding: 12px 80px;
-  height: calc(100vh-70px);
-  display: flex;
-  flex-direction: column;
   flex: 0 0 auto;
-  @media (max-width: 800px) {
+  @media (max-width: 1279px) {
     flex: 1;
   }
-  @media (max-width: 642px) {
-    & #email-input {
-      min-width: 240px !important;
-    }
+  @media (max-width: 479px) {
+    padding: 12px 20px;
   }
 `;
 const SectionRight = styled.div`
   padding: 12px 80px;
-  height: calc(100vh-70px);
-  display: flex;
-  flex-direction: column;
   flex: 1 1 auto;
-  position: relative;
-  @media (max-width: 1100px) {
+  @media (max-width: 479px) {
     display: none;
   }
 `;
@@ -41,10 +40,17 @@ const Title = styled.div`
   font-size: 48px;
   color: #fff;
   font-weight: 300;
-  margin-top: 168px;
+  margin-top: 160px;
   letter-spacing: 1px;
   & .line2 {
     text-shadow: 0 0 12px orange;
+  }
+  @media (max-width: 479px) {
+    margin-top: 100px;
+    font-size: 40px;
+    & .line1 {
+      font-size: 36px;
+    }
   }
 `;
 const Subtitle = styled.div`
@@ -66,7 +72,12 @@ class Info extends React.Component {
   };
   componentDidMount() {
     const emailInputElement = document.querySelector('#email-input');
-    emailInputElement.focus();
+    emailInputElement && emailInputElement.focus();
+    if (document.body.offsetWidth > 479) {
+      this.loadPlayground();
+    }
+  }
+  loadPlayground = () => {
     const importStart = Date.now();
     import('./Playground')
       .then(({ default: Playground }) => {
@@ -85,14 +96,18 @@ class Info extends React.Component {
       .catch(err => {
         console.error(err);
       });
-  }
+  };
   render() {
     const { Playground } = this.state;
+    let switcherMarginTop = 188;
+    if (document.body.offsetWidth < 480) {
+      switcherMarginTop = 120;
+    }
     return (
-      <Content>
+      <Content className="content">
         <SectionLeft className="section">
           <Title>
-            <Switcher top={188}>
+            <Switcher top={switcherMarginTop} className="line1">
               <UserType>Developers!</UserType>
               <UserType>Hackers!</UserType>
               <UserType>Weekend Ninjas!</UserType>

@@ -91,7 +91,8 @@ class PostPage extends React.Component {
                 css={authorCSS}
               />
               <HeaderMetaText>
-                {fromNow(createdOn)} <Separator space={8} delimiter="|" /> {ttr}
+                {fromNow(createdOn)} <Separator space={8} delimiter="|" />{' '}
+                {ttr.text}
               </HeaderMetaText>
             </HeaderMeta>
             <Title>{title}</Title>

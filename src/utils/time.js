@@ -1,3 +1,14 @@
+const getEpoc = (inputTime, format = 'EPOC') => {
+  let epoc = inputTime;
+  const timeFormat = format.toUpperCase();
+  if (timeFormat === 'EPOC') {
+    if (inputTime.toString().length === 13) {
+      epoc = parseInt(inputTime / 1000, 10);
+    }
+  }
+  return epoc;
+};
+
 /*
   Mapping:
   0 to 44 seconds	s	a few seconds ago
@@ -13,12 +24,9 @@
   320 to 547 days (1.5 years)	y	a year ago
   548 days+	yy	2 years ago ... 20 years ago
 */
-export const fromNow = inputTime => {
+export const fromNow = (inputTime, format) => {
   let timeAgo = '';
-  let epoc = inputTime;
-  if (inputTime.toString().length === 13) {
-    epoc = parseInt(inputTime / 1000, 10);
-  }
+  let epoc = getEpoc(inputTime);
   const now = parseInt(Date.now() / 1000, 10);
 
   const m45 = 45 * 60;

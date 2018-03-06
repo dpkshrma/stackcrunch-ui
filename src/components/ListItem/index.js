@@ -69,12 +69,13 @@ const ListItem = ({
   } else {
     // FIXME: display owner instead of authors
     // currently assuming only one author(owner)
+    const { text: ttrText } = ttr;
     header = (
       <Header>
         <Author profile={author} />
         <CreatedOn timeStamp={createdOn} />
         <Separator space={8} delimiter="|" />
-        <TimeToRead ttr={ttr} />
+        <TimeToRead ttr={ttrText} />
       </Header>
     );
   }
@@ -83,7 +84,7 @@ const ListItem = ({
     <Wrapper>
       {showHeader && header}
       <Title to={`/post/${slug}`}>{title}</Title>
-      <Abstract>{abstract}</Abstract>
+      <Abstract>{abstract}&hellip;</Abstract>
       <Footer>
         <Tags>{tagList}</Tags>
         <Meta>

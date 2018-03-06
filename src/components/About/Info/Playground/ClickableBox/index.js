@@ -7,7 +7,7 @@ import FocusCircle from './FocusCircle';
 import Description from './Description';
 
 const Container = styled.div`
-  ${'' /* positioning */} position: absolute;
+  position: absolute;
   top: ${({ top = 0 }) => `${top}px`};
   left: ${({ left = 0 }) => `${left}px`};
   bottom: 0;
@@ -17,7 +17,7 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  ${'' /* visual */} border-radius: 50%;
+  border-radius: 50%;
   width: 80px;
   height: 80px;
   box-shadow: 0 0 32px 0 #fff;
