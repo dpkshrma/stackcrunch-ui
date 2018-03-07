@@ -10,6 +10,8 @@ export const SUBSCRIPTION_URL =
   'https://script.google.com/macros/s/AKfycbyIrAiwJq0GRlxgB_qd4fZbIS3N8Zxbjsm9xJDE8qxosmlywe28/exec';
 export const GH_CONTRIBUTION_URL =
   'https://github.com/stackcrunch/stackcrunch/CONTRIBUTION.md';
+export const SE_QUESTIONS_API_URL = qid =>
+  `https://api.stackexchange.com/2.2/questions/${qid}?order=desc&sort=activity&site=stackoverflow`;
 export const PAGE_TYPES = {
   SPECIAL: {
     tags: 'tags',
