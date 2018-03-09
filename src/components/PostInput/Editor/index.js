@@ -51,10 +51,7 @@ class PostEditor extends React.Component {
     const firstBlock = content.getFirstBlock();
     if (firstBlock.getKey() === key) {
       const firstBlockTypes = firstBlock.getType();
-      if (
-        firstBlockTypes.indexOf('atomic') === 0 ||
-        firstBlockTypes.indexOf('qna-block') === 0
-      ) {
+      if (firstBlockTypes.indexOf(Block.ATOMIC) === 0) {
         e.preventDefault();
         const newBlock = new ContentBlock({
           type: 'unstyled',
@@ -77,7 +74,7 @@ class PostEditor extends React.Component {
           EditorState.push(editorState, newContent, 'insert-characters')
         );
       }
-    } else if (currentBlock.getType().indexOf('atomic') === 0) {
+    } else if (currentBlock.getType().indexOf(Block.ATOMIC) === 0) {
       const blockBefore = content.getBlockBefore(key);
       if (!blockBefore) {
         return;

@@ -20,7 +20,8 @@ export const Block = {
   ATOMIC: 'atomic',
   BLOCKQUOTE_CAPTION: 'block-quote-caption',
   CAPTION: 'caption',
-  QNA: 'qna-block',
+  QNA: 'atomic:qna',
+  VIDEO: 'atomic:video',
   IMAGE: 'atomic:image',
   BREAK: 'atomic:break'
 };
