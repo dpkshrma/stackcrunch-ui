@@ -23,6 +23,9 @@ export const postActions = {
   LOAD_USER_PUBLISHED_POSTS: 'LOAD_USER_PUBLISHED_POSTS',
   LOAD_MORE_USER_PUBLISHED_POSTS: 'LOAD_MORE_USER_PUBLISHED_POSTS'
 };
+export const questionActions = {
+  ADD_QUESTION: 'ADD_QUESTION'
+};
 export const IMAGE_CTRL = 'IMAGE_EMBED';
 export const VIDEO_CTRL = 'VIDEO_EMBED';
 export const LINK_CTRL = 'LINK_EMBED';

@@ -34,7 +34,7 @@ class ImageCtrl extends React.Component {
     this.props.updateEditorState(newEditorState, this.props.onSubmit);
   };
   render() {
-    const data = {
+    const props = {
       Icon: ImageIcon,
       ctrlKey: IMAGE_CTRL,
       url: this.state.src,
@@ -44,7 +44,7 @@ class ImageCtrl extends React.Component {
       activeCtrl: this.props.activeCtrl,
       inputPlaceholder: 'Paste an image url (Imgur, Flickr, etc.)'
     };
-    return <Ctrl data={data} />;
+    return <Ctrl {...props} />;
   }
 }
 

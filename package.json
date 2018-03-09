@@ -7,6 +7,7 @@
     "draft-js": "^0.10.3",
     "draft-js-prism": "^1.0.5",
     "immutability-helper": "^2.4.0",
+    "is-url-superb": "^2.0.0",
     "jwt-decode": "^2.2.0",
     "markdown-draft-js": "^0.4.1",
     "prismjs": "^1.6.0",

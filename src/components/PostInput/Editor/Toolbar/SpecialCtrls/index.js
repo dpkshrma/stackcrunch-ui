@@ -12,7 +12,11 @@ class SpecialControls extends React.Component {
     activeCtrlKey: null,
     url: ''
   };
-  onUrlSubmit = () => this.setState({ activeCtrlKey: null });
+  onUrlSubmit = () => {
+    this.setState({ activeCtrlKey: null });
+    const { editorRef } = this.props;
+    editorRef && editorRef.focus();
+  };
   setActiveCtrl = activeCtrlKey => {
     this.setState({ activeCtrlKey }, () => {
       this.urlInput && this.urlInput.focus();

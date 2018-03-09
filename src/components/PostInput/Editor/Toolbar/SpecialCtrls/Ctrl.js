@@ -1,7 +1,28 @@
 import React from 'react';
+import styled, { css } from 'styled-components';
 import { TextInput, Button } from './styled';
+import isUrl from 'is-url-superb';
 
-class Ctrl extends React.Component {
+const UrlInput = styled(TextInput)`
+  ${({ valid }) =>
+    !valid &&
+    css`
+      border-color: red;
+    `};
+`;
+
+const addDefaultUrlProtocol = url => {
+  if (
+    !url.startsWith('http://') &&
+    !url.startsWith('https://') &&
+    !url.startsWith('//')
+  ) {
+    return `http://${url}`;
+  }
+  return url;
+};
+
+class LinkCtrl extends React.Component {
   // TODO: focus input on click
   // componentDidMount() {
   //   document.addEventListener('click', e => {
@@ -24,18 +45,41 @@ class Ctrl extends React.Component {
   //   this.input && this.input.focus();
   // }
   // }
-  renderUrlInput = (url, placeholder, update, submit) => {
+  state = {
+    url: '',
+    urlIsValid: true
+  };
+  onChange = e => {
+    e.preventDefault();
+    this.setState({ url: e.target.value });
+  };
+
+  onSubmit = e => {
+    e.preventDefault();
+    const { url } = this.state;
+    const webUrl = addDefaultUrlProtocol(url);
+    if (!isUrl(webUrl)) {
+      this.setState({ urlIsValid: false });
+    } else {
+      this.props.submitUrl(webUrl);
+    }
+  };
+
+  renderUrlInput = placeholder => {
+    const { url, urlIsValid } = this.state;
     return [
-      <TextInput
+      <UrlInput
         innerRef={el => {
           this.input = el;
         }}
         placeholder={placeholder}
         key="text-input"
         value={url}
-        onChange={update}
+        onChange={this.onChange}
+        required
+        valid={urlIsValid}
       />,
-      <Button onClick={submit} key="submit-button">
+      <Button onClick={this.onSubmit} key="submit-button">
         Submit
       </Button>
     ];
@@ -44,20 +88,13 @@ class Ctrl extends React.Component {
     const {
       Icon,
       ctrlKey,
-      url,
-      updateUrl,
+      activeCtrl,
       submitUrl,
       onIconClick,
-      activeCtrl,
       inputPlaceholder
-    } = this.props.data;
+    } = this.props;
 
-    const urlInput = this.renderUrlInput(
-      url,
-      inputPlaceholder,
-      updateUrl,
-      submitUrl
-    );
+    const urlInput = this.renderUrlInput(inputPlaceholder);
     const icon = <Icon key={ctrlKey} onClick={onIconClick} />;
 
     let content;
@@ -74,4 +111,4 @@ class Ctrl extends React.Component {
   }
 }
 
-export default Ctrl;
+export default LinkCtrl;

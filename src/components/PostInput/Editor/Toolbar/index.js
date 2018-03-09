@@ -23,7 +23,7 @@ const Separator = styled.div`
   margin: 0 8px;
 `;
 
-const Toolbar = ({ getEditorState, updateEditorState }) => {
+const Toolbar = ({ getEditorState, updateEditorState, editorRef }) => {
   return (
     <Container>
       <InlineStyleControls
@@ -37,6 +37,7 @@ const Toolbar = ({ getEditorState, updateEditorState }) => {
       />
       <Separator />
       <SpecialControls
+        editorRef={editorRef}
         getEditorState={getEditorState}
         updateEditorState={updateEditorState}
       />

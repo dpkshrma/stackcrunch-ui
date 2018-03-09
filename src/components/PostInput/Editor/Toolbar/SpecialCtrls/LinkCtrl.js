@@ -70,7 +70,7 @@ class LinkCtrl extends React.Component {
       activeCtrl: this.props.activeCtrl,
       inputPlaceholder: 'Paste your url here'
     };
-    return <Ctrl data={data} />;
+    return <Ctrl {...data} />;
   }
 }
 

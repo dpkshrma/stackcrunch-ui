@@ -44,7 +44,7 @@ class VideoCtrl extends React.Component {
       activeCtrl: this.props.activeCtrl,
       inputPlaceholder: 'Paste youtube/vimeo url'
     };
-    return <Ctrl data={data} />;
+    return <Ctrl {...data} />;
   }
 }
 
