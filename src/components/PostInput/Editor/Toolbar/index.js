@@ -23,23 +23,23 @@ const Separator = styled.div`
   margin: 0 8px;
 `;
 
-const Toolbar = ({ getEditorState, updateEditorState, editorRef }) => {
+const Toolbar = ({ getEditorState, setEditorState, editorRef }) => {
   return (
     <Container>
       <InlineStyleControls
         getEditorState={getEditorState}
-        updateEditorState={updateEditorState}
+        setEditorState={setEditorState}
       />
       <Separator />
       <BlockTypeControls
         getEditorState={getEditorState}
-        updateEditorState={updateEditorState}
+        setEditorState={setEditorState}
       />
       <Separator />
       <SpecialControls
         editorRef={editorRef}
         getEditorState={getEditorState}
-        updateEditorState={updateEditorState}
+        setEditorState={setEditorState}
       />
     </Container>
   );

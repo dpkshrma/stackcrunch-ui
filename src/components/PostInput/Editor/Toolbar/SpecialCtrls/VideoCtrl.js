@@ -15,7 +15,7 @@ class VideoCtrl extends React.Component {
   onSubmit = e => {
     e.preventDefault();
     const { src } = this.state;
-    const { getEditorState, updateEditorState } = this.props;
+    const { getEditorState, setEditorState } = this.props;
     const editorState = getEditorState();
     // create entity
     const contentState = editorState.getCurrentContent();
@@ -31,7 +31,7 @@ class VideoCtrl extends React.Component {
       entityKey,
       ' '
     );
-    updateEditorState(newEditorState, this.props.onSubmit);
+    setEditorState(newEditorState, this.props.onSubmit);
   };
   render() {
     const data = {

@@ -3,7 +3,7 @@ import { RichUtils } from 'draft-js';
 import { Bullets, Numbering, Code, Blockquote } from '../../../icons/editor';
 
 const BlockTypeControls = props => {
-  const { getEditorState, updateEditorState } = props;
+  const { getEditorState, setEditorState } = props;
   const editorState = getEditorState();
   const selection = editorState.getSelection();
   const currentBlockType = editorState
@@ -13,7 +13,7 @@ const BlockTypeControls = props => {
 
   const onClick = blockType => e => {
     e.preventDefault();
-    updateEditorState(RichUtils.toggleBlockType(editorState, blockType));
+    setEditorState(RichUtils.toggleBlockType(editorState, blockType));
   };
   return [
     <Numbering

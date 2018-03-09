@@ -31,7 +31,7 @@ class ImageCtrl extends React.Component {
       entityKey,
       ' '
     );
-    this.props.updateEditorState(newEditorState, this.props.onSubmit);
+    this.props.setEditorState(newEditorState, this.props.onSubmit);
   };
   render() {
     const props = {

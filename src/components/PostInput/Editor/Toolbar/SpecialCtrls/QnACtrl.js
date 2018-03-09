@@ -10,10 +10,10 @@ class QnACtrl extends React.Component {
       Icon: QnAIcon,
       ctrlKey: QNA_CTRL,
       submitUrl: url => {
-        const { getEditorState, updateEditorState } = this.props;
+        const { getEditorState, setEditorState } = this.props;
         const editorState = getEditorState();
         const newEditorState = addNewBlock(editorState, Block.QNA, { url });
-        updateEditorState(newEditorState, this.props.onSubmit);
+        setEditorState(newEditorState, this.props.onSubmit);
       },
       onIconClick: this.props.toggleCtrl,
       activeCtrl: this.props.activeCtrl,

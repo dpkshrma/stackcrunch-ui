@@ -49,7 +49,7 @@ class LinkCtrl extends React.Component {
       let newEditorState = EditorState.set(editorState, {
         currentContent: contentStateWithEntity
       });
-      this.props.updateEditorState(
+      this.props.setEditorState(
         RichUtils.toggleLink(
           newEditorState,
           newEditorState.getSelection(),

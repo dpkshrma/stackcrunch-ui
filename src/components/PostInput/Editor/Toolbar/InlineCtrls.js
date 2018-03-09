@@ -3,11 +3,11 @@ import { RichUtils } from 'draft-js';
 import { Bold, Italic, Underline } from '../../../icons/editor';
 
 const InlineStyleControls = props => {
-  const { getEditorState, updateEditorState } = props;
+  const { getEditorState, setEditorState } = props;
   const editorState = getEditorState();
   const onClick = inlineStyle => e => {
     e.preventDefault();
-    updateEditorState(RichUtils.toggleInlineStyle(editorState, inlineStyle));
+    setEditorState(RichUtils.toggleInlineStyle(editorState, inlineStyle));
   };
 
   const currentStyle = editorState.getCurrentInlineStyle();

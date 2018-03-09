@@ -24,7 +24,7 @@ class SpecialControls extends React.Component {
   };
   renderControls = () => {
     const { activeCtrlKey } = this.state;
-    const { getEditorState, updateEditorState } = this.props;
+    const { getEditorState, setEditorState } = this.props;
     return Object.entries(controls).map(([_, control]) => {
       const { key, Component } = control;
       return (
@@ -39,7 +39,7 @@ class SpecialControls extends React.Component {
           }}
           onSubmit={this.onUrlSubmit}
           getEditorState={getEditorState}
-          updateEditorState={updateEditorState}
+          setEditorState={setEditorState}
         />
       );
     });

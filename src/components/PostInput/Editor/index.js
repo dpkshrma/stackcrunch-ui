@@ -172,7 +172,7 @@ class PostEditor extends React.Component {
       <Container>
         <Toolbar
           getEditorState={this.getEditorState}
-          updateEditorState={onChange}
+          setEditorState={onChange}
           editorRef={this.editor}
         />
         <Editor
