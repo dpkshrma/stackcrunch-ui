@@ -31,6 +31,9 @@ class PostInput extends React.Component {
     fetchingEditPost: false,
     isDraft: false
   };
+  componentDidMount() {
+    this.title.focus();
+  }
   componentWillMount() {
     const { slug } = this.props.match.params;
     slug &&
@@ -136,6 +139,9 @@ class PostInput extends React.Component {
       <Container>
         <CoverImage setDataUri={this.setCoverDataUri} />
         <TitleInput
+          innerRef={el => {
+            this.title = el;
+          }}
           placeholder="Add a descriptive Title"
           value={title}
           onChange={this.updateTitle}
@@ -163,6 +169,15 @@ class PostInput extends React.Component {
           <PublishButton onClick={this.publish} disabled={fetchingEditPost}>
             Publish
           </PublishButton>
+          <DraftButton
+            onClick={() => {
+              const content = this.state.editorState.getCurrentContent();
+              const rawContentState = convertToRaw(content);
+              console.log(JSON.stringify(rawContentState, null, 2));
+            }}
+          >
+            Log
+          </DraftButton>
         </Actions>
       </Container>
     );
