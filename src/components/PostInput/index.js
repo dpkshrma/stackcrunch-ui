@@ -19,29 +19,11 @@ import {
 
 const Meta = () => <DateString>{new Date().toDateString()}</DateString>;
 
-const testContent = {
-  blocks: [
-    {
-      key: '2o52p',
-      text: 'something',
-      type: 'atomic:image',
-      depth: 0,
-      inlineStyleRanges: [],
-      entityRanges: [],
-      data: {
-        src: 'http://localhost:5000/lemonade_boy_dribbble.png'
-      }
-    }
-  ],
-  entityMap: {}
-};
-
 // TODO: font size, letter spacing, line height
 // TODO: keybindings
 class PostInput extends React.Component {
   state = {
-    editorState: EditorState.createWithContent(convertFromRaw(testContent)),
-    // editorState: EditorState.createEmpty(comboDecorator),
+    editorState: EditorState.createEmpty(comboDecorator),
     selectedTags: [],
     coverDataUri: null,
     title: '',

@@ -7,6 +7,7 @@ import {
   convertToRaw,
   ContentBlock,
   EditorBlock,
+  Modifier,
   genKey
 } from 'draft-js';
 import isSoftNewlineEvent from 'draft-js/lib/isSoftNewlineEvent';
@@ -157,6 +158,28 @@ class PostEditor extends React.Component {
     return NOT_HANDLED;
   };
 
+  handlePastedText = (text, html, es) => {
+    const { editorState } = this.props;
+    const currentBlock = getCurrentBlock(editorState);
+    if (currentBlock.getType() === Block.IMAGE) {
+      const content = editorState.getCurrentContent();
+      this.props.onChange(
+        EditorState.push(
+          editorState,
+          Modifier.insertText(content, editorState.getSelection(), text)
+        )
+      );
+      return HANDLED;
+    }
+    if (
+      this.props.handlePastedText &&
+      this.props.handlePastedText(text, html, es) === HANDLED
+    ) {
+      return HANDLED;
+    }
+    return NOT_HANDLED;
+  };
+
   render() {
     const { editorState, onChange } = this.props;
     return (
@@ -176,6 +199,7 @@ class PostEditor extends React.Component {
           onUpArrow={this.onUpArrow}
           onChange={onChange}
           handleReturn={this.handleReturn}
+          handlePastedText={this.handlePastedText}
           blockRendererFn={blockRendererFn}
           blockStyleFn={blockStyleFn}
         />

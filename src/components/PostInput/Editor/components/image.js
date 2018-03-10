@@ -8,6 +8,7 @@ const Wrapper = styled.div`
   align-items: center;
 `;
 const Img = styled.img`
+  max-width: 100%;
   align-self: center;
 `;
 const Caption = styled.figcaption`
@@ -55,8 +56,8 @@ class ImageEmbed extends React.Component {
 
     return (
       <Wrapper>
-        <img
-          ref={el => {
+        <Img
+          innerRef={el => {
             this.img = el;
           }}
           src={src}
