@@ -1,6 +1,11 @@
 import React from 'react';
+import styled from 'styled-components';
 import { RichUtils } from 'draft-js';
 import { Bold, Italic, Underline } from '../../../icons/editor';
+
+const ControlsContainer = styled.div`
+  display: flex;
+`;
 
 const InlineStyleControls = props => {
   const { getEditorState, setEditorState } = props;
@@ -12,23 +17,19 @@ const InlineStyleControls = props => {
 
   const currentStyle = editorState.getCurrentInlineStyle();
 
-  return [
-    <Bold
-      key="bold"
-      onMouseDown={onClick('BOLD')}
-      active={currentStyle.has('BOLD')}
-    />,
-    <Italic
-      key="italic"
-      onMouseDown={onClick('ITALIC')}
-      active={currentStyle.has('ITALIC')}
-    />,
-    <Underline
-      key="underline"
-      onMouseDown={onClick('UNDERLINE')}
-      active={currentStyle.has('UNDERLINE')}
-    />
-  ];
+  return (
+    <ControlsContainer>
+      <Bold onMouseDown={onClick('BOLD')} active={currentStyle.has('BOLD')} />
+      <Italic
+        onMouseDown={onClick('ITALIC')}
+        active={currentStyle.has('ITALIC')}
+      />
+      <Underline
+        onMouseDown={onClick('UNDERLINE')}
+        active={currentStyle.has('UNDERLINE')}
+      />
+    </ControlsContainer>
+  );
 };
 
 export default InlineStyleControls;

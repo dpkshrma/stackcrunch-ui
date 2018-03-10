@@ -1,6 +1,11 @@
 import React from 'react';
+import styled from 'styled-components';
 import { RichUtils } from 'draft-js';
 import { Bullets, Numbering, Code, Blockquote } from '../../../icons/editor';
+
+const ControlsContainer = styled.div`
+  display: flex;
+`;
 
 const BlockTypeControls = props => {
   const { getEditorState, setEditorState } = props;
@@ -15,28 +20,26 @@ const BlockTypeControls = props => {
     e.preventDefault();
     setEditorState(RichUtils.toggleBlockType(editorState, blockType));
   };
-  return [
-    <Numbering
-      key="numbering"
-      onMouseDown={onClick('ordered-list-item')}
-      active={currentBlockType === 'ordered-list-item'}
-    />,
-    <Bullets
-      key="bullets"
-      onMouseDown={onClick('unordered-list-item')}
-      active={currentBlockType === 'unordered-list-item'}
-    />,
-    <Blockquote
-      key="blockquote"
-      onMouseDown={onClick('blockquote')}
-      active={currentBlockType === 'blockquote'}
-    />,
-    <Code
-      key="code"
-      onMouseDown={onClick('code-block')}
-      active={currentBlockType === 'code-block'}
-    />
-  ];
+  return (
+    <ControlsContainer>
+      <Numbering
+        onMouseDown={onClick('ordered-list-item')}
+        active={currentBlockType === 'ordered-list-item'}
+      />
+      <Bullets
+        onMouseDown={onClick('unordered-list-item')}
+        active={currentBlockType === 'unordered-list-item'}
+      />
+      <Blockquote
+        onMouseDown={onClick('blockquote')}
+        active={currentBlockType === 'blockquote'}
+      />
+      <Code
+        onMouseDown={onClick('code-block')}
+        active={currentBlockType === 'code-block'}
+      />
+    </ControlsContainer>
+  );
 };
 
 export default BlockTypeControls;
