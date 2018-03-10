@@ -12,8 +12,10 @@ import {
 import isSoftNewlineEvent from 'draft-js/lib/isSoftNewlineEvent';
 import styled from 'styled-components';
 import 'draft-js/dist/Draft.css';
+import './components/image.css';
 import Toolbar from './Toolbar';
 import blockRendererFn from './utils/blockRendererFn';
+import blockStyleFn from './utils/blockStyleFn';
 import {
   Block,
   Entity as E,
@@ -155,14 +157,6 @@ class PostEditor extends React.Component {
     return NOT_HANDLED;
   };
 
-  logState = () => {
-    const contentState = this.props.editorState.getCurrentContent();
-    const rawContent = convertToRaw(contentState);
-    console.log(JSON.stringify(rawContent, null, 2));
-    const currentSelection = this.props.editorState.getSelection();
-    console.log(JSON.stringify(currentSelection, null, 2));
-  };
-
   render() {
     const { editorState, onChange } = this.props;
     return (
@@ -183,8 +177,8 @@ class PostEditor extends React.Component {
           onChange={onChange}
           handleReturn={this.handleReturn}
           blockRendererFn={blockRendererFn}
+          blockStyleFn={blockStyleFn}
         />
-        {/* <button onClick={this.logState}>Log State</button> */}
       </Container>
     );
   }
