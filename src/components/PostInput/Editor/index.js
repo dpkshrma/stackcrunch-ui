@@ -28,10 +28,33 @@ import {
   getCurrentBlock,
   resetBlockWithType,
   addNewBlockAt,
-  isCursorBetweenLink
+  isCursorBetweenLink,
+  updateDataOfBlock
 } from './model';
 
 const Container = styled.div``;
+
+const checkEmbedRegex = blockText => {
+  const videoRegex = {
+    youtube: /(?:https?:\/\/)?youtube.com\/watch\?v=(.*)/
+  };
+  const videoEmbedUrl = {
+    youtube: id => `https://youtube.com/embed/${id}`
+  };
+  const match = blockText.match(videoRegex.youtube);
+  if (match) {
+    return {
+      matched: true,
+      blockType: Block.VIDEO,
+      data: {
+        src: videoEmbedUrl.youtube`${match[1]}`
+      }
+    };
+  }
+  return {
+    matched: false
+  };
+};
 
 class PostEditor extends React.Component {
   getEditorState = () => this.props.editorState;
@@ -161,7 +184,8 @@ class PostEditor extends React.Component {
   handlePastedText = (text, html, es) => {
     const { editorState } = this.props;
     const currentBlock = getCurrentBlock(editorState);
-    if (currentBlock.getType() === Block.IMAGE) {
+    const blockType = currentBlock.getType();
+    if (blockType === Block.IMAGE) {
       const content = editorState.getCurrentContent();
       this.props.onChange(
         EditorState.push(
@@ -170,6 +194,15 @@ class PostEditor extends React.Component {
         )
       );
       return HANDLED;
+    } else if (blockType === Block.UNSTYLED) {
+      const { matched, blockType: newBlockType, data } = checkEmbedRegex(text);
+      if (matched) {
+        const newEditorState = resetBlockWithType(editorState, newBlockType, {
+          data
+        });
+        this.props.onChange(newEditorState);
+        return HANDLED;
+      }
     }
     if (
       this.props.handlePastedText &&
