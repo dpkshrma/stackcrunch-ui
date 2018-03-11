@@ -50,20 +50,13 @@ class LinkCtrl extends React.Component {
   // }
 
   state = {
-    url: '',
     urlIsValid: true
-  };
-
-  onChange = e => {
-    e.preventDefault();
-    this.setState({ url: e.target.value });
   };
 
   onSubmit = e => {
     e.preventDefault();
-    const { getEmbedUrl, submitUrl, urlIdentifier = 'src' } = this.props;
+    const { getEmbedUrl, submitUrl, urlIdentifier = 'src', url } = this.props;
 
-    const { url } = this.state;
     let webUrl = addDefaultUrlProtocol(url);
 
     let validUrl = true;
@@ -84,7 +77,8 @@ class LinkCtrl extends React.Component {
   };
 
   renderUrlInput = placeholder => {
-    const { url, urlIsValid } = this.state;
+    const { urlIsValid } = this.state;
+    const { url, updateUrl } = this.props;
     return [
       <UrlInput
         innerRef={el => {
@@ -93,7 +87,7 @@ class LinkCtrl extends React.Component {
         placeholder={placeholder}
         key="text-input"
         value={url}
-        onChange={this.onChange}
+        onChange={updateUrl}
         required
         valid={urlIsValid}
       />,

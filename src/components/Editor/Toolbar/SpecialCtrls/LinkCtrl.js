@@ -9,10 +9,12 @@ class LinkCtrl extends React.Component {
   state = {
     url: ''
   };
+
   onChange = e => {
     e.preventDefault();
     this.setState({ url: e.target.value });
   };
+
   componentWillReceiveProps(nextProps) {
     const { getEditorState, activeCtrl } = nextProps;
     if (activeCtrl === LINK_CTRL) {
@@ -29,13 +31,12 @@ class LinkCtrl extends React.Component {
           const linkInstance = contentState.getEntity(linkKey);
           url = linkInstance.getData().href;
         }
-        this.setState({ url: url });
+        this.setState({ url });
       }
     }
   }
-  onSubmit = e => {
-    e.preventDefault();
-    const { url } = this.state;
+
+  onSubmit = url => {
     const editorState = this.props.getEditorState();
     if (url) {
       // TODO: validate url
@@ -59,11 +60,12 @@ class LinkCtrl extends React.Component {
       );
     }
   };
+
   render() {
     const data = {
       Icon: LinkIcon,
       ctrlKey: LINK_CTRL,
-      url: this.state.src,
+      url: this.state.url,
       updateUrl: this.onChange,
       submitUrl: this.onSubmit,
       onIconClick: this.props.toggleCtrl,
