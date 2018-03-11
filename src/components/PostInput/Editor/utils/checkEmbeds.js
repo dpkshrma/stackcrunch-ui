@@ -4,13 +4,13 @@ import { Block } from '../constants';
 export const checkCodeEmbeds = (text = '') => {
   const embedRegex = {
     codesandbox: [
-      /(?:https?:\/\/)?codesandbox.io\/s\/([^/]*)/,
-      /(?:https?:\/\/)?codesandbox.io\/embed\/([^/]*)/
+      /(?:https?:\/\/)?codesandbox.io\/s\/([^/]+)/,
+      /(?:https?:\/\/)?codesandbox.io\/embed\/([^/]+)/
     ],
-    jsfiddle: [/(?:https?:\/\/)?jsfiddle.net\/([^/]*)\/([^/]*)/],
+    jsfiddle: [/(?:https?:\/\/)?jsfiddle.net\/([^/]+)\/([^/]+)/],
     codepen: [
-      /(?:https?:\/\/)?codepen.io\/([^/]*)\/pen\/([^/]*)/,
-      /(?:https?:\/\/)?codepen.io\/([^/]*)\/embed\/([^/]*)/
+      /(?:https?:\/\/)?codepen.io\/([^/]+)\/pen\/([^/]+)/,
+      /(?:https?:\/\/)?codepen.io\/([^/]+)\/embed\/([^/]+)/
     ]
   };
   const embedUrl = {
@@ -74,7 +74,7 @@ export const checkQnaEmbeds = (text = '') => {
     'ux.stackexchange.com'
   ].join('|');
   const urlRegex = new RegExp(
-    `(?:https?://)?(${SUPPORTED_SE_SITES})/q(?:uestions)?/([^/]*)`
+    `(?:https?://)?(${SUPPORTED_SE_SITES})/q(?:uestions)?/([^/]+)`
   );
   const match = text.match(urlRegex);
   const [url, site] = match || [];

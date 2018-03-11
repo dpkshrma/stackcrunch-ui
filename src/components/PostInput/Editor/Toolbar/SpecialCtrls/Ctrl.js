@@ -61,18 +61,26 @@ class LinkCtrl extends React.Component {
 
   onSubmit = e => {
     e.preventDefault();
-    const { isValidUrl, submitUrl } = this.props;
+    const { getEmbedUrl, submitUrl, urlIdentifier = 'src' } = this.props;
 
     const { url } = this.state;
-    const webUrl = addDefaultUrlProtocol(url);
+    let webUrl = addDefaultUrlProtocol(url);
 
     let validUrl = true;
 
     if (!isUrl(webUrl)) validUrl = false;
-    else if (isValidUrl && !isValidUrl(webUrl)) validUrl = false;
+    else if (getEmbedUrl) {
+      const embedUrlMatch = getEmbedUrl(webUrl);
+
+      if (!embedUrlMatch || !embedUrlMatch.matched) validUrl = false;
+      else webUrl = embedUrlMatch.data[urlIdentifier];
+    }
 
     if (!validUrl) this.setState({ urlIsValid: false });
-    else submitUrl(webUrl);
+    else {
+      submitUrl(webUrl);
+      this.setState({ urlIsValid: true });
+    }
   };
 
   renderUrlInput = placeholder => {

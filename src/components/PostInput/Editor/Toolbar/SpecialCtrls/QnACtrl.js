@@ -2,6 +2,7 @@ import React from 'react';
 import { QnALink as QnAIcon } from '../../../../icons/editor';
 import { addNewBlock } from '../../model';
 import { QNA_CTRL, Block } from '../../constants';
+import { checkQnaEmbeds } from '../../utils/checkEmbeds';
 import Ctrl from './Ctrl';
 
 class QnACtrl extends React.Component {
@@ -9,6 +10,8 @@ class QnACtrl extends React.Component {
     const props = {
       Icon: QnAIcon,
       ctrlKey: QNA_CTRL,
+      urlIdentifier: 'url',
+      getEmbedUrl: checkQnaEmbeds,
       submitUrl: url => {
         const { getEditorState, setEditorState } = this.props;
         const editorState = getEditorState();

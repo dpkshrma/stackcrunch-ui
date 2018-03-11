@@ -8,9 +8,6 @@ const SVG = styled.svg`
   fill: none;
   stroke: #787878;
   stroke-width: 5;
-  &:hover {
-    stroke: #07c;
-  }
 `;
 
 const QnALinkIcon = props => {

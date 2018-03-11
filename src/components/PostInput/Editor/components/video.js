@@ -8,6 +8,7 @@ const Wrapper = styled.div`
   width: 100%;
   height: 0;
   padding-bottom: 56.25%;
+  border: 1px solid #e0e0e0;
 `;
 const IFrame = styled.iframe`
   position: absolute;

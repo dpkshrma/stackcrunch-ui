@@ -10,7 +10,8 @@ class VideoCtrl extends React.Component {
     const props = {
       Icon: VideoIcon,
       ctrlKey: VIDEO_CTRL,
-      isValidUrl: checkVideoEmbeds,
+      urlIdentifier: 'src',
+      getEmbedUrl: checkVideoEmbeds,
       submitUrl: src => {
         const editorState = this.props.getEditorState();
         const newEditorState = addNewBlock(editorState, Block.VIDEO, { src });
