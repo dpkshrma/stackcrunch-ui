@@ -1,7 +1,7 @@
 import React from 'react';
 import { EditorState, RichUtils } from 'draft-js';
-import { Link as LinkIcon } from '../../../../icons/editor';
-import { LINK_CTRL } from '../../../../../constants';
+import { Link as LinkIcon } from '../../../icons/editor';
+import { LINK_CTRL } from '../../constants';
 import Ctrl from './Ctrl';
 
 // TODO: when selection is collapsed use the link url as value for the anchor entity

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { RichUtils } from 'draft-js';
-import { Bold, Italic, Underline } from '../../../icons/editor';
+import { Bold, Italic, Underline } from '../../icons/editor';
 
 const ControlsContainer = styled.div`
   display: flex;

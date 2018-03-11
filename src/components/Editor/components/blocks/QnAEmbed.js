@@ -56,6 +56,7 @@ const FlexSection = props => {
   `;
   return <Component {...props} />;
 };
+
 const CommunityLogo = ({ site }) => {
   const Component = styled.img`
     max-height: 48px;
@@ -71,6 +72,7 @@ const CommunityLogo = ({ site }) => {
   };
   return <Component src={srcMap[site]} />;
 };
+
 const OriginalPoster = ({ user }) => {
   return <FlexSection />;
 };
@@ -120,4 +122,4 @@ class QnA extends React.Component {
 const mapStateToProps = ({ questions }) => ({ questions });
 const mapDispatchToProps = { fetchQuestion };
 
-export default connect(mapStateToProps, mapDispatchToProps)(QnA);
+export const QnAEmbed = connect(mapStateToProps, mapDispatchToProps)(QnA);

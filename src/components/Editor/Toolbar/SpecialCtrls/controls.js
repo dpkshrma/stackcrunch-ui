@@ -1,9 +1,4 @@
-import {
-  IMAGE_CTRL,
-  VIDEO_CTRL,
-  LINK_CTRL,
-  QNA_CTRL
-} from '../../../../../constants';
+import { IMAGE_CTRL, VIDEO_CTRL, LINK_CTRL, QNA_CTRL } from '../../constants';
 import LinkCtrl from './LinkCtrl';
 import ImageCtrl from './ImageCtrl';
 import VideoCtrl from './VideoCtrl';

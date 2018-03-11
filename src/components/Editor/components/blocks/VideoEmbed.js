@@ -19,7 +19,7 @@ const IFrame = styled.iframe`
 `;
 
 // TODO: Add loader
-const VideoEmbed = props => {
+export const VideoEmbed = props => {
   const src = props.block.get('data').get('src');
   return (
     <div>
@@ -30,5 +30,3 @@ const VideoEmbed = props => {
     </div>
   );
 };
-
-export default VideoEmbed;

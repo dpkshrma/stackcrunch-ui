@@ -11,7 +11,7 @@ import {
 import isSoftNewlineEvent from 'draft-js/lib/isSoftNewlineEvent';
 import styled from 'styled-components';
 import 'draft-js/dist/Draft.css';
-import './components/image.css';
+import './components/blocks/image.css';
 import Toolbar from './Toolbar';
 import blockRendererFn from './utils/blockRendererFn';
 import blockStyleFn from './utils/blockStyleFn';
@@ -179,7 +179,7 @@ class PostEditor extends React.Component {
   };
 
   render() {
-    const { editorState, onChange } = this.props;
+    const { editorState, onChange, readOnly } = this.props;
     return (
       <Container>
         <Toolbar
@@ -200,6 +200,7 @@ class PostEditor extends React.Component {
           handlePastedText={this.handlePastedText}
           blockRendererFn={blockRendererFn}
           blockStyleFn={blockStyleFn}
+          readOnly={readOnly}
         />
       </Container>
     );
@@ -207,6 +208,8 @@ class PostEditor extends React.Component {
 }
 
 PostEditor.defaultProps = {
+  editorState: EditorState.createEmpty(),
+  readOnly: false,
   continuousBlocks: [
     Block.UNSTYLED,
     Block.BLOCKQUOTE,

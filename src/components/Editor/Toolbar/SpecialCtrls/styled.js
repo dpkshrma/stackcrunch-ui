@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Button as DefaultButton } from '../../../../common';
+import { Button as DefaultButton } from '../../../common';
 
 export const TextInput = styled.input`
   font-size: 12px;

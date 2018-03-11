@@ -1,5 +1,5 @@
 import React from 'react';
-import { ImageIcon } from '../../../../icons/editor';
+import { ImageIcon } from '../../../icons/editor';
 import { addNewBlock } from '../../model';
 import { IMAGE_CTRL, Block } from '../../constants';
 import Ctrl from './Ctrl';

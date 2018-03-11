@@ -1,6 +1,4 @@
-import QnAEmbed from '../components/qna';
-import VideoEmbed from '../components/video';
-import ImageEmbed from '../components/image';
+import { QnAEmbed, VideoEmbed, ImageEmbed } from '../components/blocks';
 import { Block } from '../constants';
 
 const blockRendererFn = contentBlock => {

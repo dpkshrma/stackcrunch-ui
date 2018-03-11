@@ -3,7 +3,7 @@ import { EditorState, convertToRaw, convertFromRaw } from 'draft-js';
 import promisifySetState from 'promisify-setstate';
 import postAPI from '../../api/post';
 import CoverImage from './CoverImage';
-import Editor from './Editor';
+import Editor from '../Editor';
 import comboDecorator from '../Post/decorators';
 import TagInput from './TagInput';
 import {

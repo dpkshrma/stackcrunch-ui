@@ -1,5 +1,4 @@
 import { Map, List } from 'immutable';
-
 import { EditorState, ContentBlock, genKey } from 'draft-js';
 import { Block, Entity } from './constants';
 

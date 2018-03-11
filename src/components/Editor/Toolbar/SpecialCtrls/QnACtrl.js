@@ -1,5 +1,5 @@
 import React from 'react';
-import { QnALink as QnAIcon } from '../../../../icons/editor';
+import { QnALink as QnAIcon } from '../../../icons/editor';
 import { addNewBlock } from '../../model';
 import { QNA_CTRL, Block } from '../../constants';
 import { checkQnaEmbeds } from '../../utils/checkEmbeds';

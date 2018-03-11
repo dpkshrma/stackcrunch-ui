@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { RichUtils } from 'draft-js';
-import { Bullets, Numbering, Code, Blockquote } from '../../../icons/editor';
+import { Bullets, Numbering, Code, Blockquote } from '../../icons/editor';
 
 const ControlsContainer = styled.div`
   display: flex;

@@ -32,7 +32,7 @@ const CaptionPlaceholder = styled.div`
 `;
 
 // TODO: Add loader
-class ImageEmbed extends React.Component {
+export class ImageEmbed extends React.Component {
   state = {
     captionWidth: 0
   };
@@ -76,5 +76,3 @@ class ImageEmbed extends React.Component {
     );
   }
 }
-
-export default ImageEmbed;

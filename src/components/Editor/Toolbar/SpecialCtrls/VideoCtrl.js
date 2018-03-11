@@ -1,5 +1,5 @@
 import React from 'react';
-import { VideoIcon } from '../../../../icons/editor';
+import { VideoIcon } from '../../../icons/editor';
 import { addNewBlock } from '../../model';
 import { VIDEO_CTRL, Block } from '../../constants';
 import Ctrl from './Ctrl';
