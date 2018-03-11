@@ -17,6 +17,7 @@ import './components/image.css';
 import Toolbar from './Toolbar';
 import blockRendererFn from './utils/blockRendererFn';
 import blockStyleFn from './utils/blockStyleFn';
+import checkEmbeds from './utils/checkEmbeds';
 import {
   Block,
   Entity as E,
@@ -33,28 +34,6 @@ import {
 } from './model';
 
 const Container = styled.div``;
-
-const checkEmbedRegex = blockText => {
-  const videoRegex = {
-    youtube: /(?:https?:\/\/)?youtube.com\/watch\?v=(.*)/
-  };
-  const videoEmbedUrl = {
-    youtube: id => `https://youtube.com/embed/${id}`
-  };
-  const match = blockText.match(videoRegex.youtube);
-  if (match) {
-    return {
-      matched: true,
-      blockType: Block.VIDEO,
-      data: {
-        src: videoEmbedUrl.youtube`${match[1]}`
-      }
-    };
-  }
-  return {
-    matched: false
-  };
-};
 
 class PostEditor extends React.Component {
   getEditorState = () => this.props.editorState;
@@ -195,7 +174,7 @@ class PostEditor extends React.Component {
       );
       return HANDLED;
     } else if (blockType === Block.UNSTYLED) {
-      const { matched, blockType: newBlockType, data } = checkEmbedRegex(text);
+      const { matched, blockType: newBlockType, data } = checkEmbeds(text);
       if (matched) {
         const newEditorState = resetBlockWithType(editorState, newBlockType, {
           data
