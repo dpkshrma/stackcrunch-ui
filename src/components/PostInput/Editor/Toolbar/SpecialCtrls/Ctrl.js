@@ -24,6 +24,7 @@ const addDefaultUrlProtocol = url => {
 
 class LinkCtrl extends React.Component {
   // TODO: focus input on click
+
   // componentDidMount() {
   //   document.addEventListener('click', e => {
   //     if (this.container && !this.container.contains(e.target)) {
@@ -31,6 +32,7 @@ class LinkCtrl extends React.Component {
   //     }
   //   });
   // }
+
   // shouldComponentUpdate(nextProps) {
   //   const { activeCtrl, ctrlKey } = this.props.data;
   //   const { activeCtrl: nextActiveCtrl, ctrlKey: nextCtrlKey } = nextProps.data;
@@ -39,16 +41,19 @@ class LinkCtrl extends React.Component {
   //   return true;
   //   // if (activeCtrl===ctrlKey)
   // }
+
   // componentDidUpdate(prevProps) {
   // const { activeCtrl, ctrlKey } = this.props.data;
   // if (activeCtrl===ctrlKey) {
   //   this.input && this.input.focus();
   // }
   // }
+
   state = {
     url: '',
     urlIsValid: true
   };
+
   onChange = e => {
     e.preventDefault();
     this.setState({ url: e.target.value });
@@ -56,13 +61,18 @@ class LinkCtrl extends React.Component {
 
   onSubmit = e => {
     e.preventDefault();
+    const { isValidUrl, submitUrl } = this.props;
+
     const { url } = this.state;
     const webUrl = addDefaultUrlProtocol(url);
-    if (!isUrl(webUrl)) {
-      this.setState({ urlIsValid: false });
-    } else {
-      this.props.submitUrl(webUrl);
-    }
+
+    let validUrl = true;
+
+    if (!isUrl(webUrl)) validUrl = false;
+    else if (isValidUrl && !isValidUrl(webUrl)) validUrl = false;
+
+    if (!validUrl) this.setState({ urlIsValid: false });
+    else submitUrl(webUrl);
   };
 
   renderUrlInput = placeholder => {
@@ -84,12 +94,12 @@ class LinkCtrl extends React.Component {
       </Button>
     ];
   };
+
   render() {
     const {
       Icon,
       ctrlKey,
       activeCtrl,
-      submitUrl,
       onIconClick,
       inputPlaceholder
     } = this.props;

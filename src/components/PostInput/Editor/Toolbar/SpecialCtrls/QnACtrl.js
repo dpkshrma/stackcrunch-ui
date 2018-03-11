@@ -17,7 +17,7 @@ class QnACtrl extends React.Component {
       },
       onIconClick: this.props.toggleCtrl,
       activeCtrl: this.props.activeCtrl,
-      inputPlaceholder: 'Paste a StackExchange community question link'
+      inputPlaceholder: 'StackExchange Community Question Link'
     };
     return <Ctrl {...props} />;
   }

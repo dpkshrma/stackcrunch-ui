@@ -1,7 +1,7 @@
 import videoUrlParser from 'js-video-url-parser';
 import { Block } from '../constants';
 
-const checkCodeEmbeds = (text = '') => {
+export const checkCodeEmbeds = (text = '') => {
   const embedRegex = {
     codesandbox: [
       /(?:https?:\/\/)?codesandbox.io\/s\/([^/]*)/,
@@ -43,7 +43,7 @@ const checkCodeEmbeds = (text = '') => {
   return null;
 };
 
-const checkVideoEmbeds = text => {
+export const checkVideoEmbeds = text => {
   const SUPPORTED_PROVIDERS = ['youtube', 'vimeo', 'dailymotion', 'twitch'];
   const SUPPORTED_MEDIA = ['video'];
   const videoInfo = videoUrlParser.parse(text) || {};
@@ -61,7 +61,7 @@ const checkVideoEmbeds = text => {
   return null;
 };
 
-const checkQnaEmbeds = (text = '') => {
+export const checkQnaEmbeds = (text = '') => {
   const SUPPORTED_SE_SITES = [
     'stackoverflow.com',
     'serverfault.com',
@@ -74,10 +74,10 @@ const checkQnaEmbeds = (text = '') => {
     'ux.stackexchange.com'
   ].join('|');
   const urlRegex = new RegExp(
-    `(?:https?:\/\/)?(${SUPPORTED_SE_SITES})\/questions\/([^/]*)`
+    `(?:https?://)?(${SUPPORTED_SE_SITES})/q(?:uestions)?/([^/]*)`
   );
   const match = text.match(urlRegex);
-  const [url, site, id] = match || [];
+  const [url, site] = match || [];
   if (SUPPORTED_SE_SITES.indexOf(site) !== -1) {
     return {
       matched: true,

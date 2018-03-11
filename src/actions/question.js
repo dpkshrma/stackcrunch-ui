@@ -1,6 +1,5 @@
 import { questionActions as qa } from '../constants';
 import { questionApi } from '../api/question';
-import { success } from '../helpers/reducer';
 
 export const fetchQuestion = url => {
   return (dispatch, getState) => {

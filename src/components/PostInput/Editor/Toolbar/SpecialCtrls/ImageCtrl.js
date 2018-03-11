@@ -16,7 +16,7 @@ class ImageCtrl extends React.Component {
       },
       onIconClick: this.props.toggleCtrl,
       activeCtrl: this.props.activeCtrl,
-      inputPlaceholder: 'Paste an image url (Imgur, Flickr, etc.)'
+      inputPlaceholder: 'Image URL (Imgur, Flickr, etc.)'
     };
     return <Ctrl {...props} />;
   }

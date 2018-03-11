@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import fetch from 'isomorphic-fetch';
 import { EditorBlock } from 'draft-js';
 import { connect } from 'react-redux';
 import { fetchQuestion } from '../../../../actions/question';
@@ -13,7 +12,7 @@ import seIcon from '../../../icons/se-icon.png';
 const Wrapper = styled.a`
   background-color: #f7f7f7;
   border: 1px solid #eee;
-  padding: 20px;
+  padding: 12px;
   display: flex;
   flex-direction: column;
   text-decoration: none;
@@ -59,8 +58,9 @@ const FlexSection = props => {
 };
 const CommunityLogo = ({ site }) => {
   const Component = styled.img`
-    max-height: 50px;
-    max-width: 50px;
+    max-height: 48px;
+    max-width: 48px;
+    margin-right: 6px;
   `;
   const srcMap = {
     stackoverflow: soIcon,

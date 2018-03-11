@@ -4,9 +4,7 @@ import {
   Editor,
   EditorState,
   RichUtils,
-  convertToRaw,
   ContentBlock,
-  EditorBlock,
   Modifier,
   genKey
 } from 'draft-js';
@@ -18,20 +16,8 @@ import Toolbar from './Toolbar';
 import blockRendererFn from './utils/blockRendererFn';
 import blockStyleFn from './utils/blockStyleFn';
 import checkEmbeds from './utils/checkEmbeds';
-import {
-  Block,
-  Entity as E,
-  HANDLED,
-  NOT_HANDLED,
-  KEY_COMMANDS
-} from './constants';
-import {
-  getCurrentBlock,
-  resetBlockWithType,
-  addNewBlockAt,
-  isCursorBetweenLink,
-  updateDataOfBlock
-} from './model';
+import { Block, HANDLED, NOT_HANDLED } from './constants';
+import { getCurrentBlock, resetBlockWithType, addNewBlockAt } from './model';
 
 const Container = styled.div``;
 
