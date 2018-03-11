@@ -99,6 +99,7 @@ class QnA extends React.Component {
           target="_blank"
           rel="noopener noreferer"
           contentEditable="false"
+          suppressContentEditableWarning
         >
           <FlexSection horizontal>
             <CommunityLogo site={site} />
