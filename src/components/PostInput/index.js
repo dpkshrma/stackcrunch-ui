@@ -1,10 +1,9 @@
 import React from 'react';
-import { EditorState, convertToRaw, convertFromRaw } from 'draft-js';
+import { convertToRaw } from 'draft-js';
 import promisifySetState from 'promisify-setstate';
 import postAPI from '../../api/post';
 import CoverImage from './CoverImage';
-import Editor from '../Editor';
-import comboDecorator from '../Post/decorators';
+import Editor, { createEditorState } from '../Editor';
 import TagInput from './TagInput';
 import {
   Container,
@@ -23,7 +22,7 @@ const Meta = () => <DateString>{new Date().toDateString()}</DateString>;
 // TODO: keybindings
 class PostInput extends React.Component {
   state = {
-    editorState: EditorState.createEmpty(comboDecorator),
+    editorState: createEditorState(),
     selectedTags: [],
     coverDataUri: null,
     title: '',
@@ -47,10 +46,7 @@ class PostInput extends React.Component {
             rawContentState = Object.assign({}, content, { entityMap: true });
           }
           this.setState({
-            editorState: EditorState.createWithContent(
-              convertFromRaw(rawContentState),
-              comboDecorator
-            ),
+            editorState: createEditorState(rawContentState),
             title: meta.title,
             selectedTags: meta.tags || [],
             isDraft: meta.isDraft

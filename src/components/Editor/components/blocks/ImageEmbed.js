@@ -66,7 +66,10 @@ export class ImageEmbed extends React.Component {
         />
         <Caption style={{ width: `calc(${this.state.captionWidth}px - 16px)` }}>
           {blockText.length === 0 && (
-            <CaptionPlaceholder contentEditable="false">
+            <CaptionPlaceholder
+              contentEditable="false"
+              suppressContentEditableWarning
+            >
               Add a Caption...
             </CaptionPlaceholder>
           )}

@@ -1,6 +1,29 @@
 import { Map, List } from 'immutable';
-import { EditorState, ContentBlock, genKey } from 'draft-js';
+import {
+  EditorState,
+  ContentState,
+  ContentBlock,
+  convertFromRaw,
+  genKey
+} from 'draft-js';
 import { Block, Entity } from './constants';
+import defaultDecorators from './decorators';
+
+export const createEditorState = (
+  content = null,
+  decorators = defaultDecorators
+) => {
+  if (content === null) {
+    return EditorState.createEmpty(decorators);
+  }
+  let contentState = null;
+  if (typeof content === 'string') {
+    contentState = ContentState.createFromText(content);
+  } else {
+    contentState = convertFromRaw(content);
+  }
+  return EditorState.createWithContent(contentState, decorators);
+};
 
 /*
 Returns default block-level metadata for various block type. Empty object otherwise.

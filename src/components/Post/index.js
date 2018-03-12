@@ -1,5 +1,4 @@
 import React from 'react';
-import { Editor, EditorState, convertFromRaw } from 'draft-js';
 import { connect } from 'react-redux';
 // stateless components
 import { Chip } from '../common';
@@ -14,6 +13,7 @@ import {
   Content,
   authorCSS
 } from './styled';
+import Editor, { createEditorState } from '../Editor';
 import CommentThread from './CommentThread';
 import { fetchPost } from '../../actions/post';
 // global helpers
@@ -22,19 +22,15 @@ import { fromNow } from '../../utils/time';
 // component helpers
 import { markdownToDraftOptions, blockRenderMap } from './helpers';
 import markdownToDraft from './helpers/markdownToDraft';
-import comboDecorator from './decorators';
 // sample data
 import { URL_PREFIX } from '../../config';
 
 class PostPage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      editorState: EditorState.createEmpty(),
-      metadata: {},
-      loaded: false
-    };
-  }
+  state = {
+    editorState: createEditorState(),
+    metadata: {},
+    loaded: false
+  };
   componentWillMount() {
     const { slug } = this.props.match.params;
     this.props
@@ -51,10 +47,7 @@ class PostPage extends React.Component {
           } else {
             contentState = markdownToDraft(text, markdownToDraftOptions);
           }
-          const editorState = EditorState.createWithContent(
-            convertFromRaw(contentState),
-            comboDecorator
-          );
+          const editorState = createEditorState(contentState);
           this.setState({ editorState, metadata: meta, loaded: true });
           // onEnter route hook
           hooks.post.onEnter(this.props.dispatch, meta.refs);

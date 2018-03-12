@@ -8,6 +8,7 @@ const Quote = styled.div`
   background: #eee;
   font-style: italic;
   color: #555;
+  width: 100%;
 `;
 
 const blockquoteStrategy = (contentBlock, callback, contentState) => {
