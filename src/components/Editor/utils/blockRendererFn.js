@@ -1,4 +1,9 @@
-import { QnAEmbed, VideoEmbed, ImageEmbed } from '../components/blocks';
+import {
+  QnAEmbed,
+  VideoEmbed,
+  ImageEmbed,
+  Blockquote
+} from '../components/blocks';
 import { Block } from '../constants';
 
 const blockRendererFn = contentBlock => {
@@ -18,6 +23,12 @@ const blockRendererFn = contentBlock => {
   } else if (type === Block.IMAGE) {
     return {
       component: ImageEmbed,
+      editable: true,
+      props: {}
+    };
+  } else if (type === Block.BLOCKQUOTE) {
+    return {
+      component: Blockquote,
       editable: true,
       props: {}
     };
