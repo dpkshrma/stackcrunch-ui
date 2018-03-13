@@ -32,6 +32,7 @@ const Toolbar = ({ getEditorState, setEditorState, editorRef }) => {
       />
       <Separator />
       <BlockTypeControls
+        editorRef={editorRef}
         getEditorState={getEditorState}
         setEditorState={setEditorState}
       />

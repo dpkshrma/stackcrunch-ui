@@ -14,7 +14,7 @@ import 'draft-js/dist/Draft.css';
 import './components/blocks/image.css';
 import Toolbar from './Toolbar';
 import blockRendererFn from './utils/blockRendererFn';
-import blockRenderMap from './utils/blockRenderMap';
+import getBlockRenderMap from './utils/getBlockRenderMap';
 import blockStyleFn from './utils/blockStyleFn';
 import checkEmbeds from './utils/checkEmbeds';
 import { Block, HANDLED, NOT_HANDLED } from './constants';
@@ -42,8 +42,11 @@ class PostEditor extends React.Component {
     const currentBlock = content.getBlockForKey(key);
     const firstBlock = content.getFirstBlock();
     if (firstBlock.getKey() === key) {
-      const firstBlockTypes = firstBlock.getType();
-      if (firstBlockTypes.indexOf(Block.ATOMIC) === 0) {
+      const firstBlockType = firstBlock.getType();
+      if (
+        firstBlockType.indexOf(Block.ATOMIC) === 0 ||
+        firstBlockType === Block.CODE
+      ) {
         e.preventDefault();
         const newBlock = new ContentBlock({
           type: 'unstyled',
@@ -101,11 +104,22 @@ class PostEditor extends React.Component {
       const currentBlock = getCurrentBlock(editorState);
       const blockType = currentBlock.getType();
 
-      if (
-        blockType.indexOf(Block.ATOMIC) === 0 ||
-        blockType.indexOf(Block.QNA) === 0
-      ) {
+      if (blockType.indexOf(Block.ATOMIC) === 0 || blockType === Block.QNA) {
         this.props.onChange(addNewBlockAt(editorState, currentBlock.getKey()));
+        return HANDLED;
+      }
+
+      // Pass syntax data to newly added block
+      // TODO: split block instead of adding new blank one (https://github.com/facebook/draft-js/issues/723)
+      if (blockType === Block.CODE) {
+        this.props.onChange(
+          addNewBlockAt(
+            editorState,
+            currentBlock.getKey(),
+            Block.CODE,
+            currentBlock.getData()
+          )
+        );
         return HANDLED;
       }
 
@@ -202,7 +216,7 @@ class PostEditor extends React.Component {
           handleReturn={this.handleReturn}
           handlePastedText={this.handlePastedText}
           blockRendererFn={blockRendererFn}
-          blockRenderMap={blockRenderMap}
+          blockRenderMap={getBlockRenderMap(this.getEditorState, onChange)}
           blockStyleFn={blockStyleFn}
           readOnly={readOnly}
         />

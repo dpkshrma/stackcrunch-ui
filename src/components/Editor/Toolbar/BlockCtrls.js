@@ -8,7 +8,7 @@ const ControlsContainer = styled.div`
 `;
 
 const BlockTypeControls = props => {
-  const { getEditorState, setEditorState } = props;
+  const { getEditorState, setEditorState, editorRef } = props;
   const editorState = getEditorState();
   const selection = editorState.getSelection();
   const currentBlockType = editorState
@@ -19,6 +19,7 @@ const BlockTypeControls = props => {
   const onClick = blockType => e => {
     e.preventDefault();
     setEditorState(RichUtils.toggleBlockType(editorState, blockType));
+    editorRef && editorRef.focus();
   };
   return (
     <ControlsContainer>

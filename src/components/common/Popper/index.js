@@ -11,7 +11,14 @@ class Popper extends React.Component {
     });
   }
   render() {
-    const { isOpen, target, children, showTip, alignMenuRight } = this.props;
+    const {
+      isOpen,
+      target,
+      children,
+      showTip,
+      alignMenuRight,
+      Menu
+    } = this.props;
     return (
       <Wrapper
         innerRef={el => {
@@ -21,12 +28,9 @@ class Popper extends React.Component {
         {target}
         {showTip && isOpen && <Tip />}
         {isOpen && (
-          <DefaultMenu
-            onClick={this.props.onMenuClick}
-            alignRight={alignMenuRight}
-          >
+          <Menu onClick={this.props.onMenuClick} alignRight={alignMenuRight}>
             {children}
-          </DefaultMenu>
+          </Menu>
         )}
       </Wrapper>
     );
@@ -34,17 +38,22 @@ class Popper extends React.Component {
 }
 
 Popper.MenuItem = MenuItem;
+Popper.Menu = DefaultMenu;
 
 Popper.propTypes = {
   children: PropTypes.node.isRequired,
   isOpen: PropTypes.bool.isRequired,
   target: PropTypes.node.isRequired,
   showTip: PropTypes.bool,
-  onMenuClick: PropTypes.func
+  onMenuClick: PropTypes.func,
+  onClickOutside: PropTypes.func,
+  Menu: PropTypes.func
 };
 Popper.defaultProps = {
   showTip: false,
-  onMenuClick: () => {}
+  onMenuClick: () => {},
+  onClickOutside: () => {},
+  Menu: DefaultMenu
 };
 
 export default Popper;
