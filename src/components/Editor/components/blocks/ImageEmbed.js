@@ -12,13 +12,14 @@ const Img = styled.img`
   align-self: center;
 `;
 const Caption = styled.figcaption`
-  background-color: #0001;
-  padding: 8px;
-  font-size: 14px;
+  padding: 4px;
+  font-size: 13px;
   font-family: roboto;
   font-weight: 400;
-  color: #444;
+  color: #999;
   position: relative;
+  border: 1px solid #ddd;
+  border-top: none;
 `;
 const CaptionPlaceholder = styled.div`
   position: absolute;
@@ -64,7 +65,7 @@ export class ImageEmbed extends React.Component {
           alt={alt}
           title={title}
         />
-        <Caption style={{ width: `calc(${this.state.captionWidth}px - 16px)` }}>
+        <Caption style={{ width: `calc(${this.state.captionWidth}px - 8px)` }}>
           {blockText.length === 0 && (
             <CaptionPlaceholder
               contentEditable="false"
@@ -73,7 +74,11 @@ export class ImageEmbed extends React.Component {
               Add a Caption...
             </CaptionPlaceholder>
           )}
-          <EditorBlock {...this.props} />
+          <EditorBlock
+            {...this.props}
+            contentEditable="false"
+            suppressContentEditableWarning
+          />
         </Caption>
       </Wrapper>
     );

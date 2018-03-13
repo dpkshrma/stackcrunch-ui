@@ -6,33 +6,33 @@ import {
 } from '../components/blocks';
 import { Block } from '../constants';
 
-const blockRendererFn = contentBlock => {
+const getBlockRendererFn = ({ readOnly }) => contentBlock => {
   const type = contentBlock.getType();
   if (type === Block.QNA) {
     return {
       component: QnAEmbed,
-      editable: true,
+      editable: !readOnly,
       props: {}
     };
   } else if (type === Block.VIDEO) {
     return {
       component: VideoEmbed,
-      editable: true,
+      editable: !readOnly,
       props: {}
     };
   } else if (type === Block.IMAGE) {
     return {
       component: ImageEmbed,
-      editable: true,
+      editable: !readOnly,
       props: {}
     };
   } else if (type === Block.BLOCKQUOTE) {
     return {
       component: Blockquote,
-      editable: true,
+      editable: !readOnly,
       props: {}
     };
   }
 };
 
-export default blockRendererFn;
+export default getBlockRendererFn;

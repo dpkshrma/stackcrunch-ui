@@ -13,7 +13,7 @@ import styled from 'styled-components';
 import 'draft-js/dist/Draft.css';
 import './components/blocks/image.css';
 import Toolbar from './Toolbar';
-import blockRendererFn from './utils/blockRendererFn';
+import getBlockRendererFn from './utils/getBlockRendererFn';
 import getBlockRenderMap from './utils/getBlockRenderMap';
 import blockStyleFn from './utils/blockStyleFn';
 import checkEmbeds from './utils/checkEmbeds';
@@ -215,7 +215,7 @@ class PostEditor extends React.Component {
           onChange={onChange}
           handleReturn={this.handleReturn}
           handlePastedText={this.handlePastedText}
-          blockRendererFn={blockRendererFn}
+          blockRendererFn={getBlockRendererFn({ readOnly })}
           blockRenderMap={getBlockRenderMap(this.getEditorState, onChange)}
           blockStyleFn={blockStyleFn}
           readOnly={readOnly}
