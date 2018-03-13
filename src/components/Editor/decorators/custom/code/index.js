@@ -8,11 +8,12 @@ import 'prismjs/components/prism-go.min';
 import 'prismjs/components/prism-php.min';
 import 'prismjs/components/prism-scala.min';
 import 'prismjs/components/prism-json.min';
+import { DEFAULT_CODEBLOCK_LANG } from '../../../constants';
 import './prism.css';
 import './custom.css';
 
 const codeDecorator = new PrismDecorator({
-  defaultSyntax: 'javascript',
+  defaultSyntax: DEFAULT_CODEBLOCK_LANG,
   prism: Prism,
   render: props => {
     const className = `prism-token token ${props.type}`;

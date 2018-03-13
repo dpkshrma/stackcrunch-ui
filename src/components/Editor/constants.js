@@ -53,6 +53,8 @@ export const LINK_CTRL = 'LINK_EMBED';
 export const QNA_CTRL = 'QNA_EMBED';
 export const CODE_EMBED_CTRL = 'CODE_EMBED';
 
+export const DEFAULT_CODEBLOCK_LANG = 'javascript';
+
 export default {
   Block,
   Inline,

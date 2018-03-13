@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { updateDataOfBlock } from '../../model';
 import Popper from '../../../common/Popper';
+import { DEFAULT_CODEBLOCK_LANG } from '../../constants';
 
 const SUPPORTED_LANGS = {
   html: 'HTML',
@@ -41,7 +42,7 @@ const CurrentLang = styled.div`
   letter-spacing: 1px;
   font-family: roboto;
 `;
-const LangSelect = props => {
+const LangSelectButton = props => {
   const Btn = styled.div`
     background: #fff2;
     padding: 8px;
@@ -75,8 +76,21 @@ const LangSelectItem = props => {
 export class CodeBlockWrapper extends React.Component {
   state = {
     langPopperIsOpen: false,
-    currentSyntax: 'javascript'
+    currentSyntax: DEFAULT_CODEBLOCK_LANG
   };
+
+  componentDidMount() {
+    const [firstBlockKey] = React.Children.map(
+      this.props.children,
+      child => child.props.children.key
+    );
+    const editorState = this.props.getEditorState();
+    const block = editorState.getCurrentContent().getBlockForKey(firstBlockKey);
+    const currentSyntax = block.getData().get('syntax');
+    if (currentSyntax) {
+      this.setState({ currentSyntax });
+    }
+  }
 
   toggleLangPopper = e => {
     e.preventDefault();
@@ -108,13 +122,30 @@ export class CodeBlockWrapper extends React.Component {
   };
 
   render() {
-    const { children, restProps } = this.props;
+    const { children, readOnly, ...restProps } = this.props;
     const target = (
-      <LangSelect
+      <LangSelectButton
         onMouseDown={this.toggleLangPopper}
         contentEditable="false"
         suppressContentEditableWarning
       />
+    );
+    const langSelect = (
+      <Popper
+        isOpen={this.state.langPopperIsOpen}
+        target={target}
+        onClickOutside={this.closeLangPopper}
+        alignMenuRight={true}
+        Menu={CustomMenu}
+      >
+        {Object.entries(SUPPORTED_LANGS).map(([lang, langDisplay]) => {
+          return (
+            <LangSelectItem key={lang} onMouseDown={this.setSyntax(lang)}>
+              {langDisplay}
+            </LangSelectItem>
+          );
+        })}
+      </Popper>
     );
     return (
       <Container {...restProps}>
@@ -122,21 +153,7 @@ export class CodeBlockWrapper extends React.Component {
           <CurrentLang contentEditable="false" suppressContentEditableWarning>
             {SUPPORTED_LANGS[this.state.currentSyntax]}
           </CurrentLang>
-          <Popper
-            isOpen={this.state.langPopperIsOpen}
-            target={target}
-            onClickOutside={this.closeLangPopper}
-            alignMenuRight={true}
-            Menu={CustomMenu}
-          >
-            {Object.entries(SUPPORTED_LANGS).map(([lang, langDisplay]) => {
-              return (
-                <LangSelectItem key={lang} onMouseDown={this.setSyntax(lang)}>
-                  {langDisplay}
-                </LangSelectItem>
-              );
-            })}
-          </Popper>
+          {!readOnly && langSelect}
         </MenuBar>
         {children}
       </Container>

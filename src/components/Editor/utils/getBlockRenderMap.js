@@ -4,7 +4,7 @@ import { Map as ImmutableMap } from 'immutable';
 import { Block } from '../constants';
 import { CodeBlockWrapper } from '../components/blocks';
 
-const getBlockRenderMap = (getEditorState, setEditorState) =>
+const getBlockRenderMap = ({ getEditorState, setEditorState, readOnly }) =>
   DefaultDraftBlockRenderMap.merge(
     ImmutableMap({
       [Block.BLOCKQUOTE]: {
@@ -17,6 +17,7 @@ const getBlockRenderMap = (getEditorState, setEditorState) =>
         element: 'pre',
         wrapper: (
           <CodeBlockWrapper
+            readOnly={readOnly}
             getEditorState={getEditorState}
             setEditorState={setEditorState}
           />

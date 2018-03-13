@@ -216,7 +216,11 @@ class PostEditor extends React.Component {
           handleReturn={this.handleReturn}
           handlePastedText={this.handlePastedText}
           blockRendererFn={getBlockRendererFn({ readOnly })}
-          blockRenderMap={getBlockRenderMap(this.getEditorState, onChange)}
+          blockRenderMap={getBlockRenderMap({
+            getEditorState: this.getEditorState,
+            setEditorState: onChange,
+            readOnly
+          })}
           blockStyleFn={blockStyleFn}
           readOnly={readOnly}
         />
