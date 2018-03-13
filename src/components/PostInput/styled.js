@@ -38,8 +38,13 @@ export const EditorContainer = styled.div`
 export const Actions = styled.div`
   margin-top: 24px;
 `;
-export const DraftButton = Button;
-export const PublishButton = Button.extend`
+export const DraftButton = Button.extend`
+  &:disabled {
+    filter: grayscale();
+    cursor: wait;
+  }
+`;
+export const PublishButton = DraftButton.extend`
   background: #0095ff;
   color: #fff;
   &:hover {

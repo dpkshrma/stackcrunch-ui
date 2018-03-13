@@ -49,7 +49,8 @@ class PostInput extends React.Component {
             editorState: createEditorState(rawContentState),
             title: meta.title,
             selectedTags: meta.tags || [],
-            isDraft: meta.isDraft
+            isDraft: meta.isDraft,
+            fetchingEditPost: false
           });
         })
         .catch(err => {
