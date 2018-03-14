@@ -4,13 +4,15 @@ import styled, { css } from 'styled-components';
 import logo from '../icons/logo_white.png';
 import StackExchangeIcon from './icons/stackexchange';
 
+const Container = styled.div`
+  margin-top: auto;
+`;
 const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   padding: 16px;
   background: #333;
-  margin-top: 48px;
-  bottom: 0;
+  margin-top: 24px;
 `;
 const Content = styled.div`
   height: 96px;
@@ -51,30 +53,32 @@ const footerLabelCSS = css`
 
 const Footer = props => {
   return (
-    <Wrapper>
-      <Content>
-        <Logo to="/">
-          <LogoThumb src={logo} />
-          <LogoText>
-            <Text weight={300}>stack</Text>
-            <Text weight={500}>crunch</Text>
-          </LogoText>
-        </Logo>
-        <RightNav>
-          <Text css={footerLabelCSS} size={16} weight={100}>
-            Made in honour of
-            <SELink
-              href="https://stackexchange.com/"
-              target="_blank"
-              title="stackexchange"
-            >
-              <StackExchangeIcon height={24} />
-            </SELink>
-            contributors
-          </Text>
-        </RightNav>
-      </Content>
-    </Wrapper>
+    <Container>
+      <Wrapper>
+        <Content>
+          <Logo to="/">
+            <LogoThumb src={logo} />
+            <LogoText>
+              <Text weight={300}>stack</Text>
+              <Text weight={500}>crunch</Text>
+            </LogoText>
+          </Logo>
+          <RightNav>
+            <Text css={footerLabelCSS} size={16} weight={100}>
+              Made in honour of
+              <SELink
+                href="https://stackexchange.com/"
+                target="_blank"
+                title="stackexchange"
+              >
+                <StackExchangeIcon height={24} />
+              </SELink>
+              contributors
+            </Text>
+          </RightNav>
+        </Content>
+      </Wrapper>
+    </Container>
   );
 };
 

@@ -9,6 +9,7 @@ export const Wrapper = styled.div`
 
 export const Post = styled.div`
   max-width: 740px;
+  margin-top: 24px;
 `;
 
 export const Header = styled.div`
@@ -34,28 +35,7 @@ export const Title = styled.h1`
   font-size: 40px;
   font-weight: 300;
   margin: 16px 0;
-  text-decoration: none;
   padding-bottom: 2px;
-  cursor: default;
-  &:before {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 1px;
-    bottom: 0;
-    left: 0;
-    background-color: rgba(0, 119, 204, 0.3);
-    visibility: hidden;
-    -webkit-transform: scaleX(0);
-    transform: scaleX(0);
-    -webkit-transition: all 0.3s ease-in-out 0s;
-    transition: all 0.3s ease-in-out 0s;
-  }
-  &:hover:before {
-    visibility: visible;
-    -webkit-transform: scaleX(1);
-    transform: scaleX(1);
-  }
 `;
 
 export const Content = styled.div``;

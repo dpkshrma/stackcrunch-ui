@@ -8,10 +8,10 @@ import {
   ImagePreviewContainer,
   ImagePreviewOverlay,
   DeleteFab,
-  DNDPlaceHolder
+  DNDPlaceHolder,
+  MAX_COVER_HEIGHT
 } from './styled';
 
-const MAX_COVER_HEIGHT = 400;
 const initialState = {
   file: null,
   activeDrags: 0,

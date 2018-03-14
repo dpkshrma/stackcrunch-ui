@@ -7,6 +7,7 @@ import Editor, { createEditorState } from '../Editor';
 import TagInput from './TagInput';
 import {
   Container,
+  PostInputWrapper,
   TitleInput,
   DateString,
   EditorContainer,
@@ -135,50 +136,52 @@ class PostInput extends React.Component {
     return (
       <Container>
         <CoverImage setDataUri={this.setCoverDataUri} />
-        <TitleInput
-          innerRef={el => {
-            this.title = el;
-          }}
-          placeholder="Add a descriptive Title"
-          onChange={this.updateTitle}
-          contentEditable="true"
-          suppressContentEditableWarning
-        >
-          {title}
-        </TitleInput>
-        <Meta />
-        <EditorContainer>
-          <Editor editorState={editorState} onChange={this.onEditorChange} />
-        </EditorContainer>
-        <TagInput
-          selectedTags={selectedTags}
-          addTag={this.addTag}
-          removeTag={this.removeTag}
-        />
-        {this.state.editing &&
-          !this.state.isDraft && (
-            <PostSaveAlert>
-              <b>Note:</b> Saving a published post as a draft will unpublish the
-              post.
-            </PostSaveAlert>
-          )}
-        <Actions>
-          <DraftButton onClick={this.draft} disabled={fetchingEditPost}>
-            Save as draft
-          </DraftButton>
-          <PublishButton onClick={this.publish} disabled={fetchingEditPost}>
-            Publish
-          </PublishButton>
-          <DraftButton
-            onClick={() => {
-              const content = this.state.editorState.getCurrentContent();
-              const rawContentState = convertToRaw(content);
-              console.log(JSON.stringify(rawContentState, null, 2));
+        <PostInputWrapper>
+          <TitleInput
+            innerRef={el => {
+              this.title = el;
             }}
+            placeholder="Add a descriptive Title"
+            onChange={this.updateTitle}
+            contentEditable="true"
+            suppressContentEditableWarning
           >
-            Log
-          </DraftButton>
-        </Actions>
+            {title}
+          </TitleInput>
+          <Meta />
+          <EditorContainer>
+            <Editor editorState={editorState} onChange={this.onEditorChange} />
+          </EditorContainer>
+          <TagInput
+            selectedTags={selectedTags}
+            addTag={this.addTag}
+            removeTag={this.removeTag}
+          />
+          {this.state.editing &&
+            !this.state.isDraft && (
+              <PostSaveAlert>
+                <b>Note:</b> Saving a published post as a draft will unpublish
+                the post.
+              </PostSaveAlert>
+            )}
+          <Actions>
+            <DraftButton onClick={this.draft} disabled={fetchingEditPost}>
+              Save as draft
+            </DraftButton>
+            <PublishButton onClick={this.publish} disabled={fetchingEditPost}>
+              Publish
+            </PublishButton>
+            <DraftButton
+              onClick={() => {
+                const content = this.state.editorState.getCurrentContent();
+                const rawContentState = convertToRaw(content);
+                console.log(JSON.stringify(rawContentState, null, 2));
+              }}
+            >
+              Log
+            </DraftButton>
+          </Actions>
+        </PostInputWrapper>
       </Container>
     );
   }

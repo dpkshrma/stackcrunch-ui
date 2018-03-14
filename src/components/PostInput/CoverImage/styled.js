@@ -3,13 +3,15 @@ import styled from 'styled-components';
 import HandIcon from '../../icons/Hand';
 import MouseIcon from '../../icons/Mouse';
 
+export const MAX_COVER_HEIGHT = 640;
+
 export const CoverImageContainer = styled.div`
   width: 100%;
   position: relative;
 `;
 export const ImagePreviewContainer = styled.div`
   position: relative;
-  max-height: 400px;
+  max-height: ${MAX_COVER_HEIGHT}px;
   overflow: hidden;
   border-radius: 2px;
 `;

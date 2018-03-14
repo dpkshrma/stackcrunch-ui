@@ -1,10 +1,14 @@
 import styled from 'styled-components';
 import { Button, Alert } from '../common';
 
-export const Wrapper = styled.div`
+export const Container = styled.div`
   display: flex;
   justify-content: center;
-  flex-direction: column;
+`;
+export const Wrapper = styled.div`
+  max-width: 945px;
+  display: flex;
+  justify-content: center;
 `;
 export const List = styled.div`
   display: flex;

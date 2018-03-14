@@ -3,8 +3,13 @@ import { Alert, Button } from '../common';
 
 export const Container = styled.div`
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+export const PostInputWrapper = styled.div`
+  width: 100%;
   max-width: 740px;
-  justify-content: center;
 `;
 export const TitleInput = styled.div`
   font-size: 40px;
