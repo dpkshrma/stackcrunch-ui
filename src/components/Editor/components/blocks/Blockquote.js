@@ -3,14 +3,15 @@ import styled from 'styled-components';
 import { EditorBlock } from 'draft-js';
 
 const Quote = styled.div`
-  margin: 0;
+  margin: 8px 0;
   padding: 16px 0 16px 32px;
   border-left: 3px solid rgb(246, 155, 85);
-  background: #f7f7f7;
   font-style: italic;
   font-size: 24px;
   font-weight: 300;
+  font-family: roboto;
   letter-spacing: 1px;
+  line-height: 40px;
   color: #555;
 `;
 

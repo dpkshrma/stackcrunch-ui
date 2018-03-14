@@ -3,8 +3,10 @@ import { Alert, Button } from '../common';
 
 export const Container = styled.div`
   width: 100%;
+  max-width: 740px;
+  justify-content: center;
 `;
-export const TitleInput = styled.input`
+export const TitleInput = styled.div`
   font-size: 40px;
   color: #555;
   margin-top: 20px;

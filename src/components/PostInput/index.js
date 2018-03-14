@@ -140,9 +140,12 @@ class PostInput extends React.Component {
             this.title = el;
           }}
           placeholder="Add a descriptive Title"
-          value={title}
           onChange={this.updateTitle}
-        />
+          contentEditable="true"
+          suppressContentEditableWarning
+        >
+          {title}
+        </TitleInput>
         <Meta />
         <EditorContainer>
           <Editor editorState={editorState} onChange={this.onEditorChange} />

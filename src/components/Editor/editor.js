@@ -12,6 +12,7 @@ import isSoftNewlineEvent from 'draft-js/lib/isSoftNewlineEvent';
 import styled from 'styled-components';
 import 'draft-js/dist/Draft.css';
 import './components/blocks/image.css';
+import './components/blocks/block.css';
 import Toolbar from './Toolbar';
 import getBlockRendererFn from './utils/getBlockRendererFn';
 import getBlockRenderMap from './utils/getBlockRenderMap';
@@ -20,7 +21,11 @@ import checkEmbeds from './utils/checkEmbeds';
 import { Block, HANDLED, NOT_HANDLED } from './constants';
 import { getCurrentBlock, resetBlockWithType, addNewBlockAt } from './model';
 
-const Container = styled.div``;
+const Container = styled.div`
+  font-size: 16px;
+  line-height: 26px;
+  max-width: 740px;
+`;
 
 class PostEditor extends React.Component {
   getEditorState = () => this.props.editorState;

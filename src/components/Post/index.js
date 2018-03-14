@@ -73,7 +73,7 @@ class PostPage extends React.Component {
       return <div>Loading the post...</div>;
     }
     return (
-      <Wrapper>
+      <Wrapper className="post-wrapper">
         <Post>
           <Header>
             <HeaderMeta>

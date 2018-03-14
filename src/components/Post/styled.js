@@ -2,14 +2,13 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 
 export const Wrapper = styled.div`
+  width: 100%;
   display: flex;
-  align-items: center;
-  flex-direction: column;
-  padding: 24px 16px;
+  justify-content: center;
 `;
 
 export const Post = styled.div`
-  max-width: 700px;
+  max-width: 740px;
 `;
 
 export const Header = styled.div`
@@ -31,12 +30,10 @@ export const HeaderMetaText = styled.div`
 
 export const Title = styled.h1`
   position: relative;
-  color: #07c;
-  font-size: 36px;
+  color: #555;
+  font-size: 40px;
   font-weight: 300;
-  line-height: 36px;
   margin: 16px 0;
-  letter-spacing: 0.5px;
   text-decoration: none;
   padding-bottom: 2px;
   cursor: default;
@@ -61,10 +58,7 @@ export const Title = styled.h1`
   }
 `;
 
-export const Content = styled.div`
-  font-size: 16px;
-  line-height: 26px;
-`;
+export const Content = styled.div``;
 
 export const Separator = ({ space, delimiter }) => {
   const Span = styled.span`

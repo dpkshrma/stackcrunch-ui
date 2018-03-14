@@ -37,7 +37,7 @@ const Tags = styled.div`
   margin-top: 8px;
 `;
 const Tag = styled.div`
-  padding: 4px 8px;
+  padding: 0 8px;
   font-size: 12px;
   background-color: #fff;
   border-radius: 40px;
