@@ -24,7 +24,7 @@ const getBlockRendererFn = ({ readOnly }) => contentBlock => {
     return {
       component: ImageEmbed,
       editable: !readOnly,
-      props: {}
+      props: { readOnly }
     };
   } else if (type === Block.BLOCKQUOTE) {
     return {

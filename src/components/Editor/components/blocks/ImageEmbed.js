@@ -18,12 +18,10 @@ const Caption = styled.figcaption`
   font-weight: 400;
   color: #999;
   position: relative;
-  border: 1px solid #ddd;
-  border-top: none;
+  border: none;
 `;
 const CaptionPlaceholder = styled.div`
   position: absolute;
-  bottom: 8px;
   text-align: center;
   width: 100%;
   color: #aaa;
@@ -54,6 +52,7 @@ export class ImageEmbed extends React.Component {
     const src = data.get('src');
     const alt = data.get('alt');
     const title = data.get('title') || alt;
+    const { readOnly } = this.props.blockProps;
 
     return (
       <Wrapper>
@@ -66,14 +65,15 @@ export class ImageEmbed extends React.Component {
           title={title}
         />
         <Caption style={{ width: `calc(${this.state.captionWidth}px - 8px)` }}>
-          {blockText.length === 0 && (
-            <CaptionPlaceholder
-              contentEditable="false"
-              suppressContentEditableWarning
-            >
-              Add a Caption...
-            </CaptionPlaceholder>
-          )}
+          {!readOnly &&
+            blockText.length === 0 && (
+              <CaptionPlaceholder
+                contentEditable="false"
+                suppressContentEditableWarning
+              >
+                Add a Caption...
+              </CaptionPlaceholder>
+            )}
           <EditorBlock
             {...this.props}
             contentEditable="false"
