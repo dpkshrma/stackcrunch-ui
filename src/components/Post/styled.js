@@ -36,6 +36,15 @@ export const Title = styled.h1`
   font-weight: 300;
   margin: 16px 0;
   padding-bottom: 2px;
+  border-bottom: 1px solid #e0e0e0;
+`;
+
+export const DateString = styled.div`
+  font-family: roboto;
+  font-weight: 300;
+  font-size: 12px;
+  margin-bottom: 18px;
+  letter-spacing: 2px;
 `;
 
 export const Content = styled.div``;

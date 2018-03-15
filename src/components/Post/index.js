@@ -11,6 +11,7 @@ import {
   Post,
   Title,
   Content,
+  DateString,
   authorCSS
 } from './styled';
 import Editor, { createEditorState } from '../Editor';
@@ -24,6 +25,8 @@ import { markdownToDraftOptions, blockRenderMap } from './helpers';
 import markdownToDraft from './helpers/markdownToDraft';
 // sample data
 import { URL_PREFIX } from '../../config';
+
+const Meta = () => <DateString>{new Date().toDateString()}</DateString>;
 
 class PostPage extends React.Component {
   state = {
@@ -83,12 +86,10 @@ class PostPage extends React.Component {
                 href={author.link}
                 css={authorCSS}
               />
-              <HeaderMetaText>
-                {fromNow(createdOn)} <Separator space={8} delimiter="|" />{' '}
-                {ttr.text}
-              </HeaderMetaText>
+              <HeaderMetaText>{ttr.text} read</HeaderMetaText>
             </HeaderMeta>
             <Title>{title}</Title>
+            <Meta />
           </Header>
           <Content>
             <Editor
