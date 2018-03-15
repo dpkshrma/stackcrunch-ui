@@ -11,8 +11,6 @@ import {
 import isSoftNewlineEvent from 'draft-js/lib/isSoftNewlineEvent';
 import styled from 'styled-components';
 import 'draft-js/dist/Draft.css';
-import './components/blocks/image.css';
-import './components/blocks/block.css';
 import Toolbar from './Toolbar';
 import getBlockRendererFn from './utils/getBlockRendererFn';
 import getBlockRenderMap from './utils/getBlockRenderMap';
@@ -20,6 +18,9 @@ import blockStyleFn from './utils/blockStyleFn';
 import checkEmbeds from './utils/checkEmbeds';
 import { Block, HANDLED, NOT_HANDLED } from './constants';
 import { getCurrentBlock, resetBlockWithType, addNewBlockAt } from './model';
+import './components/blocks/image.css';
+import './components/blocks/block.css';
+import './editor.css';
 
 const Container = styled.div`
   font-size: 16px;
@@ -213,7 +214,7 @@ class PostEditor extends React.Component {
           ref={editor => {
             this.editor = editor;
           }}
-          placeholder="Write your article here..."
+          placeholder="Share your story here..."
           editorState={editorState}
           handleKeyCommand={this.handleKeyCommand}
           onUpArrow={this.onUpArrow}

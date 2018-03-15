@@ -16,19 +16,27 @@ export const TitleInput = styled.div`
   color: #555;
   margin-top: 20px;
   padding: 0;
+  cursor: text;
   outline: none;
   border: none;
   border-bottom: 1px solid #e0e0e0;
   width: 100%;
   font-family: roboto;
   font-weight: 300;
-  &::placeholder {
+  &:empty::before {
+    content: attr(data-placeholder);
     font-weight: 100;
-    color: #777;
+    color: #9197a3;
+  }
+  &:empty:focus::before {
+    color: #bdc1c9;
   }
   &:focus {
     border-bottom: 2px solid #ffa000;
   }
+`;
+export const TitleInputPlaceholder = styled.div`
+  color: #999;
 `;
 export const DateString = styled.div`
   font-family: roboto;

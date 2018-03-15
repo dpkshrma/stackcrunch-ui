@@ -9,6 +9,7 @@ import {
   Container,
   PostInputWrapper,
   TitleInput,
+  TitleInputPlaceholder,
   DateString,
   EditorContainer,
   Actions,
@@ -141,10 +142,10 @@ class PostInput extends React.Component {
             innerRef={el => {
               this.title = el;
             }}
-            placeholder="Add a descriptive Title"
             onChange={this.updateTitle}
             contentEditable="true"
             suppressContentEditableWarning
+            data-placeholder="Add a descriptive title"
           >
             {title}
           </TitleInput>
