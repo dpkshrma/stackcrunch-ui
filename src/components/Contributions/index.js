@@ -11,7 +11,7 @@ import {
   EditButton
 } from './styled';
 
-const renderPost = post => (
+const renderPost = editable => post => (
   <ListItem
     {...post}
     headerComponent={
@@ -19,7 +19,7 @@ const renderPost = post => (
         <ListItem.Header.CreatedOn timeStamp={post.createdOn} />
         <ListItem.Separator delimiter="|" space={8} />
         <ListItem.Header.TimeToRead ttr={post.ttr.text} />
-        <EditButton to={`write/${post.slug}`} />
+        {editable && <EditButton to={`write/${post.slug}`} />}
       </ListItem.Header.Container>
     }
     key={post.slug}
@@ -54,7 +54,7 @@ const Contributions = props => {
           loadMore={loadMore}
           opts={props.opts}
         >
-          {posts.map(renderPost)}
+          {posts.map(renderPost(props.editable))}
           {renderPaginationElements()}
         </InfiniteList>
       </List>
