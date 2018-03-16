@@ -14,14 +14,18 @@ const Wrapper = styled.div`
   margin: 0 auto;
 `;
 
-const TABS = {
-  drafts: 'Drafts',
+const PUBLIC_TABS = {
   publishedPosts: 'Published Posts',
+  basicInfo: 'Basic Info',
+};
+const TABS = {
+  publishedPosts: 'Published Posts',
+  drafts: 'Drafts',
   basicInfo: 'Basic Info',
   logout: 'Logout'
 };
 
-const Sidebar = ({ user, selectedTab, logout, onOptionClick }) => {
+const Sidebar = ({ user, tabs, selectedTab, logout, onOptionClick }) => {
   const Container = styled.div`
     flex: 2;
     display: flex;
@@ -38,7 +42,7 @@ const Sidebar = ({ user, selectedTab, logout, onOptionClick }) => {
       </UserMeta>
       <Options>
         {
-          Object.entries(TABS).map(([tab, tabDisplay]) => {
+          Object.entries(tabs).map(([tab, tabDisplay]) => {
             return (
               <Option key={tab} selected={selectedTab===tab} onClick={tab==='logout' ? logout : onOptionClick(tab)}>
                 {tabDisplay}
@@ -111,35 +115,42 @@ const Option = styled.div`
   ${getOptionSelectedStyles}
 `;
 
-const renderTab = (tab, username) => {
+const renderTab = ({ tab, username, isLoggedInUser }) => {
   switch (tab) {
     case 'drafts':
-      return <Contributions drafts={true} opts={{ username }} />;
+      return <Contributions drafts={true} opts={{ username }} editable={isLoggedInUser} />;
     case 'publishedPosts':
-      return <Contributions drafts={false} opts={{ username }} />;
+      return <Contributions drafts={false} opts={{ username }} editable={isLoggedInUser} />;
     case 'basicInfo':
     default:
       return null;
   }
 };
-const MainContent = ({ tab, username }) => {
+const MainContent = props => {
   const Container = styled.div`
     flex: 5;
   `;
   return (
     <Container>
-      {renderTab(tab, username)}
+      {renderTab(props)}
     </Container>
   )
 }
 
 class UserProfile extends React.Component {
   state = {
-    tab: 'drafts',
+    tab: 'publishedPosts',
   };
   componentDidMount() {
     const { username } = this.props.match.params;
     this.props.fetchProfile(username);
+  }
+  componentWillReceiveProps(nextProps) {
+    const { username: currentUsername } = this.props.match.params;
+    const { username: nextUsername } = nextProps.match.params;
+    if (currentUsername !== nextUsername) {
+      this.props.fetchProfile(nextUsername);
+    }
   }
   changeTab = tab => e => {
     e.preventDefault();
@@ -149,22 +160,34 @@ class UserProfile extends React.Component {
     // TODO: notify api about logout event
     localStorage.removeItem(STACKCRUNCH_TOKEN_ID);
     this.props.history.push('/');
-  }
+  };
   render() {
     const { username } = this.props.match.params;
-    const { users } = this.props;
+    const { users, loggedInUser } = this.props;
     const user = users[username] || {};
+    const isLoggedInUser = (user.username === loggedInUser.username);
+    const tabs = isLoggedInUser ? TABS : PUBLIC_TABS;
     return (
       <Container>
         <Wrapper>
-          <MainContent tab={this.state.tab} username={username} />
-          <Sidebar user={user} selectedTab={this.state.tab} onOptionClick={this.changeTab} logout={this.logout} />
+          <MainContent
+            tab={this.state.tab}
+            username={username}
+            isLoggedInUser={isLoggedInUser}
+          />
+          <Sidebar
+            user={user}
+            selectedTab={this.state.tab}
+            onOptionClick={this.changeTab}
+            logout={this.logout}
+            tabs={tabs}
+          />
         </Wrapper>
       </Container>
     );
   }
 }
 
-const mapStateToProps = ({ users={} }) => ({ users });
+const mapStateToProps = ({ users={}, user }) => ({ users, loggedInUser: user });
 const mapDispatchToProps = { fetchProfile };
 export default connect(mapStateToProps, mapDispatchToProps)(UserProfile);
