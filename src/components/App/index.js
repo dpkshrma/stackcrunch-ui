@@ -11,12 +11,6 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
 `;
-const Content = styled.div`
-  display: flex;
-  justify-content: center;
-  margin: auto;
-  min-height: calc(100vh - 264px);
-`;
 
 const App = ({ children }) => {
   return (

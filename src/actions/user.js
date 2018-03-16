@@ -2,12 +2,12 @@ import { userActions as ua } from '../constants';
 import { profileAPI } from '../api/user';
 import { success } from '../helpers/reducer';
 
-export const fetchProfile = () => {
+export const fetchProfile = username => {
   return (dispatch, getState) => {
     // TODO: return user if exists in store?? (cache first)
     return dispatch({
       type: ua.LOAD_PROFILE,
-      payload: profileAPI.fetch()
+      payload: profileAPI.fetch(username)
     });
   };
 };

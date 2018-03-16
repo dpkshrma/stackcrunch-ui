@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import RedirectComponent from '../common/Redirect';
 import logo from '../icons/logo.png';
 import PenIcon from '../icons/Pen';
+import BellIcon from '../icons/Bell';
 import { GH_CONTRIBUTION_URL, STACKCRUNCH_TOKEN_ID } from '../../config';
 import {
   Wrapper,
@@ -21,8 +22,12 @@ import {
 import ProfilePopper from './ProfilePopper';
 
 const EditorLinkIcon = styled(PenIcon)`
-  margin-right: 16px;
-  margin-top: 7px;
+  margin-right: 20px;
+  margin-top: 9px;
+`;
+const NotificationIcon = styled(BellIcon)`
+  margin-right: 20px;
+  margin-top: 9px;
 `;
 
 class Topbar extends RedirectComponent {
@@ -45,8 +50,9 @@ class Topbar extends RedirectComponent {
           <RightNav>
             {token
               ? [
+                  <NotificationIcon key="notification" className="icon" height={18} />,
                   <Link to="/write" key="write">
-                    <EditorLinkIcon className="icon" height={20} />
+                    <EditorLinkIcon className="icon" height={18} />
                   </Link>,
                   <ProfilePopper key="profile" />
                 ]

@@ -6,7 +6,6 @@ import { InfiniteList, Loader as LoaderIcon } from '../common';
 import {
   Container,
   List,
-  Heading,
   LoadMoreButton,
   LoaderButton,
   EditButton
@@ -40,22 +39,31 @@ const renderPaginationElements = () => {
     </Loader>
   ];
 };
-const Contributions = props => (
-  <Container>
-    <List>
-      <Heading>Drafts</Heading>
-      <InfiniteList loadMore={props.fetchDrafts}>
-        {props.contributions.drafts.map(renderPost)}
-        {renderPaginationElements()}
-      </InfiniteList>
-      <Heading>Published Posts</Heading>
-      <InfiniteList loadMore={props.fetchUserPublishedPosts}>
-        {props.contributions.published.map(renderPost)}
-        {renderPaginationElements()}
-      </InfiniteList>
-    </List>
-  </Container>
-);
+const Contributions = props => {
+  let loadMore = props.fetchDrafts;
+  let posts = props.contributions.drafts;
+  if (!props.drafts) {
+    loadMore = props.fetchUserPublishedPosts
+    posts = props.contributions.published;
+  }
+
+  return (
+    <Container>
+      <List>
+        <InfiniteList
+          loadMore={loadMore}
+        >
+          {posts.map(renderPost)}
+          {renderPaginationElements()}
+        </InfiniteList>
+      </List>
+    </Container>
+  );
+};
+
+Contributions.defaultProps = {
+  drafts: true,
+};
 
 const mapStateToProps = ({ user, contributions }) => ({ user, contributions });
 const mapDispatchToProps = { fetchDrafts, fetchUserPublishedPosts };

@@ -28,6 +28,9 @@ const PostInput = asyncLoad({ loader: () => import(`./components/PostInput`) });
 const Contributions = asyncLoad({
   loader: () => import(`./components/Contributions`)
 });
+const UserProfile = asyncLoad({
+  loader: () => import(`./components/UserProfile`)
+});
 
 const uri = path => `${URL_PREFIX}/${path}`;
 
@@ -46,7 +49,7 @@ export default (
       <Route exact path={uri('/')} render={About} />
       <App>
         <Switch>
-          <Route exact component={PostList} path={uri('@:username')} />
+          <Route exact component={UserProfile} path={uri('@:username')} />
           <Route exact component={PostList} path={uri('posts/')} />
           <Route exact component={Post} path={uri('post/:slug')} />
           <Route exact component={Profile} path={uri('profile')} />

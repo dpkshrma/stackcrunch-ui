@@ -1,7 +1,7 @@
 import { req } from '../helpers/http';
 
-const fetchProfile = () => {
-  return req('profile').get();
+const fetchProfile = username => {
+  return req('profile').get({ username });
 };
 
 const updateProfile = user => {

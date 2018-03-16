@@ -7,7 +7,6 @@ import {
   Header,
   HeaderMeta,
   HeaderMetaText,
-  Separator,
   Post,
   Title,
   Content,
@@ -19,7 +18,6 @@ import CommentThread from './CommentThread';
 import { fetchPost } from '../../actions/post';
 // global helpers
 import { hooks } from '../../helpers/routes';
-import { fromNow } from '../../utils/time';
 // component helpers
 import { markdownToDraftOptions, blockRenderMap } from './helpers';
 import markdownToDraft from './helpers/markdownToDraft';
@@ -70,7 +68,7 @@ class PostPage extends React.Component {
     this.setState({ editorState });
   };
   render() {
-    const { author = {}, createdOn = 0, ttr, title } = this.state.metadata;
+    const { author = {}, ttr, title } = this.state.metadata;
     const { slug } = this.props.match.params;
     if (!this.state.loaded) {
       return <div>Loading the post...</div>;

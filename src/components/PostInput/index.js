@@ -9,7 +9,6 @@ import {
   Container,
   PostInputWrapper,
   TitleInput,
-  TitleInputPlaceholder,
   DateString,
   EditorContainer,
   Actions,
