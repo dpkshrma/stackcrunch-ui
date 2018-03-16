@@ -1,10 +1,12 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import RedirectComponent from '../common/Redirect';
 import logo from '../icons/logo.png';
 import PenIcon from '../icons/Pen';
 import BellIcon from '../icons/Bell';
+import UserIcon from '../icons/User';
 import { GH_CONTRIBUTION_URL, STACKCRUNCH_TOKEN_ID } from '../../config';
 import {
   Wrapper,
@@ -17,9 +19,10 @@ import {
   Button,
   signUpCSS,
   ContributeTip,
-  Tip
+  Tip,
+  ProfileIconWrapper,
+  ProfileIconImg
 } from './styled';
-import ProfilePopper from './ProfilePopper';
 
 const EditorLinkIcon = styled(PenIcon)`
   margin-right: 20px;
@@ -54,7 +57,13 @@ class Topbar extends RedirectComponent {
                   <Link to="/write" key="write">
                     <EditorLinkIcon className="icon" height={18} />
                   </Link>,
-                  <ProfilePopper key="profile" />
+                  <ProfileIconWrapper key="profile" to={`/@${this.props.username}`}>
+                    {this.props.avatar ? (
+                      <ProfileIconImg src={this.props.avatar} />
+                    ) : (
+                      <UserIcon height="34" fill="#777" />
+                    )}
+                  </ProfileIconWrapper>
                 ]
               : [
                   <Button to={'/join?tab=signin'} key="signin">
@@ -71,4 +80,7 @@ class Topbar extends RedirectComponent {
   }
 }
 
-export default Topbar;
+const mapStateToProps = ({ user: { avatarURL, username } }) => {
+  return { avatar: avatarURL, username };
+};
+export default connect(mapStateToProps)(Topbar);

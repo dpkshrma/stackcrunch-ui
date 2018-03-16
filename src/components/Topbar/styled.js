@@ -94,3 +94,13 @@ export const ContributeTip = styled.a`
     }
   }
 `;
+export const ProfileIconWrapper = styled(Link)`
+  cursor: pointer;
+  display: flex;
+`;
+export const ProfileIconImg = styled.img`
+  height: 32px;
+  width: 32px;
+  border-radius: 100%;
+  border: 1px solid #ccc;
+`;
