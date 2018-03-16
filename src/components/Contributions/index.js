@@ -52,6 +52,7 @@ const Contributions = props => {
       <List>
         <InfiniteList
           loadMore={loadMore}
+          opts={props.opts}
         >
           {posts.map(renderPost)}
           {renderPaginationElements()}
@@ -65,7 +66,7 @@ Contributions.defaultProps = {
   drafts: true,
 };
 
-const mapStateToProps = ({ user, contributions }) => ({ user, contributions });
+const mapStateToProps = ({ contributions }) => ({ contributions });
 const mapDispatchToProps = { fetchDrafts, fetchUserPublishedPosts };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Contributions);

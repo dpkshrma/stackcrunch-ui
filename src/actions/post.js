@@ -38,27 +38,25 @@ export const fetchPost = dispatch => {
   };
 };
 
-export const fetchDrafts = page => {
-  return (dispatch, getState) => {
+export const fetchDrafts = (page, opts) => {
+  return (dispatch) => {
     let type = pa.LOAD_DRAFTS;
     if (page) {
       type = pa.LOAD_MORE_DRAFTS;
     }
-    const { user: { username } } = getState();
     return dispatch({
       type,
-      payload: postsAPI.fetchAll({ username, page, isDraft: true })
+      payload: postsAPI.fetchAll(Object.assign({}, { page, isDraft: true }, opts))
     });
   };
 };
 
-export const fetchUserPublishedPosts = page => {
-  return (dispatch, getState) => {
+export const fetchUserPublishedPosts = (page, opts) => {
+  return (dispatch) => {
     let type = pa.LOAD_USER_PUBLISHED_POSTS;
     if (page) {
       type = pa.LOAD_MORE_USER_PUBLISHED_POSTS;
     }
-    const { user: { username } } = getState();
-    return dispatch({ type, payload: postsAPI.fetchAll({ username, page }) });
+    return dispatch({ type, payload: postsAPI.fetchAll(Object.assign({}, { page }, opts)) });
   };
 };

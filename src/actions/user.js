@@ -5,8 +5,10 @@ import { success } from '../helpers/reducer';
 export const fetchProfile = username => {
   return (dispatch, getState) => {
     // TODO: return user if exists in store?? (cache first)
+    let type = ua.LOAD_LOGGED_IN_PROFILE;
+    if (username) type = ua.LOAD_PROFILE;
     return dispatch({
-      type: ua.LOAD_PROFILE,
+      type,
       payload: profileAPI.fetch(username)
     });
   };

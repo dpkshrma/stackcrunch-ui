@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import styled, { css } from 'styled-components';
+import { fetchProfile } from '../../actions/user';
 import Contributions from '../Contributions';
 import { STACKCRUNCH_TOKEN_ID } from '../../config';
 
@@ -110,24 +111,24 @@ const Option = styled.div`
   ${getOptionSelectedStyles}
 `;
 
-const renderTab = tab => {
+const renderTab = (tab, username) => {
   switch (tab) {
     case 'drafts':
-      return <Contributions drafts={true} />;
+      return <Contributions drafts={true} opts={{ username }} />;
     case 'publishedPosts':
-      return <Contributions drafts={false} />;
+      return <Contributions drafts={false} opts={{ username }} />;
     case 'basicInfo':
     default:
       return null;
   }
 };
-const MainContent = ({ tab }) => {
+const MainContent = ({ tab, username }) => {
   const Container = styled.div`
     flex: 5;
   `;
   return (
     <Container>
-      {renderTab(tab)}
+      {renderTab(tab, username)}
     </Container>
   )
 }
@@ -136,6 +137,10 @@ class UserProfile extends React.Component {
   state = {
     tab: 'drafts',
   };
+  componentDidMount() {
+    const { username } = this.props.match.params;
+    this.props.fetchProfile(username);
+  }
   changeTab = tab => e => {
     e.preventDefault();
     this.setState({ tab });
@@ -146,11 +151,13 @@ class UserProfile extends React.Component {
     this.props.history.push('/');
   }
   render() {
-    const { user } = this.props;
+    const { username } = this.props.match.params;
+    const { users } = this.props;
+    const user = users[username] || {};
     return (
       <Container>
         <Wrapper>
-          <MainContent tab={this.state.tab} />
+          <MainContent tab={this.state.tab} username={username} />
           <Sidebar user={user} selectedTab={this.state.tab} onOptionClick={this.changeTab} logout={this.logout} />
         </Wrapper>
       </Container>
@@ -158,5 +165,6 @@ class UserProfile extends React.Component {
   }
 }
 
-const mapStateToProps = ({ user }) => ({ user });
-export default connect(mapStateToProps)(UserProfile);
+const mapStateToProps = ({ users={} }) => ({ users });
+const mapDispatchToProps = { fetchProfile };
+export default connect(mapStateToProps, mapDispatchToProps)(UserProfile);

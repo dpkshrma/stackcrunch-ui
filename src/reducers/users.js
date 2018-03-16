@@ -6,11 +6,13 @@ const initialState = {};
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case success(ua.LOAD_LOGGED_IN_PROFILE):
-      return action.payload;
-
-    case success(ua.UPDATE_PROFILE):
-      return update(state, { $merge: action.payload });
+    case success(ua.LOAD_PROFILE):
+      const { username } = action.payload;
+      return update(state, {
+        $merge: {
+          [username]: action.payload
+        },
+      })
 
     default:
       return state;
