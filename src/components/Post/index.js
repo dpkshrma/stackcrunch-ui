@@ -68,7 +68,7 @@ class PostPage extends React.Component {
     this.setState({ editorState });
   };
   render() {
-    const { authors = [], ttr, title } = this.state.metadata;
+    const { authors = [], ttr, title, coverImageUrl } = this.state.metadata;
     const { slug } = this.props.match.params;
     const [author] = authors;
     if (!this.state.loaded) {
@@ -76,6 +76,7 @@ class PostPage extends React.Component {
     }
     return (
       <Wrapper className="post-wrapper">
+        {coverImageUrl && <img src={coverImageUrl} />}
         <Post>
           <Header>
             <HeaderMeta>
