@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import ContentEditable from 'react-contenteditable';
 import { Alert, Button } from '../common';
 
 export const Container = styled.div`
@@ -11,7 +12,7 @@ export const PostInputWrapper = styled.div`
   width: 100%;
   max-width: 740px;
 `;
-export const TitleInput = styled.div`
+export const TitleInput = styled(ContentEditable)`
   font-size: 40px;
   color: #555;
   margin-top: 20px;

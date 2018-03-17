@@ -32,7 +32,7 @@ class PostInput extends React.Component {
     isDraft: false
   };
   componentDidMount() {
-    this.title.focus();
+    // this.title.focus();
   }
   componentWillMount() {
     const { slug } = this.props.match.params;
@@ -141,13 +141,12 @@ class PostInput extends React.Component {
             innerRef={el => {
               this.title = el;
             }}
+            html={title}
             onChange={this.updateTitle}
             contentEditable="true"
             suppressContentEditableWarning
             data-placeholder="Add a descriptive title"
-          >
-            {title}
-          </TitleInput>
+          />
           <Meta />
           <EditorContainer>
             <Editor editorState={editorState} onChange={this.onEditorChange} />

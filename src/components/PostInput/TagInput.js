@@ -13,7 +13,7 @@ const TextInput = styled.input`
   border-bottom: 1px solid #e0e0e0;
   width: 100%;
   font-family: roboto;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: normal;
   margin-top: 20px;
   &::placeholder {

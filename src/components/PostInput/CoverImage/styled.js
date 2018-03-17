@@ -48,7 +48,7 @@ export const DeleteFab = styled.div`
 
 const DNDContainer = styled.div`
   color: #777;
-  background-color: #eee;
+  background-color: #f7f7f7;
   padding: 70px;
   border-radius: 2px;
   text-align: center;
