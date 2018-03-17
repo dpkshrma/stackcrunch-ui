@@ -1,24 +1,6 @@
 import { postActions as pa } from '../constants';
 import postsAPI from '../api/post';
 
-const formatPost = p => {
-  return p.then(post => {
-    if (post && post.meta) {
-      // assuming only 1 author
-      const [author = {}] = post.meta.authors;
-      return Object.assign({}, post, {
-        meta: Object.assign({}, post.meta, {
-          author: {
-            name: author.name,
-            img: author.avatarURL
-          }
-        })
-      });
-    }
-    return {};
-  });
-};
-
 export const fetchPosts = dispatch => {
   return (page, opts = {}) => {
     let type = pa.LOAD_POSTS;
@@ -33,7 +15,7 @@ export const fetchPost = dispatch => {
   return slug => {
     return dispatch({
       type: pa.LOAD_POST,
-      payload: formatPost(postsAPI.fetchOne(slug))
+      payload: postsAPI.fetchOne(slug)
     });
   };
 };

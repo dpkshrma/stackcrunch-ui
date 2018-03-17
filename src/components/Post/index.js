@@ -68,8 +68,9 @@ class PostPage extends React.Component {
     this.setState({ editorState });
   };
   render() {
-    const { author = {}, ttr, title } = this.state.metadata;
+    const { authors = [], ttr, title } = this.state.metadata;
     const { slug } = this.props.match.params;
+    const [author] = authors;
     if (!this.state.loaded) {
       return <div>Loading the post...</div>;
     }
@@ -79,10 +80,11 @@ class PostPage extends React.Component {
           <Header>
             <HeaderMeta>
               <Chip
-                img={author.img}
-                text={author.name}
-                href={author.link}
+                img={author.avatarURL}
+                text={author.name || author.username}
+                to={author.link}
                 css={authorCSS}
+                useDefaultImg
               />
               <HeaderMetaText>{ttr.text} read</HeaderMetaText>
             </HeaderMeta>
