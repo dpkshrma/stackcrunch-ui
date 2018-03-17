@@ -1,7 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import { fetchProfile } from '../../actions/user';
+import UserIcon from '../icons/User';
 
 const PUBLIC_TABS = {
   publishedPosts: 'Published Posts',
@@ -22,6 +24,11 @@ const UserImage = ({ avatar }) => {
   `;
   return <Img src={avatar} />;
 };
+const DefaultUserImage = styled(UserIcon)`
+  border-radius: 50%;
+  height: 160px;
+  width: 160px;
+`;
 
 const UserMeta = styled.div`
   padding: 24px;
@@ -78,6 +85,15 @@ class Sidebar extends React.Component {
     this.props.fetchProfile(username);
   }
 
+  componentWillReceiveProps(nextProps) {
+    // fetch profile on route change!!! :)
+    const { username: currentUsername } = this.props.match.params;
+    const { username: nextUsername } = nextProps.match.params;
+    if (currentUsername !== nextUsername) {
+      this.props.fetchProfile(nextUsername);
+    }
+  }
+
   render() {
     const { username } = this.props.match.params;
     const {
@@ -99,7 +115,11 @@ class Sidebar extends React.Component {
     `;
     return (
       <Container>
-        <UserImage avatar={user.avatarURL} />
+        {user.avatarURL ? (
+          <UserImage avatar={user.avatarURL} />
+        ) : (
+          <DefaultUserImage fill="#777" />
+        )}
         <UserMeta>
           <UserFullName>{user.name}</UserFullName>
           <Username>@{user.username}</Username>
@@ -124,4 +144,6 @@ class Sidebar extends React.Component {
 
 const mapStateToProps = ({ user, users }) => ({ loggedInUser: user, users });
 const mapDispatchToProps = { fetchProfile };
-export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(Sidebar)
+);
