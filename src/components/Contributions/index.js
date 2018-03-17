@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { fetchDrafts, fetchUserPublishedPosts } from '../../actions/post';
 import ListItem from '../ListItem';
 import { InfiniteList, Loader as LoaderIcon } from '../common';
@@ -43,18 +44,23 @@ const Contributions = props => {
   let loadMore = props.fetchDrafts;
   let posts = props.contributions.drafts;
   if (!props.drafts) {
-    loadMore = props.fetchUserPublishedPosts
+    loadMore = props.fetchUserPublishedPosts;
     posts = props.contributions.published;
+  }
+
+  let editable = false;
+  const { loggedInUser } = props;
+  const { username } = props.match.params;
+
+  if (username === loggedInUser.username) {
+    editable = true;
   }
 
   return (
     <Container>
       <List>
-        <InfiniteList
-          loadMore={loadMore}
-          opts={props.opts}
-        >
-          {posts.map(renderPost(props.editable))}
+        <InfiniteList loadMore={loadMore} opts={props.opts}>
+          {posts.map(renderPost(editable))}
           {renderPaginationElements()}
         </InfiniteList>
       </List>
@@ -63,10 +69,15 @@ const Contributions = props => {
 };
 
 Contributions.defaultProps = {
-  drafts: true,
+  drafts: true
 };
 
-const mapStateToProps = ({ contributions }) => ({ contributions });
+const mapStateToProps = ({ contributions, user }) => ({
+  contributions,
+  loggedInUser: user
+});
 const mapDispatchToProps = { fetchDrafts, fetchUserPublishedPosts };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Contributions);
+export default connect(mapStateToProps, mapDispatchToProps)(
+  withRouter(Contributions)
+);
