@@ -51,6 +51,7 @@ class PostInput extends React.Component {
             title: meta.title,
             selectedTags: meta.tags || [],
             isDraft: meta.isDraft,
+            coverImageUrl: meta.coverImageUrl,
             fetchingEditPost: false
           });
         })
@@ -132,10 +133,16 @@ class PostInput extends React.Component {
       });
   };
   render() {
-    const { fetchingEditPost, title, editorState, selectedTags } = this.state;
+    const {
+      fetchingEditPost,
+      title,
+      editorState,
+      coverImageUrl,
+      selectedTags
+    } = this.state;
     return (
       <Container>
-        <CoverImage setDataUri={this.setCoverDataUri} />
+        <CoverImage setDataUri={this.setCoverDataUri} url={coverImageUrl} />
         <PostInputWrapper>
           <TitleInput
             innerRef={el => {

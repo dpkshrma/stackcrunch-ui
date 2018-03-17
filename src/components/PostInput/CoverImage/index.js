@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Dropzone from 'react-dropzone';
 import Draggable from 'react-draggable';
+import fetch from 'isomorphic-fetch';
+import promisifySetState from 'promisify-setstate';
 import DeleteIcon from '../../icons/Delete';
 import {
   CoverImageContainer,
@@ -25,13 +27,32 @@ const initialState = {
     y: 0
   },
   outputImageDataURL: null,
-  hideDropzone: false
+  hideDropzone: false,
+  fetchingImage: false
 };
 
 class CoverImage extends React.Component {
   constructor(props) {
     super(props);
     this.state = initialState;
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { url: currentUrl } = this.props;
+    const { url: nextUrl } = nextProps;
+    // initial load previously saved image
+    if (currentUrl !== nextUrl) {
+      this.setState({ fetchingImage: true })
+        .then(() => {
+          return fetch(nextUrl);
+        })
+        .then(r => r.blob())
+        .then(blob => {
+          const file = new File([blob], 'cover.png', { type: 'image/png' });
+          file.preview = URL.createObjectURL(blob);
+          this.onDrop([file]);
+        });
+    }
   }
 
   removeCoverImage = () => {
@@ -55,12 +76,13 @@ class CoverImage extends React.Component {
   };
 
   handleDND = ({ isDragActive, isDragReject }) => {
+    const { fetchingImage } = this.state;
     // TODO: add dnd state change component
     if (isDragActive) {
     }
     if (isDragReject) {
     }
-    return <DNDPlaceHolder />;
+    return <DNDPlaceHolder loading={fetchingImage} />;
   };
 
   onDragStart = () => {
@@ -163,6 +185,7 @@ class CoverImage extends React.Component {
           multiple={false}
           accept="image/*"
           style={dropzoneStyles}
+          disableClick={this.state.fetchingImage}
         >
           {this.handleDND}
         </Dropzone>
@@ -198,4 +221,4 @@ CoverImage.propTypes = {
   setDataUri: PropTypes.func.isRequired
 };
 
-export default CoverImage;
+export default promisifySetState(CoverImage);

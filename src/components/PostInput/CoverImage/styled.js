@@ -54,11 +54,18 @@ const DNDContainer = styled.div`
   text-align: center;
   cursor: pointer;
 `;
-export const DNDPlaceHolder = () => (
-  <DNDContainer>
-    <HandIcon height={18} />
-    Drag & Drop or
-    <MouseIcon height={20} />
-    Click to upload a Cover Image
-  </DNDContainer>
-);
+
+export const DNDPlaceHolder = ({ loading = false }) => {
+  let content = (
+    <div>
+      <HandIcon height={18} />
+      Drag & Drop or
+      <MouseIcon height={20} />
+      Click to upload a Cover Image
+    </div>
+  );
+  if (loading) {
+    content = <div>Loading Cover Image...</div>;
+  }
+  return <DNDContainer>{content}</DNDContainer>;
+};
