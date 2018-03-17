@@ -11,8 +11,8 @@ export default (state = initialState, action) => {
       return update(state, {
         $merge: {
           [username]: action.payload
-        },
-      })
+        }
+      });
 
     default:
       return state;

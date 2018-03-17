@@ -24,6 +24,22 @@ import {
   ProfileIconImg
 } from './styled';
 
+/** SnackBar Notifications
+<- wrapper ->
+transform: rotateX(90deg);
+transform-style: preserve-3d;
+transform-origin: top;
+
+<- before ->
+content: '';
+background-color: coral;
+height: 60px;
+width: 100%;
+position: absolute;
+bottom: -31px;
+transform: rotateX(90deg) translateY(-30px);
+*/
+
 const EditorLinkIcon = styled(PenIcon)`
   margin-right: 20px;
   margin-top: 9px;
@@ -53,11 +69,18 @@ class Topbar extends RedirectComponent {
           <RightNav>
             {token
               ? [
-                  <NotificationIcon key="notification" className="icon" height={18} />,
+                  <NotificationIcon
+                    key="notification"
+                    className="icon"
+                    height={18}
+                  />,
                   <Link to="/write" key="write">
                     <EditorLinkIcon className="icon" height={18} />
                   </Link>,
-                  <ProfileIconWrapper key="profile" to={`/@${this.props.username}`}>
+                  <ProfileIconWrapper
+                    key="profile"
+                    to={`/@${this.props.username}`}
+                  >
                     {this.props.avatar ? (
                       <ProfileIconImg src={this.props.avatar} />
                     ) : (

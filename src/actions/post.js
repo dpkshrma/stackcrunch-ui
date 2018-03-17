@@ -39,24 +39,29 @@ export const fetchPost = dispatch => {
 };
 
 export const fetchDrafts = (page, opts) => {
-  return (dispatch) => {
+  return dispatch => {
     let type = pa.LOAD_DRAFTS;
     if (page) {
       type = pa.LOAD_MORE_DRAFTS;
     }
     return dispatch({
       type,
-      payload: postsAPI.fetchAll(Object.assign({}, { page, isDraft: true }, opts))
+      payload: postsAPI.fetchAll(
+        Object.assign({}, { page, isDraft: true }, opts)
+      )
     });
   };
 };
 
 export const fetchUserPublishedPosts = (page, opts) => {
-  return (dispatch) => {
+  return dispatch => {
     let type = pa.LOAD_USER_PUBLISHED_POSTS;
     if (page) {
       type = pa.LOAD_MORE_USER_PUBLISHED_POSTS;
     }
-    return dispatch({ type, payload: postsAPI.fetchAll(Object.assign({}, { page }, opts)) });
+    return dispatch({
+      type,
+      payload: postsAPI.fetchAll(Object.assign({}, { page }, opts))
+    });
   };
 };

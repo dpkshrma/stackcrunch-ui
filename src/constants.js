@@ -13,7 +13,7 @@ export const widgetActions = {
 export const userActions = {
   LOAD_PROFILE: 'LOAD_PROFILE',
   LOAD_LOGGED_IN_PROFILE: 'LOAD_LOGGED_IN_PROFILE',
-  UPDATE_PROFILE: 'UPDATE_PROFILE',
+  UPDATE_PROFILE: 'UPDATE_PROFILE'
 };
 export const postActions = {
   LOAD_POSTS: 'LOAD_POSTS',

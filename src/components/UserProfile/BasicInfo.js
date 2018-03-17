@@ -2,6 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import queryString from 'query-string';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import ContentEditable from 'react-contenteditable';
 import { fetchProfile, updateRemoteProfile } from '../../actions/user';
 import { Connect, Text, Form, FormGroup, SubmitButton } from './styled';
 import { STACKCRUNCH_TOKEN_ID, STACKCRUNCH_API_URL } from '../../config';
@@ -18,8 +20,9 @@ const Container = styled.div`
   flex-direction: column;
   padding: 80px;
 `;
-const Input = styled.input`
+const Input = styled(ContentEditable)`
   font-size: 24px;
+  line-height: 1.6;
   color: #555;
   padding: 0;
   cursor: text;
@@ -29,11 +32,12 @@ const Input = styled.input`
   width: 100%;
   font-family: roboto;
   font-weight: 300;
-  &::placeholder {
+  &:empty::before {
+    content: attr(data-placeholder);
     font-weight: 100;
     color: #9197a3;
   }
-  &:focus::placeholder {
+  &:empty:focus::before {
     color: #bdc1c9;
   }
   &:focus {
@@ -87,15 +91,21 @@ class BasicInfo extends React.Component {
     user: {
       name: '',
       description: ''
-    }
+    },
+    editable: false
   };
   componentDidMount() {
     const { username } = this.props.match.params;
     this.props.fetchProfile(username).then(() => {
-      const { users } = this.props;
+      const { users, loggedInUser } = this.props;
       const user = users[username] || {};
 
-      this.setState({ user });
+      let editable = false;
+      if (username === loggedInUser.username) {
+        editable = true;
+      }
+
+      this.setState({ user, editable });
     });
   }
   updateName = e => {
@@ -116,13 +126,14 @@ class BasicInfo extends React.Component {
   };
   save = e => {
     e.preventDefault();
-    const name = this.name.value;
-    const description = this.description.value;
-    this.props.updateRemoteProfile({ name, description });
+    this.props.updateRemoteProfile(this.state.user);
   };
   render() {
-    const { user = {} } = this.state;
+    const { user = {}, editable } = this.state;
     const { name = '', description = '' } = user;
+    const descriptionPlaceholder = editable
+      ? 'Tell something about yourself'
+      : 'mode === incognito';
     return (
       <Container>
         <Form onSubmit={this.save}>
@@ -131,9 +142,10 @@ class BasicInfo extends React.Component {
               innerRef={el => {
                 this.name = el;
               }}
-              value={name}
+              html={name}
               onChange={this.updateName}
-              placeholder="Your Name"
+              data-placeholder="Your Name"
+              disabled={!editable}
             />
           </FormGroup>
           <FormGroup>
@@ -141,40 +153,47 @@ class BasicInfo extends React.Component {
               innerRef={el => {
                 this.description = el;
               }}
-              value={description}
+              html={description}
               onChange={this.updateDescription}
-              placeholder="Tell something about yourself"
+              data-placeholder={descriptionPlaceholder}
+              disabled={!editable}
             />
           </FormGroup>
-          <FormGroup>
-            <Connect>
-              {connectCards.map((card, i) => {
-                return (
-                  <ConnectCard
-                    key={i}
-                    Img={card.img}
-                    link={card.link({
-                      token: localStorage.getItem(STACKCRUNCH_TOKEN_ID),
-                      newToken: true,
-                      returnPath: '/profile'
-                    })}
-                    name={card.name}
-                    profile={user[card.provider]}
-                  />
-                );
-              })}
-            </Connect>
-          </FormGroup>
-          <FormGroup>
-            <SubmitButton onClick={this.save}>Save</SubmitButton>
-          </FormGroup>
+          {editable && (
+            <FormGroup>
+              <Connect>
+                {connectCards.map((card, i) => {
+                  return (
+                    <ConnectCard
+                      key={i}
+                      Img={card.img}
+                      link={card.link({
+                        token: localStorage.getItem(STACKCRUNCH_TOKEN_ID),
+                        newToken: true,
+                        returnPath: '/profile'
+                      })}
+                      name={card.name}
+                      profile={user[card.provider]}
+                    />
+                  );
+                })}
+              </Connect>
+            </FormGroup>
+          )}
+          {editable && (
+            <FormGroup>
+              <SubmitButton onClick={this.save}>Save</SubmitButton>
+            </FormGroup>
+          )}
         </Form>
       </Container>
     );
   }
 }
 
-const mapStateToProps = ({ users }) => ({ users });
+const mapStateToProps = ({ users, user }) => ({ users, loggedInUser: user });
 const mapDispatchToProps = { updateRemoteProfile, fetchProfile };
 
-export default connect(mapStateToProps, mapDispatchToProps)(BasicInfo);
+export default connect(mapStateToProps, mapDispatchToProps)(
+  withRouter(BasicInfo)
+);
