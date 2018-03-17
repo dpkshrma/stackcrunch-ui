@@ -1,7 +1,7 @@
 import React from 'react';
 import queryString from 'query-string';
 import { STACKCRUNCH_TOKEN_ID } from '../../config';
-import { updateProfile } from '../../actions/user';
+import { fetchProfile } from '../../actions/user';
 import store from '../../store';
 
 class Redirect extends React.Component {
@@ -22,10 +22,7 @@ class Redirect extends React.Component {
     }
   };
   updateProfilePhoto = () => {
-    const avatarURL = this.getQueryParam('avatarURL');
-    if (avatarURL) {
-      store.dispatch(updateProfile({ avatarURL }));
-    }
+    store.dispatch(fetchProfile());
   };
 }
 
