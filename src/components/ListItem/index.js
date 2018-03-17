@@ -26,7 +26,10 @@ import TwitterIcon from './icons/TwitterIcon';
 
 const Author = ({ profile: { avatarURL, name, username } }) => {
   const link = `${URL_PREFIX}/@${username}`;
-  return <Chip img={avatarURL} text={name} to={link} css={authorCSS} />;
+  const text = name ? name : username;
+  return (
+    <Chip img={avatarURL} text={text} to={link} css={authorCSS} useDefaultImg />
+  );
 };
 const CreatedOn = ({ timeStamp }) => {
   return <HeaderMetaText>{fromNow(timeStamp)}</HeaderMetaText>;
@@ -54,7 +57,7 @@ const ListItem = ({
       <Chip key={i} text={tag.name} to={tag.link} css={tagCSS} />
     ));
 
-  const [author] = authors;
+  const [author = {}] = authors;
   // TODO: ellipsify shareText if char length overshot
   const shareText = `${title} by @${author.twitterHandle}`;
   const shareLink = `${TWITTER_SHARE_URL}?text=${shareText}&url=${STACKCRUNCH_POST_URL}/${id}`;

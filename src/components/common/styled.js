@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
+import UserIcon from '../icons/User2';
 
 export const Wrapper = styled.div`
   display: flex;
@@ -10,6 +11,12 @@ export const Thumb = styled.img`
   border-radius: 50%;
   height: 24px;
   ${({ css }) => css};
+`;
+
+export const DefaultImg = styled(UserIcon)`
+  height: 24px;
+  fill: #fff;
+  background: #777;
 `;
 
 export const Text = styled.span`

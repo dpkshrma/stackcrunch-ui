@@ -8,10 +8,19 @@ import {
   contentCSS,
   OutLink,
   InLink,
-  CloseIcon
+  CloseIcon,
+  DefaultImg
 } from './styled';
 
-const Chip = ({ img, text, to, href, css = {}, onCloseClick }) => {
+const Chip = ({
+  img,
+  useDefaultImg,
+  text,
+  to,
+  href,
+  css = {},
+  onCloseClick
+}) => {
   let Content = styled.div`
     ${contentCSS} ${({ css }) => css};
   `;
@@ -24,6 +33,7 @@ const Chip = ({ img, text, to, href, css = {}, onCloseClick }) => {
     <Wrapper css={css.wrapper}>
       <Content css={css.content}>
         {img && <Thumb src={img} css={css.thumb} />}
+        {!img && useDefaultImg && <DefaultImg />}
         <Text css={css.text}>{text}</Text>
         {onCloseClick && <CloseIcon onClick={onCloseClick} />}
       </Content>
