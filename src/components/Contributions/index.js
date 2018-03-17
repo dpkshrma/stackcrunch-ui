@@ -41,6 +41,7 @@ const renderPaginationElements = () => {
   ];
 };
 const Contributions = props => {
+  // loadMore & posts by type of contributions
   let loadMore = props.fetchDrafts;
   let posts = props.contributions.drafts;
   if (!props.drafts) {
@@ -48,6 +49,7 @@ const Contributions = props => {
     posts = props.contributions.published;
   }
 
+  // show edit icons for logged in user posts
   let editable = false;
   const { loggedInUser } = props;
   const { username } = props.match.params;
@@ -56,10 +58,13 @@ const Contributions = props => {
     editable = true;
   }
 
+  // display only user contributions
+  const opts = { username };
+
   return (
     <Container>
       <List>
-        <InfiniteList loadMore={loadMore} opts={props.opts}>
+        <InfiniteList loadMore={loadMore} opts={opts}>
           {posts.map(renderPost(editable))}
           {renderPaginationElements()}
         </InfiniteList>
