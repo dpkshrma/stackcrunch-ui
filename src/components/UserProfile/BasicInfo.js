@@ -126,7 +126,9 @@ class BasicInfo extends React.Component {
   };
   save = e => {
     e.preventDefault();
-    this.props.updateRemoteProfile(this.state.user);
+    // excluding rest of the user info (like github, stackexchange info, etc.)
+    const { name, description } = this.state.user;
+    this.props.updateRemoteProfile({ name, description });
   };
   render() {
     const { user = {}, editable } = this.state;
