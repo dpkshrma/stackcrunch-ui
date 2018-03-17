@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import styled from 'styled-components';
 import Contributions from '../Contributions';
 import { STACKCRUNCH_TOKEN_ID } from '../../config';
@@ -15,15 +14,14 @@ const Wrapper = styled.div`
   margin: 0 auto;
 `;
 
-const renderTab = ({ tab, isLoggedInUser, match }) => {
-  const { username } = match.params;
+const renderTab = ({ tab, isLoggedInUser }) => {
   switch (tab) {
     case 'drafts':
-      return <Contributions drafts={true} opts={{ username }} />;
+      return <Contributions drafts={true} />;
     case 'publishedPosts':
-      return <Contributions drafts={false} opts={{ username }} />;
+      return <Contributions drafts={false} />;
     case 'basicInfo':
-      return <BasicInfo match={match} />;
+      return <BasicInfo />;
     default:
       return null;
   }
@@ -52,12 +50,11 @@ class UserProfile extends React.Component {
     return (
       <Container>
         <Wrapper>
-          <MainContent tab={this.state.tab} match={this.props.match} />
+          <MainContent tab={this.state.tab} />
           <Sidebar
             selectedTab={this.state.tab}
             onOptionClick={this.changeTab}
             logout={this.logout}
-            match={this.props.match}
           />
         </Wrapper>
       </Container>
