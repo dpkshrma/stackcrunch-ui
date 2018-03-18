@@ -39,7 +39,7 @@ export class ImageEmbed extends React.Component {
     this.setCaptionWidth();
   }
   setCaptionWidth = () => {
-    if (this.img.complete) {
+    if (this.img && this.img.complete) {
       const { width: imageWidth } = this.img.getBoundingClientRect();
       this.setState({ captionWidth: imageWidth });
     } else {
