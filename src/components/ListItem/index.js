@@ -57,7 +57,7 @@ const ListItem = ({
   const tagList =
     tags &&
     tags.map((tag, i) => (
-      <Chip key={i} text={tag.name} to={tag.link} css={tagCSS} />
+      <Chip key={i} text={tag.name} href={tag.link} css={tagCSS} />
     ));
 
   const [author = {}] = authors;
