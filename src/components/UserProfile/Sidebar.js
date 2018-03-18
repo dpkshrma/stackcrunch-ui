@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import styled, { css } from 'styled-components';
-import { fetchProfile } from '../../actions/user';
+import { fetchProfile, uploadPhoto } from '../../actions/user';
 import UserIcon from '../icons/User';
 
 const PUBLIC_TABS = {
@@ -16,19 +16,65 @@ const TABS = {
   logout: 'Logout'
 };
 
-const UserImage = ({ avatar }) => {
-  const Img = styled.img`
+const UserImage = ({ avatar, uploading, onChange, ...restProps }) => {
+  const ChangePhotoLabel = styled.div`
+    align-self: center;
+    position: absolute;
+    width: 100%;
+    height: 20px;
+    background: rgba(0, 0, 0, 0.4);
+    display: ${uploading ? 'block' : 'none'};
+    color: #fff;
+    font-size: 16px;
+    font-weight: 300;
+    font-family: roboto;
+    letter-spacing: 1px;
+    text-align: center;
+    vertical-align: middle;
+  `;
+  const Container = styled.div`
+    position: relative;
+    display: flex;
+    cursor: pointer;
+    &:hover ${ChangePhotoLabel} {
+      display: block;
+    }
+  `;
+  const imgCSS = css`
     border-radius: 50%;
     height: 160px;
     width: 160px;
   `;
-  return <Img src={avatar} />;
+  const Img = styled.img`
+    ${imgCSS};
+  `;
+  const DefaultUserImage = styled(UserIcon)`
+    ${imgCSS};
+  `;
+  const FileInput = styled.input`
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+    cursor: pointer;
+    opacity: 0;
+  `;
+  return (
+    <Container {...restProps}>
+      {avatar ? <Img src={avatar} /> : <DefaultUserImage fill="#777" />}
+      <ChangePhotoLabel>
+        {uploading ? 'Uploading...' : 'CHANGE PHOTO'}
+      </ChangePhotoLabel>
+      <FileInput
+        type="file"
+        onChange={onChange}
+        accept="image/*"
+        disabled={uploading ? 'disabled' : false}
+        title="Profile Photo"
+      />
+    </Container>
+  );
 };
-const DefaultUserImage = styled(UserIcon)`
-  border-radius: 50%;
-  height: 160px;
-  width: 160px;
-`;
 
 const UserMeta = styled.div`
   padding: 24px;
@@ -80,9 +126,18 @@ const Option = styled.div`
 `;
 
 class Sidebar extends React.Component {
+  state = {
+    avatarUploading: false,
+    avatarURL: null
+  };
+
   componentDidMount() {
     const { username } = this.props.match.params;
-    this.props.fetchProfile(username);
+    this.props.fetchProfile(username).then(() => {
+      const { users } = this.props;
+      const { avatarURL } = users[username];
+      this.setState({ avatarURL });
+    });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -93,6 +148,21 @@ class Sidebar extends React.Component {
       this.props.fetchProfile(nextUsername);
     }
   }
+
+  onAvatarInputChange = e => {
+    e.preventDefault();
+    const reader = new FileReader();
+    const file = e.target.files[0];
+    this.setState({ avatarUploading: true }, () => {
+      reader.onloadend = () => {
+        this.setState({ file, avatarURL: reader.result });
+      };
+      reader.readAsDataURL(file);
+      this.props.uploadPhoto(file).then(() => {
+        this.setState({ avatarUploading: false });
+      });
+    });
+  };
 
   render() {
     const { username } = this.props.match.params;
@@ -106,6 +176,7 @@ class Sidebar extends React.Component {
     const user = users[username] || {};
     const isLoggedInUser = user.username === loggedInUser.username;
     const tabs = isLoggedInUser ? TABS : PUBLIC_TABS;
+
     const Container = styled.div`
       flex: 2;
       display: flex;
@@ -113,13 +184,14 @@ class Sidebar extends React.Component {
       align-items: center;
       padding: 20px 0;
     `;
+
     return (
       <Container>
-        {user.avatarURL ? (
-          <UserImage avatar={user.avatarURL} />
-        ) : (
-          <DefaultUserImage fill="#777" />
-        )}
+        <UserImage
+          avatar={this.state.avatarURL}
+          uploading={this.state.avatarUploading}
+          onChange={this.onAvatarInputChange}
+        />
         <UserMeta>
           <UserFullName>{user.name}</UserFullName>
           <Username>@{user.username}</Username>
@@ -143,7 +215,7 @@ class Sidebar extends React.Component {
 }
 
 const mapStateToProps = ({ user, users }) => ({ loggedInUser: user, users });
-const mapDispatchToProps = { fetchProfile };
+const mapDispatchToProps = { fetchProfile, uploadPhoto };
 export default withRouter(
   connect(mapStateToProps, mapDispatchToProps)(Sidebar)
 );
