@@ -3,6 +3,8 @@ import { fromNow } from '../../utils/time';
 import { Chip } from '../common';
 import {
   Wrapper,
+  Content,
+  CoverImage,
   Header,
   HeaderMetaText,
   Separator,
@@ -40,6 +42,7 @@ const TimeToRead = ({ ttr }) => {
 
 const ListItem = ({
   id,
+  coverImageUrl,
   title,
   slug,
   abstract,
@@ -85,22 +88,25 @@ const ListItem = ({
 
   return (
     <Wrapper>
-      {showHeader && header}
-      <Title to={`/post/${slug}`}>{title}</Title>
-      <Abstract>{abstract}&hellip;</Abstract>
-      <Footer>
-        <Tags>{tagList}</Tags>
-        <Meta>
-          {showShareLinks && (
-            <MetaItem>
-              <ShareLink href={shareLink} target="_blank">
-                <TwitterIcon height={14} />
-                <MetaLabel>Share</MetaLabel>
-              </ShareLink>
-            </MetaItem>
-          )}
-        </Meta>
-      </Footer>
+      {coverImageUrl && <CoverImage src={coverImageUrl} />}
+      <Content>
+        {showHeader && header}
+        <Title to={`/post/${slug}`}>{title}</Title>
+        <Abstract>{abstract}&hellip;</Abstract>
+        <Footer>
+          <Tags>{tagList}</Tags>
+          <Meta>
+            {showShareLinks && (
+              <MetaItem>
+                <ShareLink href={shareLink} target="_blank">
+                  <TwitterIcon height={14} />
+                  <MetaLabel>Share</MetaLabel>
+                </ShareLink>
+              </MetaItem>
+            )}
+          </Meta>
+        </Footer>
+      </Content>
     </Wrapper>
   );
 };

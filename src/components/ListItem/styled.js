@@ -4,12 +4,25 @@ import styled, { css } from 'styled-components';
 
 export const Wrapper = styled.div`
   max-width: 682px;
-  padding: 24px 16px;
+  margin: 16px 0;
+  padding: 16px;
+  box-shadow: 0 0 8px -4px;
+  border-radius: 4px;
+  display: flex;
   ${props =>
     props.showBorder &&
     css`
       border-bottom: 1px solid #ddd;
     `};
+`;
+
+export const Content = styled.div``;
+
+export const CoverImage = styled.img`
+  width: 100%;
+  max-width: 200px;
+  max-height: 200px;
+  margin-right: 20px;
 `;
 
 export const Header = styled.div`

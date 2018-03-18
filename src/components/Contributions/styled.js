@@ -46,12 +46,12 @@ export const EditButton = ({ onClick, to }) => {
   const Container = styled(Link)`
     cursor: pointer;
     display: flex;
-    font-size: 16px;
+    font-size: 14px;
     color: #999;
     margin-left: auto;
     text-decoration: none;
     &:hover {
-      ${EditIcon} svg {
+      ${EditIcon} {
         fill: #777;
       }
       ${Text} {
@@ -61,7 +61,7 @@ export const EditButton = ({ onClick, to }) => {
   `;
   return (
     <Container onClick={onClick} to={to}>
-      <EditIcon height={16} />
+      <EditIcon height={14} />
       <Text>Edit</Text>
     </Container>
   );
