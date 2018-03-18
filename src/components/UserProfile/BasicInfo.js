@@ -44,6 +44,12 @@ const Input = styled(ContentEditable)`
     border-bottom: 2px solid #ffa000;
   }
 `;
+const Label = styled.div`
+  font-size: 16px;
+  font-family: roboto;
+  color: #999;
+  letter-spacing: 1px;
+`;
 
 const connectCards = [
   {
@@ -139,7 +145,8 @@ class BasicInfo extends React.Component {
     return (
       <Container>
         <Form onSubmit={this.save}>
-          <FormGroup>
+          <FormGroup vertical>
+            <Label>Name</Label>
             <Input
               innerRef={el => {
                 this.name = el;
@@ -150,7 +157,8 @@ class BasicInfo extends React.Component {
               disabled={!editable}
             />
           </FormGroup>
-          <FormGroup>
+          <FormGroup vertical>
+            <Label>About Me</Label>
             <Input
               innerRef={el => {
                 this.description = el;

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Button } from '../common';
 
 export const Wrapper = styled.div`
@@ -62,6 +62,9 @@ export const FormGroup = styled.div`
   display: flex;
   margin: 24px 0;
   width: 100%;
+  ${({ vertical }) => css`
+    flex-direction: column;
+  `};
 `;
 export const FormInput = Input.extend`
   height: 10px;
