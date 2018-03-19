@@ -115,7 +115,9 @@ class CoverImage extends React.Component {
 
   onDelete = e => {
     e.preventDefault();
-    this.setState({ preview: null });
+    this.setState({ preview: null }).then(() =>
+      this.props.setCoverImageUrl(null)
+    );
   };
 
   render() {
