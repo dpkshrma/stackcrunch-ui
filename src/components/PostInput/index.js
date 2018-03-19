@@ -42,7 +42,8 @@ class PostInput extends React.Component {
     publishing: false,
     saving: false,
     draftUrl: null,
-    publishUrl: null
+    publishUrl: null,
+    uploadingCover: false
   };
   componentDidMount() {
     // this.title.focus();
@@ -135,6 +136,7 @@ class PostInput extends React.Component {
     const { slug } = this.props.match.params;
     return postAPI.update({ slug, post: this.getRawPostInput(isDraft) });
   };
+  setUploadingCover = uploadingCover => this.setState({ uploadingCover });
   render() {
     const {
       fetchingEditPost,
@@ -145,13 +147,16 @@ class PostInput extends React.Component {
       publishing,
       saving,
       draftUrl,
-      publishUrl
+      publishUrl,
+      uploadingCover
     } = this.state;
     return (
       <Container>
         <CoverImage
           src={coverImageUrl}
+          uploadingCover={uploadingCover}
           setCoverImageUrl={this.setCoverImageUrl}
+          setUploadingCover={this.setUploadingCover}
         />
         <PostInputWrapper>
           <TitleInput
@@ -175,14 +180,21 @@ class PostInput extends React.Component {
           />
           {!publishUrl &&
             !draftUrl &&
+            !uploadingCover &&
             (this.state.editing && !this.state.isDraft) && (
               <PostSaveAlert>
                 <b>Note:</b> Saving a published post as a draft will unpublish
                 the post.
               </PostSaveAlert>
             )}
+          {uploadingCover && (
+            <PostSaveInfo>Uploading Cover Image...</PostSaveInfo>
+          )}
           <Actions>
-            <DraftButton onClick={this.draft} disabled={fetchingEditPost}>
+            <DraftButton
+              onClick={this.draft}
+              disabled={fetchingEditPost || uploadingCover}
+            >
               {saving ? (
                 <FlexSection>
                   Saving&hellip;&nbsp;
@@ -192,7 +204,10 @@ class PostInput extends React.Component {
                 `Save as draft`
               )}
             </DraftButton>
-            <PublishButton onClick={this.publish} disabled={fetchingEditPost}>
+            <PublishButton
+              onClick={this.publish}
+              disabled={fetchingEditPost || uploadingCover}
+            >
               {publishing ? (
                 <FlexSection>
                   Publishing&hellip;&nbsp;
@@ -214,13 +229,13 @@ class PostInput extends React.Component {
           </Actions>
           {draftUrl && (
             <PostSaveInfo>
-              Post saved at{' '}
+              Story saved. You can check it out at{' '}
               <PostLink to={draftUrl.url}>{draftUrl.display}</PostLink>
             </PostSaveInfo>
           )}
           {publishUrl && (
             <PostSaveInfo>
-              Post published at{' '}
+              Your story is now published at{' '}
               <PostLink to={publishUrl.url}>{publishUrl.display}</PostLink>
             </PostSaveInfo>
           )}

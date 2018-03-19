@@ -76,8 +76,7 @@ const Options = ({ onDelete }) => {
 
 class CoverImage extends React.Component {
   state = {
-    preview: null,
-    uploading: false
+    preview: null
   };
 
   componentWillReceiveProps(nextProps) {
@@ -92,9 +91,9 @@ class CoverImage extends React.Component {
     e.preventDefault();
     const reader = new FileReader();
     const file = e.target.files[0];
-    this.setState({ uploading: true }, () => {
+    this.props.setUploadingCover(true).then(() => {
       reader.onloadend = () => {
-        this.setState({ file, preview: reader.result });
+        this.setState({ preview: reader.result });
       };
       reader.readAsDataURL(file);
       // upload cover image
@@ -109,7 +108,7 @@ class CoverImage extends React.Component {
           return data.location;
         })
         .then(this.props.setCoverImageUrl)
-        .then(() => this.setState({ uploading: false }));
+        .then(() => this.props.setUploadingCover(false));
     });
   };
 
@@ -121,7 +120,8 @@ class CoverImage extends React.Component {
   };
 
   render() {
-    const { preview, uploading } = this.state;
+    const { uploadingCover } = this.props;
+    const { preview } = this.state;
     return (
       <CoverImageContainer>
         {preview && (
@@ -137,7 +137,7 @@ class CoverImage extends React.Component {
               type="file"
               onChange={this.onChange}
               accept="image/*"
-              disabled={uploading ? 'disabled' : false}
+              disabled={uploadingCover ? 'disabled' : false}
               title="Cover Image"
             />
           </div>
