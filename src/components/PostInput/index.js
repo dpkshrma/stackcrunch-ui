@@ -34,7 +34,7 @@ class PostInput extends React.Component {
   state = {
     editorState: createEditorState(),
     selectedTags: [],
-    coverDataUri: null,
+    coverImageUrl: null,
     title: '',
     editing: false,
     fetchingEditPost: false,
@@ -93,8 +93,8 @@ class PostInput extends React.Component {
       selectedTags: this.state.selectedTags.filter(tag => tag.name !== tagName)
     });
   };
-  setCoverDataUri = coverDataUri => {
-    this.setState({ coverDataUri });
+  setCoverImageUrl = coverImageUrl => {
+    this.setState({ coverImageUrl });
   };
   draft = e => {
     e.preventDefault();
@@ -120,35 +120,20 @@ class PostInput extends React.Component {
   };
   getRawPostInput = isDraft => {
     const content = convertToRaw(this.state.editorState.getCurrentContent());
-    const { title, selectedTags } = this.state;
+    const { title, selectedTags, coverImageUrl } = this.state;
     const tagname = selectedTags.map(({ name }) => name);
-    return {
+    const rawPost = {
       post: { content },
-      meta: { title, tagname, isDraft }
+      meta: { title, tagname, isDraft, coverImageUrl }
     };
-  };
-  uploadCover = () => {
-    const { coverDataUri } = this.state;
-    if (coverDataUri) return postAPI.uploadCoverImage(coverDataUri);
-    return Promise.resolve();
-  };
-  uploadCoverAndGetRawPostInput = isDraft => {
-    return this.uploadCover().then(coverResponse => {
-      const rawPost = this.getRawPostInput(isDraft);
-      if (coverResponse && coverResponse.location) {
-        rawPost.meta.coverImageUrl = coverResponse.location;
-      }
-      return rawPost;
-    });
+    return rawPost;
   };
   submitPost = (isDraft = true) => {
-    return this.uploadCoverAndGetRawPostInput(isDraft).then(postAPI.create);
+    return postAPI.create(this.getRawPostInput(isDraft));
   };
   submitPostEdit = (isDraft = true) => {
     const { slug } = this.props.match.params;
-    return this.uploadCoverAndGetRawPostInput(isDraft)
-      .then(rawPost => ({ slug, post: rawPost }))
-      .then(postAPI.update);
+    return postAPI.update({ slug, post: this.getRawPostInput(isDraft) });
   };
   render() {
     const {
@@ -164,7 +149,10 @@ class PostInput extends React.Component {
     } = this.state;
     return (
       <Container>
-        <CoverImage setDataUri={this.setCoverDataUri} url={coverImageUrl} />
+        <CoverImage
+          src={coverImageUrl}
+          setCoverImageUrl={this.setCoverImageUrl}
+        />
         <PostInputWrapper>
           <TitleInput
             innerRef={el => {

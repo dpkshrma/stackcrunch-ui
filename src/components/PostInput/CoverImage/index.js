@@ -1,224 +1,148 @@
-import React from 'react';
+import React, { Fragment } from 'react';
+import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import Dropzone from 'react-dropzone';
-import Draggable from 'react-draggable';
-import fetch from 'isomorphic-fetch';
 import promisifySetState from 'promisify-setstate';
+import postApi from '../../../api/post';
+import MouseIcon from '../../icons/Mouse';
 import DeleteIcon from '../../icons/Delete';
-import {
-  CoverImageContainer,
-  ImagePreviewContainer,
-  ImagePreviewOverlay,
-  DeleteFab,
-  DNDPlaceHolder,
-  MAX_COVER_HEIGHT
-} from './styled';
 
-const initialState = {
-  file: null,
-  activeDrags: 0,
-  imagePreviewHeight: 0,
-  imagePreviewWidth: 0,
-  imageBounds: {
-    top: -100,
-    bottom: 0
-  },
-  deltaPosition: {
-    y: 0
-  },
-  outputImageDataURL: null,
-  hideDropzone: false,
-  fetchingImage: false
+const CoverImageContainer = styled.div`
+  width: 100%;
+  position: relative;
+`;
+
+const FileInput = styled.input`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+  cursor: pointer;
+  opacity: 0;
+  top: 0;
+`;
+
+const Img = styled.img`
+  width: 100%;
+`;
+
+const Placeholder = () => {
+  const Container = styled.div`
+    color: #777;
+    background-color: #f7f7f7;
+    padding: 70px;
+    border-radius: 2px;
+    text-align: center;
+    cursor: pointer;
+  `;
+  return (
+    <Container>
+      <MouseIcon height={20} />
+      Click to upload a Cover Image
+    </Container>
+  );
+};
+
+const Options = ({ onDelete }) => {
+  const DeleteFab = styled.div`
+    height: 24px;
+    width: 24px;
+    cursor: pointer;
+    padding: 12px;
+    background-color: #fff;
+    opacity: 0.8;
+    color: #aaa;
+    border-radius: 50%;
+    &:hover {
+      opacity: 0.9;
+    }
+  `;
+  const Container = styled.div`
+    position: absolute;
+    top: 0;
+    display: flex;
+    justify-content: flex-end;
+    width: calc(100% - 24px);
+    padding: 12px;
+  `;
+
+  return (
+    <Container>
+      <DeleteFab onClick={onDelete}>
+        <DeleteIcon height={24} />
+      </DeleteFab>
+    </Container>
+  );
 };
 
 class CoverImage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = initialState;
-  }
+  state = {
+    preview: null,
+    uploading: false
+  };
 
   componentWillReceiveProps(nextProps) {
-    const { url: currentUrl } = this.props;
-    const { url: nextUrl } = nextProps;
-    // initial load previously saved image
-    if (currentUrl !== nextUrl) {
-      this.setState({ fetchingImage: true })
-        .then(() => {
-          return fetch(nextUrl);
-        })
-        .then(r => r.blob())
-        .then(blob => {
-          const file = new File([blob], 'cover.png', { type: 'image/png' });
-          file.preview = URL.createObjectURL(blob);
-          this.onDrop([file]);
-        });
+    const { src: currentSrc } = this.props;
+    const { src: nextSrc } = nextProps;
+    if (currentSrc !== nextSrc) {
+      this.setState({ preview: nextSrc });
     }
   }
 
-  removeCoverImage = () => {
-    this.setState(initialState);
-  };
-
-  onDrop = ([acceptedFile]) => {
-    this.setState(
-      {
-        file: acceptedFile,
-        hideDropzone: true
-      },
-      () => {
-        // FIXME: w/o setTimeout, image height = 18px why?
-        setTimeout(() => {
-          this.setImagePreviewBounds();
-          this.setCroppedImageDataURL();
-        }, 200);
-      }
-    );
-  };
-
-  handleDND = ({ isDragActive, isDragReject }) => {
-    const { fetchingImage } = this.state;
-    // TODO: add dnd state change component
-    if (isDragActive) {
-    }
-    if (isDragReject) {
-    }
-    return <DNDPlaceHolder loading={fetchingImage} />;
-  };
-
-  onDragStart = () => {
-    this.setState({ activeDrags: ++this.state.activeDrags });
-  };
-
-  onDragStop = () => {
-    this.setState({ activeDrags: --this.state.activeDrags }, () => {
-      this.setCroppedImageDataURL();
-    });
-  };
-
-  onPreviewImageDrag = (e, ui) => {
-    this.setState({
-      deltaPosition: {
-        y: this.state.deltaPosition.y + ui.deltaY
-      }
-    });
-  };
-
-  setImagePreviewBounds = () => {
-    const { clientWidth, clientHeight } = this.refs.imagePreview;
-    this.setState({
-      imagePreviewHeight: clientHeight,
-      imagePreviewWidth: clientWidth,
-      imageBounds: {
-        top: MAX_COVER_HEIGHT - clientHeight,
-        bottom: 0
-      }
-    });
-  };
-
-  // TODO: move image cropping logic to separate pure function
-  setCroppedImageDataURL = () => {
-    const self = this;
+  onChange = e => {
+    e.preventDefault();
     const reader = new FileReader();
-    const imageObj = new Image();
-    const canvas = document.createElement('canvas');
-    let context = null;
-
-    const { clientWidth } = this.refs.imagePreview;
-    const max_width = clientWidth;
-    const max_height = MAX_COVER_HEIGHT;
-    //create a hidden canvas object we can use to create the new resized image data
-    canvas.width = max_width;
-    canvas.height = max_height;
-    canvas.style.visibility = 'hidden';
-
-    //get the context to use
-    context = canvas.getContext('2d');
-
-    const { file } = this.state;
-    if (file.type.match('image.*')) {
+    const file = e.target.files[0];
+    this.setState({ uploading: true }, () => {
+      reader.onloadend = () => {
+        this.setState({ file, preview: reader.result });
+      };
       reader.readAsDataURL(file);
-    } else {
-      alert('File is not an image');
-    }
+      // upload cover image
+      postApi
+        .uploadCoverImage(file)
+        .then(data => {
+          // check if upload is successful
+          if (!data || !data.location) {
+            console.error('Cover Upload Response: ', data);
+            throw new Error('Error uploading cover image');
+          }
+          return data.location;
+        })
+        .then(this.props.setCoverImageUrl)
+        .then(() => this.setState({ uploading: false }));
+    });
+  };
 
-    reader.onload = function(event) {
-      imageObj.src = event.target.result;
-    };
-
-    // draws the new image then gets the blob data from it
-    imageObj.onload = function() {
-      // Check for empty images
-      if (this.width === 0 || this.height === 0) {
-        alert('Image is empty');
-      } else {
-        context.clearRect(0, 0, max_width, max_height);
-        // const { width: imageNaturalWidth, height: imageNaturalHeight } = this;
-        const { imagePreviewWidth, imagePreviewHeight } = self.state;
-        context.drawImage(
-          imageObj,
-          0,
-          self.state.deltaPosition.y,
-          imagePreviewWidth,
-          imagePreviewHeight
-        );
-        self.props.setDataUri(canvas.toDataURL('image/png'));
-      }
-    };
+  onDelete = e => {
+    e.preventDefault();
+    this.setState({ preview: null });
   };
 
   render() {
-    // disabling default dropzone css (TODO: raise a PR to use an explicit prop)
-    const { preview: imagePreviewBlob = null } = this.state.file || {};
-    const dropzoneStyles = { display: 'block' };
-    const imagePreviewStyles = { display: 'none' };
-
-    if (this.state.hideDropzone) {
-      dropzoneStyles.display = 'none';
-      imagePreviewStyles.display = 'block';
-    }
-
+    const { preview, uploading } = this.state;
     return (
       <CoverImageContainer>
-        <Dropzone
-          ref="dropzone"
-          onDrop={this.onDrop}
-          multiple={false}
-          accept="image/*"
-          style={dropzoneStyles}
-          disableClick={this.state.fetchingImage}
-        >
-          {this.handleDND}
-        </Dropzone>
-        <ImagePreviewContainer style={imagePreviewStyles}>
-          <Draggable
-            onDrag={this.onPreviewImageDrag}
-            onStart={this.onDragStart}
-            onStop={this.onDragStop}
-            bounds={this.state.imageBounds}
-            axis="y"
-          >
-            <div ref="imagePreview">
-              <img
-                alt="cover preview"
-                src={imagePreviewBlob}
-                style={{ width: '100%' }}
-              />
-              <ImagePreviewOverlay />
-            </div>
-          </Draggable>
-        </ImagePreviewContainer>
-        {this.state.file && (
-          <DeleteFab onClick={this.removeCoverImage}>
-            <DeleteIcon height={24} />
-          </DeleteFab>
+        {preview && (
+          <div>
+            <Img src={preview} />
+            <Options onDelete={this.onDelete} />
+          </div>
+        )}
+        {!preview && (
+          <div>
+            <Placeholder />
+            <FileInput
+              type="file"
+              onChange={this.onChange}
+              accept="image/*"
+              disabled={uploading ? 'disabled' : false}
+              title="Cover Image"
+            />
+          </div>
         )}
       </CoverImageContainer>
     );
   }
 }
-
-CoverImage.propTypes = {
-  setDataUri: PropTypes.func.isRequired
-};
 
 export default promisifySetState(CoverImage);

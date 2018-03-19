@@ -23,10 +23,8 @@ const update = ({ slug, post }) => {
   return req(`posts/${slug}`).put(post);
 };
 
-const uploadCoverImage = dataUri => {
+const uploadCoverImage = file => {
   const form = new FormData();
-  const blob = dataURItoBlob(dataUri);
-  const file = new File([blob], 'coverImage.png', { type: 'image/png' });
   form.append('coverImage', file);
   return req('posts/cover').postFormData(form);
 };
