@@ -14,10 +14,19 @@ import {
   Actions,
   DraftButton,
   PublishButton,
-  PostSaveAlert
+  PostSaveAlert,
+  PostSaveInfo,
+  PostLink,
+  FlexSection
 } from './styled';
+import LoadingIcon from '../icons/Loading';
 
 const Meta = () => <DateString>{new Date().toDateString()}</DateString>;
+
+const getPostUrl = slug => ({
+  url: `/post/${slug}`,
+  display: `${document.location.origin}/post/${slug}`
+});
 
 // TODO: font size, letter spacing, line height
 // TODO: keybindings
@@ -29,7 +38,11 @@ class PostInput extends React.Component {
     title: '',
     editing: false,
     fetchingEditPost: false,
-    isDraft: false
+    isDraft: false,
+    publishing: false,
+    saving: false,
+    draftUrl: null,
+    publishUrl: null
   };
   componentDidMount() {
     // this.title.focus();
@@ -85,11 +98,25 @@ class PostInput extends React.Component {
   };
   draft = e => {
     e.preventDefault();
-    this.state.editing ? this.submitPostEdit() : this.submitPost();
+    const submitFn = this.state.editing ? this.submitPostEdit : this.submitPost;
+    this.setState({ saving: true })
+      .then(submitFn)
+      .then(({ meta: { slug } }) => getPostUrl(slug))
+      .then(url =>
+        this.setState({ saving: false, draftUrl: url, publishUrl: null })
+      )
+      .catch(console.error);
   };
   publish = e => {
     e.preventDefault();
-    this.state.editing ? this.submitPostEdit(false) : this.submitPost(false);
+    const submitFn = this.state.editing ? this.submitPostEdit : this.submitPost;
+    this.setState({ publishing: true })
+      .then(() => submitFn(false))
+      .then(({ meta: { slug } }) => getPostUrl(slug))
+      .then(url =>
+        this.setState({ publishing: false, publishUrl: url, draftUrl: null })
+      )
+      .catch(console.error);
   };
   getRawPostInput = isDraft => {
     const content = convertToRaw(this.state.editorState.getCurrentContent());
@@ -115,22 +142,13 @@ class PostInput extends React.Component {
     });
   };
   submitPost = (isDraft = true) => {
-    this.uploadCoverAndGetRawPostInput(isDraft)
-      .then(postAPI.create)
-      .then(data => {
-        // TODO: show a snackbar
-        console.log('submitPost final response: ', data);
-      });
+    return this.uploadCoverAndGetRawPostInput(isDraft).then(postAPI.create);
   };
   submitPostEdit = (isDraft = true) => {
     const { slug } = this.props.match.params;
-    this.uploadCoverAndGetRawPostInput(isDraft)
+    return this.uploadCoverAndGetRawPostInput(isDraft)
       .then(rawPost => ({ slug, post: rawPost }))
-      .then(postAPI.update)
-      .then(data => {
-        // TODO: show a snackbar
-        console.log('submitPostEdit final response: ', data);
-      });
+      .then(postAPI.update);
   };
   render() {
     const {
@@ -138,7 +156,11 @@ class PostInput extends React.Component {
       title,
       editorState,
       coverImageUrl,
-      selectedTags
+      selectedTags,
+      publishing,
+      saving,
+      draftUrl,
+      publishUrl
     } = this.state;
     return (
       <Container>
@@ -163,8 +185,9 @@ class PostInput extends React.Component {
             addTag={this.addTag}
             removeTag={this.removeTag}
           />
-          {this.state.editing &&
-            !this.state.isDraft && (
+          {!publishUrl &&
+            !draftUrl &&
+            (this.state.editing && !this.state.isDraft) && (
               <PostSaveAlert>
                 <b>Note:</b> Saving a published post as a draft will unpublish
                 the post.
@@ -172,12 +195,26 @@ class PostInput extends React.Component {
             )}
           <Actions>
             <DraftButton onClick={this.draft} disabled={fetchingEditPost}>
-              Save as draft
+              {saving ? (
+                <FlexSection>
+                  Saving&hellip;&nbsp;
+                  <LoadingIcon height={18} stroke="#07c" />
+                </FlexSection>
+              ) : (
+                `Save as draft`
+              )}
             </DraftButton>
             <PublishButton onClick={this.publish} disabled={fetchingEditPost}>
-              Publish
+              {publishing ? (
+                <FlexSection>
+                  Publishing&hellip;&nbsp;
+                  <LoadingIcon height={18} stroke="#fff" />
+                </FlexSection>
+              ) : (
+                `Publish`
+              )}
             </PublishButton>
-            <DraftButton
+            {/* <DraftButton
               onClick={() => {
                 const content = this.state.editorState.getCurrentContent();
                 const rawContentState = convertToRaw(content);
@@ -185,8 +222,20 @@ class PostInput extends React.Component {
               }}
             >
               Log
-            </DraftButton>
+            </DraftButton> */}
           </Actions>
+          {draftUrl && (
+            <PostSaveInfo>
+              Post saved at{' '}
+              <PostLink to={draftUrl.url}>{draftUrl.display}</PostLink>
+            </PostSaveInfo>
+          )}
+          {publishUrl && (
+            <PostSaveInfo>
+              Post published at{' '}
+              <PostLink to={publishUrl.url}>{publishUrl.display}</PostLink>
+            </PostSaveInfo>
+          )}
         </PostInputWrapper>
       </Container>
     );

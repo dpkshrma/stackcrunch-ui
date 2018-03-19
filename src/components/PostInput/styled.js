@@ -1,6 +1,7 @@
+import React from 'react';
 import styled from 'styled-components';
 import ContentEditable from 'react-contenteditable';
-import { Alert, Button } from '../common';
+import { Alert, Button, StyledLink } from '../common';
 
 export const Container = styled.div`
   width: 100%;
@@ -75,3 +76,22 @@ export const PostSaveAlert = styled(Alert)`
     background-color: rgba(246, 155, 85, 0.3);
   }
 `;
+export const PostLink = styled(StyledLink)`
+  font-size: 12px;
+  line-height: 18px;
+`;
+export const PostSaveInfo = styled(Alert)`
+  width: fit-content;
+  margin: 24px 0;
+`;
+export const FlexSection = props => {
+  const getFlexDirection = ({ vertical, horizontal }) => {
+    if (vertical) return 'column';
+    return 'row';
+  };
+  const Component = styled.div`
+    display: flex;
+    flex-direction: ${getFlexDirection};
+  `;
+  return <Component {...props} />;
+};

@@ -135,7 +135,7 @@ class Sidebar extends React.Component {
     const { username } = this.props.match.params;
     this.props.fetchProfile(username).then(() => {
       const { users } = this.props;
-      const { avatarURL } = users[username];
+      const { avatarURL } = users[username] || {};
       this.setState({ avatarURL });
     });
   }
