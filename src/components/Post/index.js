@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import styled from 'styled-components';
 // stateless components
 import { Chip } from '../common';
 import {
@@ -25,6 +26,24 @@ import markdownToDraft from './helpers/markdownToDraft';
 import { URL_PREFIX } from '../../config';
 
 const Meta = () => <DateString>{new Date().toDateString()}</DateString>;
+
+const CoverImg = props => {
+  const { alignment } = props;
+  let imgWidth;
+  if (alignment === 'inset') imgWidth = '740px';
+  else if (alignment === 'outset') imgWidth = '945px';
+  else imgWidth = '100vw';
+
+  const Img = styled.img`
+    width: ${imgWidth};
+  `;
+  const Container = styled.div``;
+  return (
+    <Container>
+      <Img {...props} />
+    </Container>
+  );
+};
 
 class PostPage extends React.Component {
   state = {
@@ -68,7 +87,13 @@ class PostPage extends React.Component {
     this.setState({ editorState });
   };
   render() {
-    const { authors = [], ttr, title, coverImageUrl } = this.state.metadata;
+    const {
+      authors = [],
+      ttr,
+      title,
+      coverImageUrl,
+      coverAlignment
+    } = this.state.metadata;
     const { slug } = this.props.match.params;
     const [author] = authors;
     if (!this.state.loaded) {
@@ -76,7 +101,9 @@ class PostPage extends React.Component {
     }
     return (
       <Wrapper className="post-wrapper">
-        {coverImageUrl && <img src={coverImageUrl} />}
+        {coverImageUrl && (
+          <CoverImg src={coverImageUrl} alignment={coverAlignment} />
+        )}
         <Post>
           <Header>
             <HeaderMeta>

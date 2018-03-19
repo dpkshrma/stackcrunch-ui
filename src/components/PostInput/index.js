@@ -43,7 +43,8 @@ class PostInput extends React.Component {
     saving: false,
     draftUrl: null,
     publishUrl: null,
-    uploadingCover: false
+    uploadingCover: false,
+    coverAlignment: 'inset'
   };
   componentDidMount() {
     // this.title.focus();
@@ -121,11 +122,11 @@ class PostInput extends React.Component {
   };
   getRawPostInput = isDraft => {
     const content = convertToRaw(this.state.editorState.getCurrentContent());
-    const { title, selectedTags, coverImageUrl } = this.state;
+    const { title, selectedTags, coverImageUrl, coverAlignment } = this.state;
     const tagname = selectedTags.map(({ name }) => name);
     const rawPost = {
       post: { content },
-      meta: { title, tagname, isDraft, coverImageUrl }
+      meta: { title, tagname, isDraft, coverImageUrl, coverAlignment }
     };
     return rawPost;
   };
@@ -137,6 +138,7 @@ class PostInput extends React.Component {
     return postAPI.update({ slug, post: this.getRawPostInput(isDraft) });
   };
   setUploadingCover = uploadingCover => this.setState({ uploadingCover });
+  setCoverAlignment = coverAlignment => this.setState({ coverAlignment });
   render() {
     const {
       fetchingEditPost,
@@ -148,15 +150,18 @@ class PostInput extends React.Component {
       saving,
       draftUrl,
       publishUrl,
-      uploadingCover
+      uploadingCover,
+      coverAlignment
     } = this.state;
     return (
       <Container>
         <CoverImage
           src={coverImageUrl}
           uploadingCover={uploadingCover}
+          coverAlignment={coverAlignment}
           setCoverImageUrl={this.setCoverImageUrl}
           setUploadingCover={this.setUploadingCover}
+          setCoverAlignment={this.setCoverAlignment}
         />
         <PostInputWrapper>
           <TitleInput

@@ -1,14 +1,19 @@
 import React, { Fragment } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 import promisifySetState from 'promisify-setstate';
 import postApi from '../../../api/post';
 import MouseIcon from '../../icons/Mouse';
 import DeleteIcon from '../../icons/Delete';
+import ImageInsetIcon from '../../icons/editor/ImageInset';
+import ImageOutsetIcon from '../../icons/editor/ImageOutset';
+import ImageFillWidthIcon from '../../icons/editor/ImageFillWidth';
 
 const CoverImageContainer = styled.div`
   width: 100%;
   position: relative;
+  display: flex;
+  justify-content: center;
 `;
 
 const FileInput = styled.input`
@@ -21,9 +26,27 @@ const FileInput = styled.input`
   top: 0;
 `;
 
-const Img = styled.img`
-  width: 100%;
-`;
+const CoverImg = props => {
+  const { alignment } = props;
+  let imgWidth;
+  if (alignment === 'inset') imgWidth = '740px';
+  else if (alignment === 'outset') imgWidth = '945px';
+  else imgWidth = '100vw';
+
+  const Img = styled.img`
+    width: ${imgWidth};
+  `;
+  const Container = styled.div`
+    &:hover ${Img} {
+      border: 2px solid coral;
+    }
+  `;
+  return (
+    <Container>
+      <Img {...props} />
+    </Container>
+  );
+};
 
 const Placeholder = () => {
   const Container = styled.div`
@@ -33,6 +56,7 @@ const Placeholder = () => {
     border-radius: 2px;
     text-align: center;
     cursor: pointer;
+    width: 100%;
   `;
   return (
     <Container>
@@ -42,34 +66,73 @@ const Placeholder = () => {
   );
 };
 
-const Options = ({ onDelete }) => {
-  const DeleteFab = styled.div`
-    height: 24px;
-    width: 24px;
-    cursor: pointer;
-    padding: 12px;
-    background-color: #fff;
-    opacity: 0.8;
-    color: #aaa;
-    border-radius: 50%;
-    &:hover {
-      opacity: 0.9;
-    }
-  `;
+const Options = ({ onDelete, onOptionClick, selectedOption }) => {
   const Container = styled.div`
     position: absolute;
     top: 0;
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     width: calc(100% - 24px);
+  `;
+
+  const Toolbar = styled.div`
+    display: flex;
+    background-color: #fffb;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    &:hover {
+      background-color: #fffc;
+    }
+  `;
+
+  const btnCSS = css`
+    cursor: pointer;
     padding: 12px;
+    margin: 0;
+    fill: #666;
+    &:hover {
+      fill: #555;
+      background: #fff;
+    }
+    ${({ selected }) =>
+      selected &&
+      css`
+        background: #fff;
+      `};
+  `;
+  const DeleteBtn = styled(DeleteIcon)`
+    ${btnCSS};
+  `;
+  const InsetBtn = styled(ImageInsetIcon)`
+    ${btnCSS};
+  `;
+  const OutsetBtn = styled(ImageOutsetIcon)`
+    ${btnCSS};
+  `;
+  const FillWidthBtn = styled(ImageFillWidthIcon)`
+    ${btnCSS};
   `;
 
   return (
     <Container>
-      <DeleteFab onClick={onDelete}>
-        <DeleteIcon height={24} />
-      </DeleteFab>
+      <Toolbar>
+        <InsetBtn
+          height={24}
+          onClick={onOptionClick('inset')}
+          selected={selectedOption === 'inset'}
+        />
+        <OutsetBtn
+          height={24}
+          onClick={onOptionClick('outset')}
+          selected={selectedOption === 'outset'}
+        />
+        <FillWidthBtn
+          height={24}
+          onClick={onOptionClick('fillWidth')}
+          selected={selectedOption === 'fillWidth'}
+        />
+        <DeleteBtn height={23} onClick={onDelete} title="Remove Image" />
+      </Toolbar>
     </Container>
   );
 };
@@ -119,29 +182,36 @@ class CoverImage extends React.Component {
     );
   };
 
+  onOptionClick = coverAlignment => e => {
+    e.preventDefault();
+    this.props.setCoverAlignment(coverAlignment);
+  };
+
   render() {
-    const { uploadingCover } = this.props;
+    const { uploadingCover, coverAlignment = 'inset' } = this.props;
     const { preview } = this.state;
     return (
       <CoverImageContainer>
-        {preview && (
-          <div>
-            <Img src={preview} />
-            <Options onDelete={this.onDelete} />
-          </div>
-        )}
-        {!preview && (
-          <div>
-            <Placeholder />
-            <FileInput
-              type="file"
-              onChange={this.onChange}
-              accept="image/*"
-              disabled={uploadingCover ? 'disabled' : false}
-              title="Cover Image"
-            />
-          </div>
-        )}
+        {preview && [
+          <CoverImg src={preview} alignment={coverAlignment} key="img" />,
+          <Options
+            onDelete={this.onDelete}
+            onOptionClick={this.onOptionClick}
+            selectedOption={coverAlignment}
+            key="options"
+          />
+        ]}
+        {!preview && [
+          <Placeholder key="placeholder" />,
+          <FileInput
+            type="file"
+            onChange={this.onChange}
+            accept="image/*"
+            disabled={uploadingCover ? 'disabled' : false}
+            title="Cover Image"
+            key="fileInput"
+          />
+        ]}
       </CoverImageContainer>
     );
   }
