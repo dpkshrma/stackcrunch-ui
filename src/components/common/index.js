@@ -1,3 +1,4 @@
+import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
@@ -66,4 +67,14 @@ export const StyledLink = styled(Link)`
     -webkit-transform: scaleX(1);
     transform: scaleX(1);
   }
+`;
+
+const getFlexDirection = ({ vertical, horizontal }) => {
+  if (vertical) return 'column';
+  return 'row';
+};
+export const FlexSection = styled.div`
+  display: flex;
+  flex-direction: ${getFlexDirection};
+  flex: ${({ flex }) => flex};
 `;
