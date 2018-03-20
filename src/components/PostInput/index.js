@@ -67,6 +67,7 @@ class PostInput extends React.Component {
             selectedTags: meta.tags || [],
             isDraft: meta.isDraft,
             coverImageUrl: meta.coverImageUrl,
+            coverAlignment: meta.coverAlignment,
             fetchingEditPost: false
           });
         })
