@@ -27,7 +27,7 @@ const FileInput = styled.input`
 `;
 
 const CoverImg = props => {
-  const { alignment } = props;
+  const { alignment, children, ...restProps } = props;
   let imgWidth;
   if (alignment === 'inset') imgWidth = '740px';
   else if (alignment === 'outset') imgWidth = '945px';
@@ -37,13 +37,15 @@ const CoverImg = props => {
     width: ${imgWidth};
   `;
   const Container = styled.div`
+    position: relative;
     &:hover ${Img} {
       border: 2px solid coral;
     }
   `;
   return (
     <Container>
-      <Img {...props} />
+      <Img {...restProps} />
+      {children}
     </Container>
   );
 };
@@ -192,15 +194,15 @@ class CoverImage extends React.Component {
     const { preview } = this.state;
     return (
       <CoverImageContainer>
-        {preview && [
-          <CoverImg src={preview} alignment={coverAlignment} key="img" />,
-          <Options
-            onDelete={this.onDelete}
-            onOptionClick={this.onOptionClick}
-            selectedOption={coverAlignment}
-            key="options"
-          />
-        ]}
+        {preview && (
+          <CoverImg src={preview} alignment={coverAlignment}>
+            <Options
+              onDelete={this.onDelete}
+              onOptionClick={this.onOptionClick}
+              selectedOption={coverAlignment}
+            />
+          </CoverImg>
+        )}
         {!preview && [
           <Placeholder key="placeholder" />,
           <FileInput
