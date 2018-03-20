@@ -1,8 +1,8 @@
-import soIcon from '../../../icons/so-icon.svg';
-import sfIcon from '../../../icons/sf-icon.svg';
-import suIcon from '../../../icons/su-icon.png';
-import secIcon from '../../../icons/sec-icon.png';
-import seIcon from '../../../icons/se-icon.png';
+import soIcon from '../../../icons/community/so-icon.svg';
+import sfIcon from '../../../icons/community/sf-icon.svg';
+import suIcon from '../../../icons/community/su-icon.png';
+import secIcon from '../../../icons/community/sec-icon.png';
+import seIcon from '../../../icons/community/se-icon.png';
 
 export const clickables = [
   {
