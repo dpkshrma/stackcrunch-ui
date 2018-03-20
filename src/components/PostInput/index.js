@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import { convertToRaw } from 'draft-js';
 import promisifySetState from 'promisify-setstate';
 import postAPI from '../../api/post';
@@ -51,6 +52,16 @@ class PostInput extends React.Component {
   }
   componentWillMount() {
     const { slug } = this.props.match.params;
+    this.loadPost(slug);
+  }
+  componentWillReceiveProps(nextProps) {
+    const { slug: currentSlug } = this.props.match.params;
+    const { slug: nextSlug } = nextProps.match.params;
+    if (currentSlug !== nextSlug && nextSlug && nextSlug.length > 0) {
+      this.setState({ editing: true });
+    }
+  }
+  loadPost = slug => {
     slug &&
       this.setState({ fetchingEditPost: true, editing: true })
         .then(() => postAPI.fetchOne(slug))
@@ -74,7 +85,7 @@ class PostInput extends React.Component {
         .catch(err => {
           throw err;
         });
-  }
+  };
   onEditorChange = (editorState, afterChange) => {
     if (afterChange) {
       return this.setState({ editorState }, afterChange);
@@ -104,9 +115,17 @@ class PostInput extends React.Component {
     const submitFn = this.state.editing ? this.submitPostEdit : this.submitPost;
     this.setState({ saving: true })
       .then(submitFn)
-      .then(({ meta: { slug } }) => getPostUrl(slug))
+      .then(({ meta: { slug } }) => {
+        this.props.history.push(`/write/${slug}`);
+        return getPostUrl(slug);
+      })
       .then(url =>
-        this.setState({ saving: false, draftUrl: url, publishUrl: null })
+        this.setState({
+          publishing: false,
+          saving: false,
+          draftUrl: url,
+          publishUrl: null
+        })
       )
       .catch(console.error);
   };
@@ -115,9 +134,17 @@ class PostInput extends React.Component {
     const submitFn = this.state.editing ? this.submitPostEdit : this.submitPost;
     this.setState({ publishing: true })
       .then(() => submitFn(false))
-      .then(({ meta: { slug } }) => getPostUrl(slug))
+      .then(({ meta: { slug } }) => {
+        this.props.history.push(`/write/${slug}`);
+        return getPostUrl(slug);
+      })
       .then(url =>
-        this.setState({ publishing: false, publishUrl: url, draftUrl: null })
+        this.setState({
+          publishing: false,
+          saving: false,
+          draftUrl: null,
+          publishUrl: url
+        })
       )
       .catch(console.error);
   };
@@ -251,4 +278,4 @@ class PostInput extends React.Component {
   }
 }
 
-export default promisifySetState(PostInput);
+export default withRouter(promisifySetState(PostInput));

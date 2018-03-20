@@ -10,6 +10,7 @@ export const Wrapper = styled.div`
 
 export const Post = styled.div`
   max-width: 740px;
+  width: 100%;
   margin-top: 24px;
 `;
 
