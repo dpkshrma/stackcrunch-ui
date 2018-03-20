@@ -110,8 +110,9 @@ const getOptionSelectedStyles = ({ selected }) => {
 };
 const Option = styled.div`
   font-family: roboto;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 300;
+  letter-spacing: 0.06em;
   color: #444;
   padding: 12px;
   cursor: pointer;
