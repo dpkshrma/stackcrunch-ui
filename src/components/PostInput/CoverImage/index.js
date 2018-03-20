@@ -1,6 +1,5 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import styled, { css } from 'styled-components';
-import PropTypes from 'prop-types';
 import promisifySetState from 'promisify-setstate';
 import postApi from '../../../api/post';
 import MouseIcon from '../../icons/Mouse';

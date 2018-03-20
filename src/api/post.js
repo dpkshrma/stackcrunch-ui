@@ -1,5 +1,4 @@
 import { req } from '../helpers/http';
-import { dataURItoBlob } from '../utils/image';
 
 const fetchAll = ({ page, username, isDraft } = {}) => {
   let endpoint = 'posts';
