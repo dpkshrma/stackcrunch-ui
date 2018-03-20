@@ -71,7 +71,14 @@ export const checkQnaEmbeds = (text = '') => {
     'security.stackexchange.com',
     'apple.stackexchange.com',
     'graphicdesign.stackexchange.com',
-    'ux.stackexchange.com'
+    'ux.stackexchange.com',
+    'unix.stackexchange.com',
+    'cstheory.stackexchange.com',
+    'cs.stackexchange.com',
+    'dba.stackexchange.com',
+    'codereview.stackexchange.com',
+    'math.stackexchange.com',
+    'android.stackexchange.com'
   ].join('|');
   const urlRegex = new RegExp(
     `(?:https?://)?(${SUPPORTED_SE_SITES})/q(?:uestions)?/([^/]+)`

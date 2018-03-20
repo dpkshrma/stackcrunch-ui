@@ -67,9 +67,11 @@ class CommunityLogo extends React.Component {
     }
   }
   setSrc = site => {
-    communityIcons[site].then(src => {
-      this.setState({ src });
-    });
+    if (Object.keys(communityIcons).indexOf(site) !== -1) {
+      communityIcons[site].then(src => {
+        this.setState({ src });
+      });
+    }
   };
   render() {
     const Component = styled.img`
