@@ -18,11 +18,14 @@ import {
   PostSaveAlert,
   PostSaveInfo,
   PostLink,
-  FlexSection
+  AbstractBtn,
+  AbstractInput
 } from './styled';
+import { FlexSection } from '../common';
 import LoadingIcon from '../icons/Loading';
+import PenIcon from '../icons/Pen';
 
-const Meta = () => <DateString>{new Date().toDateString()}</DateString>;
+const MAX_ABSTRACT_LENGTH = 200;
 
 const getPostUrl = slug => ({
   url: `/post/${slug}`,
@@ -45,14 +48,17 @@ class PostInput extends React.Component {
     draftUrl: null,
     publishUrl: null,
     uploadingCover: false,
-    coverAlignment: 'inset'
+    coverAlignment: 'inset',
+    showAbstractInput: false,
+    abstract: '',
+    userAbstractEdit: false
   };
   componentDidMount() {
     // this.title.focus();
   }
   componentWillMount() {
     const { slug } = this.props.match.params;
-    this.loadPost(slug);
+    if (slug) this.loadPost(slug);
   }
   componentWillReceiveProps(nextProps) {
     const { slug: currentSlug } = this.props.match.params;
@@ -62,40 +68,58 @@ class PostInput extends React.Component {
     }
   }
   loadPost = slug => {
-    slug &&
-      this.setState({ fetchingEditPost: true, editing: true })
-        .then(() => postAPI.fetchOne(slug))
-        .then(result => {
-          if (!result) return;
-          const { content, meta } = result;
-          let rawContentState = content;
-          if (Object.keys(content).indexOf('entityMap') === -1) {
-            rawContentState = Object.assign({}, content, { entityMap: true });
-          }
-          this.setState({
-            editorState: createEditorState(rawContentState),
-            title: meta.title,
-            selectedTags: meta.tags || [],
-            isDraft: meta.isDraft,
-            coverImageUrl: meta.coverImageUrl,
-            coverAlignment: meta.coverAlignment,
-            fetchingEditPost: false
-          });
-        })
-        .catch(err => {
-          throw err;
+    this.setState({ fetchingEditPost: true, editing: true })
+      .then(() => postAPI.fetchOne(slug))
+      .then(result => {
+        if (!result) return;
+        const { content, meta } = result;
+        let rawContentState = content;
+        if (Object.keys(content).indexOf('entityMap') === -1) {
+          rawContentState = Object.assign({}, content, { entityMap: true });
+        }
+        this.setState({
+          editorState: createEditorState(rawContentState),
+          title: meta.title,
+          selectedTags: meta.tags || [],
+          isDraft: meta.isDraft,
+          coverImageUrl: meta.coverImageUrl,
+          coverAlignment: meta.coverAlignment,
+          fetchingEditPost: false,
+          abstract: meta.abstract || '',
+          userAbstractEdit: true
         });
+      })
+      .catch(err => {
+        throw err;
+      });
   };
   onEditorChange = (editorState, afterChange) => {
+    const newState = { editorState };
+    const { abstract, userAbstractEdit } = this.state;
+    if (!userAbstractEdit) {
+      const content = editorState.getCurrentContent();
+      const postText = content.getPlainText();
+      if (
+        abstract.length < MAX_ABSTRACT_LENGTH ||
+        postText.length < MAX_ABSTRACT_LENGTH
+      ) {
+        newState.abstract = postText.slice(0, MAX_ABSTRACT_LENGTH);
+      }
+    }
+
     if (afterChange) {
-      return this.setState({ editorState }, afterChange);
+      return this.setState(newState, afterChange);
     } else {
-      return this.setState({ editorState });
+      return this.setState(newState);
     }
   };
   updateTitle = e => {
     e.preventDefault();
     this.setState({ title: e.target.value });
+  };
+  updateAbstract = e => {
+    e.preventDefault();
+    this.setState({ abstract: e.target.value, userAbstractEdit: true });
   };
   addTag = tag => {
     this.setState({
@@ -106,6 +130,10 @@ class PostInput extends React.Component {
     this.setState({
       selectedTags: this.state.selectedTags.filter(tag => tag.name !== tagName)
     });
+  };
+  toggleAbstractInput = e => {
+    e && e.preventDefault();
+    this.setState({ showAbstractInput: !this.state.showAbstractInput });
   };
   setCoverImageUrl = coverImageUrl => {
     this.setState({ coverImageUrl });
@@ -150,11 +178,17 @@ class PostInput extends React.Component {
   };
   getRawPostInput = isDraft => {
     const content = convertToRaw(this.state.editorState.getCurrentContent());
-    const { title, selectedTags, coverImageUrl, coverAlignment } = this.state;
+    const {
+      title,
+      selectedTags,
+      coverImageUrl,
+      coverAlignment,
+      abstract
+    } = this.state;
     const tagname = selectedTags.map(({ name }) => name);
     const rawPost = {
       post: { content },
-      meta: { title, tagname, isDraft, coverImageUrl, coverAlignment }
+      meta: { title, tagname, isDraft, coverImageUrl, coverAlignment, abstract }
     };
     return rawPost;
   };
@@ -179,7 +213,8 @@ class PostInput extends React.Component {
       draftUrl,
       publishUrl,
       uploadingCover,
-      coverAlignment
+      coverAlignment,
+      showAbstractInput
     } = this.state;
     return (
       <Container>
@@ -202,7 +237,22 @@ class PostInput extends React.Component {
             suppressContentEditableWarning
             data-placeholder="Add a descriptive title"
           />
-          <Meta />
+          <FlexSection>
+            <DateString>{new Date().toDateString()}</DateString>
+            <AbstractBtn onClick={this.toggleAbstractInput}>
+              <PenIcon height={12} />&nbsp;Abstract
+            </AbstractBtn>
+          </FlexSection>
+          {showAbstractInput && (
+            <FlexSection>
+              <AbstractInput
+                fontSize={14}
+                data-placeholder="Abstract"
+                onChange={this.updateAbstract}
+                html={this.state.abstract}
+              />
+            </FlexSection>
+          )}
           <EditorContainer>
             <Editor editorState={editorState} onChange={this.onEditorChange} />
           </EditorContainer>

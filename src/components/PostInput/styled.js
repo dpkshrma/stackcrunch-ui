@@ -1,7 +1,6 @@
-import React from 'react';
 import styled from 'styled-components';
 import ContentEditable from 'react-contenteditable';
-import { Alert, Button, StyledLink } from '../common';
+import { Alert, Button, StyledLink, MultiLineInput } from '../common';
 
 export const Container = styled.div`
   width: 100%;
@@ -47,6 +46,20 @@ export const DateString = styled.div`
   padding: 8px 0;
   letter-spacing: 2px;
 `;
+export const AbstractBtn = styled.div`
+  font-family: roboto;
+  font-weight: 300;
+  font-size: 12px;
+  padding: 8px 0;
+  letter-spacing: 2px;
+  margin-left: auto;
+  cursor: pointer;
+  display: flex;
+`;
+export const AbstractInput = styled(MultiLineInput)`
+  letter-spacing: 0.1em;
+  line-height: 1.6;
+`;
 export const EditorContainer = styled.div`
   margin-top: 16px;
   font-family: roboto;
@@ -84,14 +97,3 @@ export const PostSaveInfo = styled(Alert)`
   width: fit-content;
   margin: 24px 0;
 `;
-export const FlexSection = props => {
-  const getFlexDirection = ({ vertical, horizontal }) => {
-    if (vertical) return 'column';
-    return 'row';
-  };
-  const Component = styled.div`
-    display: flex;
-    flex-direction: ${getFlexDirection};
-  `;
-  return <Component {...props} />;
-};

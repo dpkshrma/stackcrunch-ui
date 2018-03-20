@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import ContentEditable from 'react-contenteditable';
 
 export { default as Chip } from './Chip';
 export { default as Loader } from './Loader';
@@ -76,4 +77,29 @@ export const FlexSection = styled.div`
   display: flex;
   flex-direction: ${getFlexDirection};
   flex: ${({ flex }) => flex};
+`;
+
+export const MultiLineInput = styled(ContentEditable)`
+  font-size: ${({ fontSize = '20px' }) => `${fontSize}px`};
+  color: #555;
+  margin-top: 20px;
+  padding: 0;
+  cursor: text;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid #e0e0e0;
+  width: 100%;
+  font-family: roboto;
+  font-weight: 300;
+  &:empty::before {
+    content: attr(data-placeholder);
+    font-weight: 100;
+    color: #9197a3;
+  }
+  &:empty:focus::before {
+    color: #bdc1c9;
+  }
+  &:focus {
+    border-bottom: 2px solid #ffa000;
+  }
 `;
