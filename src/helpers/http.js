@@ -44,6 +44,10 @@ export const req = (path, { headers = {}, auth = true } = {}) => {
       opts.body = JSON.stringify(body);
       opts.headers = Object.assign({}, opts.headers, jsonHeaders);
       return fetchJSON(url, opts);
+    },
+    delete: () => {
+      opts.method = 'DELETE';
+      return fetchJSON(url, opts);
     }
   };
 };

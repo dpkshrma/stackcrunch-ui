@@ -22,6 +22,10 @@ const update = ({ slug, post }) => {
   return req(`posts/${slug}`).put(post);
 };
 
+const deletePost = slug => {
+  return req(`posts/${slug}`).delete();
+};
+
 const uploadCoverImage = file => {
   const form = new FormData();
   form.append('coverImage', file);
@@ -33,5 +37,6 @@ export default {
   fetchOne,
   create,
   update,
+  delete: deletePost,
   uploadCoverImage
 };

@@ -20,6 +20,15 @@ export const fetchPost = dispatch => {
   };
 };
 
+export const deletePost = slug => {
+  return dispatch => {
+    return dispatch({
+      type: pa.DELETE_POST,
+      payload: postsAPI.delete(slug)
+    });
+  };
+};
+
 export const fetchDrafts = (page, opts) => {
   return dispatch => {
     let type = pa.LOAD_DRAFTS;

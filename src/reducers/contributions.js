@@ -24,6 +24,15 @@ export default (state = initialState, action) => {
       return Object.assign({}, state, {
         drafts: [...state.drafts, ...action.payload.posts]
       });
+    case success(pa.DELETE_POST):
+      const { slug } = action.payload;
+      if (slug) {
+        return {
+          published: state.published.filter(post => post.slug !== slug),
+          drafts: state.drafts.filter(post => post.slug !== slug)
+        };
+      }
+      return state;
     default:
       return state;
   }

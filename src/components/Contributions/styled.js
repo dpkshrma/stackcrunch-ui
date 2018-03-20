@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import PenIcon from '../icons/Pen';
+import DeleteIcon from '../icons/DeleteOutline';
 import { Button } from '../common';
 
 export const Container = styled.div`
@@ -36,33 +37,45 @@ export const LoaderButton = LoadMoreButton.extend`
   cursor: wait;
 `;
 
-export const EditButton = ({ onClick, to }) => {
-  const Text = styled.span`
-    margin-left: 4px;
-  `;
+export const EditBtn = ({ onClick, to }) => {
   const EditIcon = styled(PenIcon)`
-    fill: #999;
+    fill: #777;
   `;
   const Container = styled(Link)`
     cursor: pointer;
     display: flex;
-    font-size: 14px;
-    color: #999;
     margin-left: auto;
     text-decoration: none;
     &:hover {
       ${EditIcon} {
-        fill: #777;
-      }
-      ${Text} {
-        color: #777;
+        fill: #444;
       }
     }
   `;
   return (
-    <Container onClick={onClick} to={to}>
+    <Container onClick={onClick} to={to} title="Edit Post">
       <EditIcon height={14} />
-      <Text>Edit</Text>
+    </Container>
+  );
+};
+
+export const DeleteBtn = ({ onClick, to }) => {
+  const Icon = styled(DeleteIcon)`
+    stroke: #777;
+  `;
+  const Container = styled.div`
+    cursor: pointer;
+    display: flex;
+    margin-left: 12px;
+    &:hover {
+      ${Icon} {
+        stroke: #444;
+      }
+    }
+  `;
+  return (
+    <Container onClick={onClick} to={to} title="Delete Post">
+      <Icon height={15} />
     </Container>
   );
 };
