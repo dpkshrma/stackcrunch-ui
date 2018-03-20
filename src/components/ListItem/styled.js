@@ -16,14 +16,28 @@ export const Wrapper = styled.div`
     `};
 `;
 
-export const Content = styled.div``;
-
-export const CoverImage = styled.img`
-  width: 100%;
-  max-width: 200px;
-  max-height: 200px;
-  margin-right: 20px;
+export const Content = styled.div`
+  flex: 5;
 `;
+
+export const CoverImage = props => {
+  const Img = styled.img`
+    height: 200px;
+  `;
+  const Container = styled.div`
+    position: relative;
+    flex: 2;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    margin-right: 20px;
+  `;
+  return (
+    <Container>
+      <Img {...props} />
+    </Container>
+  );
+};
 
 export const Header = styled.div`
   display: flex;
