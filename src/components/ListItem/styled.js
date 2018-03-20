@@ -36,7 +36,7 @@ export const HeaderMetaText = styled.div`
 `;
 
 export const Abstract = styled.div`
-  font-size: 16px;
+  font-size: 14px;
   font-weight: normal;
   line-height: 26px;
   color: #222;
@@ -65,7 +65,7 @@ export const MetaLabel = styled.span`
 export const Title = styled(Link)`
   position: relative;
   color: #07c;
-  font-size: 24px;
+  font-size: 22px;
   font-weight: 300;
   line-height: 36px;
   letter-spacing: 0.5px;
