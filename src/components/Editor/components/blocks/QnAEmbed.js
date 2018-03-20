@@ -3,11 +3,7 @@ import styled from 'styled-components';
 import { EditorBlock } from 'draft-js';
 import { connect } from 'react-redux';
 import { fetchQuestion } from '../../../../actions/question';
-import soIcon from '../../../icons/so-icon.svg';
-import sfIcon from '../../../icons/sf-icon.svg';
-import suIcon from '../../../icons/su-icon.png';
-import secIcon from '../../../icons/sec-icon.png';
-import seIcon from '../../../icons/se-icon.png';
+import communityIcons from '../../../icons/community';
 
 const Wrapper = styled.a`
   background-color: #f7f7f7;
@@ -16,10 +12,10 @@ const Wrapper = styled.a`
   display: flex;
   flex-direction: column;
   text-decoration: none;
+  font-family: roboto;
 `;
 const Title = styled.div`
   font-size: 24px;
-  font-family: roboto;
   font-weight: 300;
   color: #333;
   margin-bottom: 4px;
@@ -57,21 +53,33 @@ const FlexSection = props => {
   return <Component {...props} />;
 };
 
-const CommunityLogo = ({ site }) => {
-  const Component = styled.img`
-    max-height: 48px;
-    max-width: 48px;
-    margin-right: 6px;
-  `;
-  const srcMap = {
-    stackoverflow: soIcon,
-    serverfault: sfIcon,
-    superuser: suIcon,
-    security: secIcon,
-    softwareEngineering: seIcon
+class CommunityLogo extends React.Component {
+  state = {
+    src: null
   };
-  return <Component src={srcMap[site]} />;
-};
+  componentDidMount() {
+    const { site } = this.props;
+    if (site) this.setSrc(site);
+  }
+  componentWillReceiveProps(nextProps) {
+    if (this.props.site !== nextProps.site) {
+      this.setSrc(nextProps.site);
+    }
+  }
+  setSrc = site => {
+    communityIcons[site].then(src => {
+      this.setState({ src });
+    });
+  };
+  render() {
+    const Component = styled.img`
+      max-height: 48px;
+      max-width: 48px;
+      margin-right: 6px;
+    `;
+    return <Component src={this.state.src} />;
+  }
+}
 
 const OriginalPoster = ({ user }) => {
   return <FlexSection />;
