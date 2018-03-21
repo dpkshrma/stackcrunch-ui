@@ -12,7 +12,8 @@ export const Wrapper = styled.div`
   margin-top: 56px;
 `;
 export const HeaderImg = styled.img`
-  margin-top: -64px;
+  margin-top: -56px;
+  height: 76px;
 `;
 export const Title = styled.span`
   font-weight: 300;

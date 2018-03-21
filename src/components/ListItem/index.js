@@ -26,6 +26,7 @@ import {
 } from '../../config';
 import TwitterIcon from './icons/TwitterIcon';
 import ClockIcon from '../icons/Clock';
+import CalendarIcon from '../icons/Calendar';
 
 const Author = ({ profile: { avatarURL, name, username } }) => {
   const link = `${URL_PREFIX}/@${username}`;
@@ -35,10 +36,23 @@ const Author = ({ profile: { avatarURL, name, username } }) => {
   );
 };
 const CreatedOn = ({ timeStamp }) => {
-  return <HeaderMetaText>{fromNow(timeStamp)}</HeaderMetaText>;
+  return (
+    <HeaderMetaText>
+      <CalendarIcon height={12} />
+      &nbsp;
+      {fromNow(timeStamp)}
+    </HeaderMetaText>
+  );
 };
 const TimeToRead = ({ ttr }) => {
-  return <HeaderMetaText>{ttr} read </HeaderMetaText>;
+  return (
+    <div style={{ marginBottom: '-1px' }}>
+      <HeaderMetaText>
+        <ClockIcon height={12} /> &nbsp;
+        {ttr} read
+      </HeaderMetaText>
+    </div>
+  );
 };
 
 const ListItem = ({
@@ -83,7 +97,6 @@ const ListItem = ({
         {showAuthorChip && <Author profile={author} />}
         <CreatedOn timeStamp={createdOn} />
         <Separator space={8} delimiter="|" />
-        <ClockIcon height={12} /> &nbsp;
         <TimeToRead ttr={ttrText} />
       </Header>
     );

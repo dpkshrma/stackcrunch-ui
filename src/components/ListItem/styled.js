@@ -47,6 +47,7 @@ export const Header = styled.div`
 export const HeaderMetaText = styled.div`
   font-size: 12px;
   color: #777;
+  display: flex;
 `;
 
 export const Abstract = styled.div`
