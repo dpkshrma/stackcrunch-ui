@@ -158,8 +158,10 @@ export const authorCSS = {
   content: css`
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
-    color: #444;
+    border-color: #bbb;
+    color: #555;
     &:hover {
+      border-color: #888;
       color: #000;
     }
   `
