@@ -33,9 +33,10 @@ const PostList = props => {
             <List>
               {posts.map(post => <ListItem {...post} key={post.slug} />)}
             </List>
-            <EndOfList>
+            {/* TODO: show when a good number of posts are available */}
+            {/* <EndOfList>
               <EndOfListMsg>No more posts to show</EndOfListMsg>
-            </EndOfList>
+            </EndOfList> */}
             <LoadMore>
               <LoadMoreButton>Load More Posts</LoadMoreButton>
             </LoadMore>
