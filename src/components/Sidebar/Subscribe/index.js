@@ -10,7 +10,7 @@ import {
   SuccessMsg,
   EditEmail
 } from './styled';
-import { subscribeUser } from '../../../services/Subscription';
+import subscribeApi from '../../../api/subscribe';
 import letter from './letter.png';
 
 class Subscribe extends React.Component {
@@ -38,14 +38,18 @@ class Subscribe extends React.Component {
   };
   subscribe = e => {
     e.preventDefault();
-    subscribeUser(this.state.emailAddress)
-      .then(response => {
+
+    subscribeApi
+      .submit(this.state.emailAddress)
+      .then(({ errors }) => {
+        if (errors) {
+          this.input.focus();
+          throw errors;
+        }
         localStorage.setItem('subscriptionEmail', this.state.emailAddress);
         this.setState({ subscribed: true });
       })
-      .catch(err => {
-        console.error(err);
-      });
+      .catch(console.error);
   };
   editEmail = e => {
     e.preventDefault();
