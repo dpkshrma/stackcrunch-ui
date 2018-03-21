@@ -51,7 +51,9 @@ class PostInput extends React.Component {
     coverAlignment: 'inset',
     showAbstractInput: false,
     abstract: '',
-    userAbstractEdit: false
+    userAbstractEdit: false,
+    titleInputEmpty: false,
+    tagsInputEmpty: false
   };
   componentDidMount() {
     // this.title.focus();
@@ -115,7 +117,7 @@ class PostInput extends React.Component {
   };
   updateTitle = e => {
     e.preventDefault();
-    this.setState({ title: e.target.value });
+    this.setState({ title: e.target.value, titleInputEmpty: false });
   };
   updateAbstract = e => {
     e.preventDefault();
@@ -123,7 +125,8 @@ class PostInput extends React.Component {
   };
   addTag = tag => {
     this.setState({
-      selectedTags: [...this.state.selectedTags, tag]
+      selectedTags: [...this.state.selectedTags, tag],
+      tagsInputEmpty: false
     });
   };
   removeTag = tagName => {
@@ -138,8 +141,23 @@ class PostInput extends React.Component {
   setCoverImageUrl = coverImageUrl => {
     this.setState({ coverImageUrl });
   };
+  validate = () => {
+    let hasError = false;
+    const { title, selectedTags } = this.state;
+    if (title.length === 0) {
+      hasError = true;
+      this.setState({ titleInputEmpty: true });
+    } else if (selectedTags.length === 0) {
+      hasError = true;
+      this.setState({ tagsInputEmpty: true });
+    }
+    return hasError;
+  };
   draft = e => {
     e.preventDefault();
+    const hasError = this.validate();
+    if (hasError) return;
+
     const submitFn = this.state.editing ? this.submitPostEdit : this.submitPost;
     this.setState({ saving: true })
       .then(submitFn)
@@ -159,6 +177,9 @@ class PostInput extends React.Component {
   };
   publish = e => {
     e.preventDefault();
+    const hasError = this.validate();
+    if (hasError) return;
+
     const submitFn = this.state.editing ? this.submitPostEdit : this.submitPost;
     this.setState({ publishing: true })
       .then(() => submitFn(false))
@@ -214,7 +235,9 @@ class PostInput extends React.Component {
       publishUrl,
       uploadingCover,
       coverAlignment,
-      showAbstractInput
+      showAbstractInput,
+      tagsInputEmpty,
+      titleInputEmpty
     } = this.state;
     return (
       <Container>
@@ -270,6 +293,17 @@ class PostInput extends React.Component {
                 the post.
               </PostSaveAlert>
             )}
+          {titleInputEmpty && (
+            <PostSaveAlert>
+              <b>Error:</b> Title is required before drafting/publishing a post
+            </PostSaveAlert>
+          )}
+          {tagsInputEmpty && (
+            <PostSaveAlert>
+              <b>Error:</b> Atleast one tag is required before
+              drafting/publishing a post
+            </PostSaveAlert>
+          )}
           {uploadingCover && (
             <PostSaveInfo>Uploading Cover Image...</PostSaveInfo>
           )}
