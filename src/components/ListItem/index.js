@@ -25,6 +25,7 @@ import {
   URL_PREFIX
 } from '../../config';
 import TwitterIcon from './icons/TwitterIcon';
+import ClockIcon from '../icons/Clock';
 
 const Author = ({ profile: { avatarURL, name, username } }) => {
   const link = `${URL_PREFIX}/@${username}`;
@@ -52,7 +53,8 @@ const ListItem = ({
   ttr,
   headerComponent,
   showHeader = true,
-  showShareLinks = true
+  showShareLinks = true,
+  showAuthorChip = true
 }) => {
   const tagList =
     tags &&
@@ -78,9 +80,10 @@ const ListItem = ({
     const { text: ttrText } = ttr;
     header = (
       <Header>
-        <Author profile={author} />
+        {showAuthorChip && <Author profile={author} />}
         <CreatedOn timeStamp={createdOn} />
         <Separator space={8} delimiter="|" />
+        <ClockIcon height={12} /> &nbsp;
         <TimeToRead ttr={ttrText} />
       </Header>
     );

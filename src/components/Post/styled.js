@@ -29,6 +29,7 @@ export const HeaderMetaText = styled.div`
   font-size: 12px;
   margin-left: 8px;
   color: #777;
+  display: flex;
 `;
 
 export const Title = styled.h1`

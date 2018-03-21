@@ -16,6 +16,7 @@ import {
 } from './styled';
 import Editor, { createEditorState } from '../Editor';
 import CommentThread from './CommentThread';
+import ClockIcon from '../icons/Clock';
 import { fetchPost } from '../../actions/post';
 // global helpers
 import { hooks } from '../../helpers/routes';
@@ -92,7 +93,8 @@ class PostPage extends React.Component {
       ttr,
       title,
       coverImageUrl,
-      coverAlignment
+      coverAlignment,
+      showAuthorChip
     } = this.state.metadata;
     const { slug } = this.props.match.params;
     const [author] = authors;
@@ -107,14 +109,18 @@ class PostPage extends React.Component {
         <Post>
           <Header>
             <HeaderMeta>
-              <Chip
-                img={author.avatarURL}
-                text={author.name || author.username}
-                to={author.link}
-                css={authorCSS}
-                useDefaultImg
-              />
-              <HeaderMetaText>{ttr.text} read</HeaderMetaText>
+              {showAuthorChip && (
+                <Chip
+                  img={author.avatarURL}
+                  text={author.name || author.username}
+                  to={author.link}
+                  css={authorCSS}
+                  useDefaultImg
+                />
+              )}
+              <HeaderMetaText>
+                <ClockIcon height={12} /> &nbsp; {ttr.text} read
+              </HeaderMetaText>
             </HeaderMeta>
             <Title>{title}</Title>
             <Meta />
