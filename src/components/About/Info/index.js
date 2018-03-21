@@ -1,9 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import EmailInput from './EmailInput';
 import Switcher from './Switcher';
 import ShareIcons from './ShareIcons';
 import Loading from '../Loading';
+
+const LAUNCH_POST_LINK =
+  '/post/StackCrunch-Crowdsourcing-Practical-Solutionslessspangreater-rJeRqu5y5f';
+const ReadMoreLink = styled(Link)`
+  text-decoration: none;
+  border-bottom: 1px dashed #ffa000;
+  color: #ccc;
+`;
 
 const Content = styled.div`
   display: flex;
@@ -121,7 +130,8 @@ class Info extends React.Component {
           </Title>
           <Subtitle>
             Learn from solutions to bugs, performance issues, vulnerabilities<br />
-            that developers around the world face everyday.
+            that developers around the world face everyday.<br />
+            <ReadMoreLink to={LAUNCH_POST_LINK}>Read more</ReadMoreLink>
           </Subtitle>
           <EmailInput placeholder="Your Email Address" />
           <ShareIcons />
