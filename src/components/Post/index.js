@@ -7,6 +7,7 @@ import {
   Wrapper,
   Header,
   HeaderMeta,
+  HeaderMetaItem,
   HeaderMetaText,
   Post,
   Title,
@@ -110,17 +111,21 @@ class PostPage extends React.Component {
           <Header>
             <HeaderMeta>
               {showAuthorChip && (
-                <Chip
-                  img={author.avatarURL}
-                  text={author.name || author.username}
-                  to={author.link}
-                  css={authorCSS}
-                  useDefaultImg
-                />
+                <HeaderMetaItem>
+                  <Chip
+                    img={author.avatarURL}
+                    text={author.name || author.username}
+                    to={author.link}
+                    css={authorCSS}
+                    useDefaultImg
+                  />
+                </HeaderMetaItem>
               )}
-              <HeaderMetaText>
-                <ClockIcon height={12} /> &nbsp; {ttr.text} read
-              </HeaderMetaText>
+              <HeaderMetaItem>
+                <HeaderMetaText>
+                  <ClockIcon height={12} /> &nbsp; {ttr.text} read
+                </HeaderMetaText>
+              </HeaderMetaItem>
             </HeaderMeta>
             <Title>{title}</Title>
             <Meta />

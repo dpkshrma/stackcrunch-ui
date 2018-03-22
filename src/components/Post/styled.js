@@ -25,9 +25,12 @@ export const HeaderMeta = styled.div`
   align-items: center;
 `;
 
+export const HeaderMetaItem = styled.div`
+  margin-right: 8px;
+`;
+
 export const HeaderMetaText = styled.div`
   font-size: 12px;
-  margin-left: 8px;
   color: #777;
   display: flex;
 `;
