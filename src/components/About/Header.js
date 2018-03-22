@@ -70,10 +70,12 @@ const Header = () => (
   <Container>
     <Logo.Icon />
     <Logo.Text />
-    <ContributeTip href="/">
+    <ContributeTip
+      href="/post/How-to-share-your-awesome-development-stories-r1lZ_1hJcz"
+      target="_blank"
+    >
       <Tip />
-      {/* ⚡Get Early Access! ⚡ */}
-      ⚡Launching soon! ⚡
+      ⚡Get Early Access! ⚡
     </ContributeTip>
   </Container>
 );

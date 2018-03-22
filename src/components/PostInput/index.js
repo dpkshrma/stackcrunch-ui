@@ -309,6 +309,9 @@ class PostInput extends React.Component {
           {uploadingCover && (
             <PostSaveInfo>Uploading Cover Image...</PostSaveInfo>
           )}
+          <PostSaveAlert>
+            <b>Early Access:</b> Publishing is disabled at the moment
+          </PostSaveAlert>
           <Actions>
             <DraftButton
               onClick={this.draft}
@@ -360,9 +363,6 @@ class PostInput extends React.Component {
               <PostLink to={publishUrl.url}>{publishUrl.display}</PostLink>
             </PostSaveInfo>
           )}
-          <PostSaveAlert>
-            <b>Early Access:</b> Publishing is disabled at the moment
-          </PostSaveAlert>
         </PostInputWrapper>
       </Container>
     );

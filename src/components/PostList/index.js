@@ -32,7 +32,8 @@ const PostList = props => {
           <InfiniteList loadMore={fetchPosts} opts={{ username }}>
             <List>
               {posts.map(post => {
-                const liked = user.likedPosts.indexOf(post.slug) !== -1;
+                const { likedPosts = [] } = user;
+                const liked = likedPosts.indexOf(post.slug) !== -1;
                 return (
                   <ListItem
                     key={post.slug}

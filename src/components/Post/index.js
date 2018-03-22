@@ -203,7 +203,8 @@ class PostPage extends React.Component {
 }
 
 const mapStateToProps = ({ post, user }) => {
-  const previouslyLikedPost = user.likedPosts.indexOf(post.meta.slug) !== -1;
+  const { likedPosts = [] } = user;
+  const previouslyLikedPost = likedPosts.indexOf(post.meta.slug) !== -1;
   const liked = previouslyLikedPost || post.meta.liked;
   return { post, liked };
 };

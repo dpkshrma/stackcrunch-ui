@@ -103,8 +103,8 @@ const Contributions = props => {
       <List>
         <InfiniteList loadMore={loadMore} opts={opts}>
           {posts.map(post => {
-            const liked =
-              props.loggedInUser.likedPosts.indexOf(post.slug) !== -1;
+            const { likedPosts = [] } = props.loggedInUser;
+            const liked = likedPosts.indexOf(post.slug) !== -1;
             const { deletePost, likePost } = props;
             return renderPost(post, editable, deletePost, liked, likePost);
           })}
