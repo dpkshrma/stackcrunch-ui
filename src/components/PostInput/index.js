@@ -323,7 +323,9 @@ class PostInput extends React.Component {
             </DraftButton>
             <PublishButton
               onClick={this.publish}
-              disabled={fetchingEditPost || uploadingCover}
+              // TODO: enable Publish button after full launch
+              disabled={true}
+              // disabled={fetchingEditPost || uploadingCover}
             >
               {publishing ? (
                 <FlexSection>
@@ -356,6 +358,9 @@ class PostInput extends React.Component {
               <PostLink to={publishUrl.url}>{publishUrl.display}</PostLink>
             </PostSaveInfo>
           )}
+          <PostSaveAlert>
+            <b>Early Access:</b> Publishing is disabled at the moment
+          </PostSaveAlert>
         </PostInputWrapper>
       </Container>
     );
