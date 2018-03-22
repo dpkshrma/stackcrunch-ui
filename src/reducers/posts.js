@@ -16,6 +16,17 @@ export default (state = initialState, action) => {
         return state.filter(post => post.slug !== slug);
       }
       return state;
+
+    case success(pa.INC_POST_VIEWS):
+      const { post: { slug: updatedPostSlug, views } } = action.payload;
+
+      const newState = state.map(post => {
+        if (post.slug !== updatedPostSlug) return post;
+        return Object.assign({}, post, { views });
+      });
+
+      return newState;
+
     default:
       return state;
   }

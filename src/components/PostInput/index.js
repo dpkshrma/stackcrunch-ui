@@ -121,7 +121,9 @@ class PostInput extends React.Component {
   };
   updateAbstract = e => {
     e.preventDefault();
-    this.setState({ abstract: e.target.value, userAbstractEdit: true });
+    if (this.state.abstract.length < MAX_ABSTRACT_LENGTH) {
+      this.setState({ abstract: e.target.value, userAbstractEdit: true });
+    }
   };
   addTag = tag => {
     this.setState({

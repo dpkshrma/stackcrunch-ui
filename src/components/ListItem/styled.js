@@ -70,6 +70,22 @@ export const MetaItem = styled.div`
   display: flex;
   align-items: center;
   margin-left: 16px;
+  cursor: default;
+  &:hover * {
+    color: #444;
+  }
+  &:hover .icon {
+    fill: #444;
+  }
+  &:hover .icon.views {
+    fill: #07cc;
+  }
+  &:hover .icon.like {
+    fill: #d7594a;
+  }
+  &:hover .icon.twitter {
+    fill: #1da1f2cc;
+  }
 `;
 export const MetaLabel = styled.span`
   color: #777;
@@ -112,10 +128,6 @@ export const ShareLink = styled.a`
   text-decoration: none;
   display: flex;
   align-items: center;
-  filter: grayscale(1);
-  &:hover {
-    filter: grayscale(0);
-  }
 `;
 
 export const Footer = styled.div`

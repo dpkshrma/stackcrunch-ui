@@ -1,6 +1,6 @@
 import update from 'immutability-helper';
 import { success } from '../helpers/reducer';
-import { userActions as ua } from '../constants';
+import { userActions as ua, postActions as pa } from '../constants';
 
 const initialState = {};
 
@@ -11,6 +11,10 @@ export default (state = initialState, action) => {
 
     case success(ua.UPDATE_PROFILE):
       return update(state, { $merge: action.payload });
+
+    case success(pa.INC_POST_VIEWS):
+      const { user: { viewedPosts } } = action.payload;
+      return Object.assign({}, state, { viewedPosts });
 
     default:
       return state;

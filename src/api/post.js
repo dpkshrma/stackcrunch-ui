@@ -22,6 +22,10 @@ const update = ({ slug, post }) => {
   return req(`posts/${slug}`).put(post);
 };
 
+const incViews = slug => {
+  return req(`posts/${slug}/views`).put();
+};
+
 const deletePost = slug => {
   return req(`posts/${slug}`).delete();
 };
@@ -38,5 +42,6 @@ export default {
   create,
   update,
   delete: deletePost,
-  uploadCoverImage
+  uploadCoverImage,
+  incViews
 };

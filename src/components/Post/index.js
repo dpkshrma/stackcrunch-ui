@@ -18,7 +18,7 @@ import {
 import Editor, { createEditorState } from '../Editor';
 import CommentThread from './CommentThread';
 import ClockIcon from '../icons/Clock';
-import { fetchPost } from '../../actions/post';
+import { fetchPost, incViews } from '../../actions/post';
 // global helpers
 import { hooks } from '../../helpers/routes';
 // component helpers
@@ -85,6 +85,13 @@ class PostPage extends React.Component {
   componentWillUnmount() {
     hooks.post.onLeave(this.props.dispatch);
   }
+  componentDidMount() {
+    this.increaseViewsCount();
+  }
+  increaseViewsCount = () => {
+    const { slug } = this.props.match.params;
+    this.props.increaseViewsCount(slug);
+  };
   onChange = editorState => {
     this.setState({ editorState });
   };
@@ -154,7 +161,8 @@ const mapStateToProps = ({ post }) => ({ post });
 const mapDispatchToProps = dispatch => {
   return {
     dispatch,
-    fetchPost: fetchPost(dispatch)
+    fetchPost: fetchPost(dispatch),
+    increaseViewsCount: incViews(dispatch)
   };
 };
 

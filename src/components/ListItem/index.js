@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactTooltip from 'react-tooltip';
 import { fromNow } from '../../utils/time';
 import { Chip } from '../common';
 import {
@@ -19,6 +20,7 @@ import {
   tagCSS,
   authorCSS
 } from './styled';
+import { DefaultTooltip } from '../common';
 import {
   TWITTER_SHARE_URL,
   STACKCRUNCH_POST_URL,
@@ -27,6 +29,8 @@ import {
 import TwitterIcon from './icons/TwitterIcon';
 import ClockIcon from '../icons/Clock';
 import CalendarIcon from '../icons/Calendar';
+import EyeIcon from '../icons/Eye';
+import HeartIcon from '../icons/Heart';
 
 const Author = ({ profile: { avatarURL, name, username } }) => {
   const link = `${URL_PREFIX}/@${username}`;
@@ -56,7 +60,6 @@ const TimeToRead = ({ ttr }) => {
 };
 
 const ListItem = ({
-  id,
   coverImageUrl,
   title,
   slug,
@@ -65,6 +68,7 @@ const ListItem = ({
   tags,
   createdOn,
   ttr,
+  views = {},
   headerComponent,
   showHeader = true,
   showShareLinks = true,
@@ -78,8 +82,11 @@ const ListItem = ({
 
   const [author = {}] = authors;
   // TODO: ellipsify shareText if char length overshot
-  const shareText = `${title} by @${author.twitterHandle}`;
-  const shareLink = `${TWITTER_SHARE_URL}?text=${shareText}&url=${STACKCRUNCH_POST_URL}/${id}`;
+  let shareText = `${title}`;
+  if (author.twitterHandle) {
+    shareText += ` by @${author.twitterHandle}`;
+  }
+  const shareLink = `${TWITTER_SHARE_URL}?text=${shareText}&url=${STACKCRUNCH_POST_URL}/${slug}`;
 
   // TODO: Number of views, shares in Meta
   // TODO: Change meta icons to line icons
@@ -104,6 +111,7 @@ const ListItem = ({
 
   return (
     <Wrapper>
+      <DefaultTooltip />
       {coverImageUrl && <CoverImage src={coverImageUrl} />}
       <Content>
         {showHeader && header}
@@ -112,10 +120,20 @@ const ListItem = ({
         <Footer>
           <Tags>{tagList}</Tags>
           <Meta>
+            {views.total && (
+              <MetaItem data-tip="Views">
+                <EyeIcon className="icon views" height={20} />
+                <MetaLabel>{views.total}</MetaLabel>
+              </MetaItem>
+            )}
+            <MetaItem className="meta-item--like" data-tip="Like">
+              <HeartIcon className="icon like" height={16} />
+              <MetaLabel>3.5k</MetaLabel>
+            </MetaItem>
             {showShareLinks && (
               <MetaItem>
-                <ShareLink href={shareLink} target="_blank">
-                  <TwitterIcon height={14} />
+                <ShareLink href={shareLink} target="_blank" data-tip="Tweet">
+                  <TwitterIcon className="icon twitter" height={14} />
                   <MetaLabel>Share</MetaLabel>
                 </ShareLink>
               </MetaItem>

@@ -20,6 +20,15 @@ export const fetchPost = dispatch => {
   };
 };
 
+export const incViews = dispatch => {
+  return slug => {
+    return dispatch({
+      type: pa.INC_POST_VIEWS,
+      payload: postsAPI.incViews(slug)
+    });
+  };
+};
+
 export const deletePost = slug => {
   return dispatch => {
     return dispatch({
