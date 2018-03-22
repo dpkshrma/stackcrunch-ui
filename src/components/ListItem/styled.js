@@ -188,3 +188,22 @@ export const authorCSS = {
     }
   `
 };
+
+export const EditBtn = styled(Link)`
+  cursor: pointer;
+  display: flex;
+  margin-left: auto;
+  text-decoration: none;
+  &:hover .icon {
+    fill: #444;
+  }
+`;
+
+export const DeleteBtn = styled.div`
+  cursor: pointer;
+  display: flex;
+  margin-left: 12px;
+  &:hover .icon {
+    stroke: #444;
+  }
+`;

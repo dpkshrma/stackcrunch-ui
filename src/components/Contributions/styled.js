@@ -1,8 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import PenIcon from '../icons/Pen';
-import DeleteIcon from '../icons/DeleteOutline';
 import { Button } from '../common';
 
 export const Container = styled.div`
@@ -36,46 +34,3 @@ export const LoaderButton = LoadMoreButton.extend`
   background-color: #f9f9f9;
   cursor: wait;
 `;
-
-export const EditBtn = ({ onClick, to, ...restProps }) => {
-  const EditIcon = styled(PenIcon)`
-    fill: #777;
-  `;
-  const Container = styled(Link)`
-    cursor: pointer;
-    display: flex;
-    margin-left: auto;
-    text-decoration: none;
-    &:hover {
-      ${EditIcon} {
-        fill: #444;
-      }
-    }
-  `;
-  return (
-    <Container onClick={onClick} to={to} {...restProps}>
-      <EditIcon height={14} />
-    </Container>
-  );
-};
-
-export const DeleteBtn = ({ onClick, to, ...restProps }) => {
-  const Icon = styled(DeleteIcon)`
-    stroke: #777;
-  `;
-  const Container = styled.div`
-    cursor: pointer;
-    display: flex;
-    margin-left: 12px;
-    &:hover {
-      ${Icon} {
-        stroke: #444;
-      }
-    }
-  `;
-  return (
-    <Container onClick={onClick} to={to} {...restProps}>
-      <Icon height={15} />
-    </Container>
-  );
-};

@@ -19,7 +19,9 @@ import {
   ShareLink,
   Footer,
   tagCSS,
-  authorCSS
+  authorCSS,
+  DeleteBtn,
+  EditBtn
 } from './styled';
 import { DefaultTooltip } from '../common';
 import {
@@ -32,6 +34,8 @@ import ClockIcon from '../icons/Clock';
 import CalendarIcon from '../icons/Calendar';
 import EyeIcon from '../icons/Eye';
 import HeartIcon from '../icons/Heart';
+import PenIcon from '../icons/Pen';
+import DeleteIcon from '../icons/DeleteOutline';
 
 const Author = ({ profile: { avatarURL, name, username } }) => {
   const link = `${URL_PREFIX}/@${username}`;
@@ -71,10 +75,12 @@ const ListItem = ({
   ttr,
   views = {},
   likes = 0,
-  headerComponent,
   showHeader = true,
   showShareLinks = true,
   showAuthorChip = true,
+  showEditBtn = false,
+  showDeleteBtn = false,
+  onDelete,
   likePost,
   liked = false
 }) => {
@@ -96,35 +102,37 @@ const ListItem = ({
   // TODO: Change meta icons to line icons
   // TODO: on MetaItem hover: 1. Show tooltip 2. change icon fill
 
-  let header;
-  if (headerComponent) {
-    header = headerComponent;
-  } else {
-    // FIXME: display owner instead of authors
-    // currently assuming only one author(owner)
-    const { text: ttrText } = ttr;
-    header = (
-      <Header>
-        {showAuthorChip && <Author profile={author} />}
-        <CreatedOn timeStamp={createdOn} />
-        <Separator space={8} delimiter="|" />
-        <TimeToRead ttr={ttrText} />
-      </Header>
-    );
-  }
+  const { text: ttrText } = ttr;
 
   return (
     <Wrapper>
       <DefaultTooltip />
       {coverImageUrl && <CoverImage src={coverImageUrl} />}
       <Content>
-        {showHeader && header}
+        {showHeader && (
+          <Header>
+            {showAuthorChip && <Author profile={author} />}
+            <CreatedOn timeStamp={createdOn} />
+            <Separator space={8} delimiter="|" />
+            <TimeToRead ttr={ttrText} />
+            {showEditBtn && (
+              <EditBtn data-tip="Edit Post" to={`write/${slug}`}>
+                <PenIcon height={14} />
+              </EditBtn>
+            )}
+            {showDeleteBtn && (
+              <DeleteBtn data-tip="Delete Post" onClick={() => onDelete(slug)}>
+                <DeleteIcon height={14} />
+              </DeleteBtn>
+            )}
+          </Header>
+        )}
         <Title to={`/post/${slug}`}>{title}</Title>
         <Abstract>{abstract}&hellip;</Abstract>
         <Footer>
           <Tags>{tagList}</Tags>
           <Meta>
-            {views.total && (
+            {views.total > 0 && (
               <MetaItem data-tip="Views">
                 <EyeIcon className="icon views" height={20} />
                 <MetaLabel>{views.total}</MetaLabel>

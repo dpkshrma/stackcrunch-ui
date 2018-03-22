@@ -10,14 +10,7 @@ import {
 } from '../../actions/post';
 import ListItem from '../ListItem';
 import { InfiniteList, Loader as LoaderIcon } from '../common';
-import {
-  Container,
-  List,
-  LoadMoreButton,
-  LoaderButton,
-  EditBtn,
-  DeleteBtn
-} from './styled';
+import { Container, List, LoadMoreButton, LoaderButton } from './styled';
 import { Button, DefaultTooltip } from '../common';
 
 const NoPosts = ({ postType }) => {
@@ -59,22 +52,9 @@ const renderPost = (post, editable, onDelete, liked, onLike) => {
   return (
     <ListItem
       {...post}
-      headerComponent={
-        <ListItem.Header.Container>
-          <ListItem.Header.CreatedOn timeStamp={post.createdOn} />
-          <ListItem.Separator delimiter="|" space={8} />
-          <ListItem.Header.TimeToRead ttr={post.ttr.text} />
-          {editable && (
-            <EditBtn data-tip="Edit Post" to={`write/${post.slug}`} />
-          )}
-          {editable && (
-            <DeleteBtn
-              data-tip="Delete Post"
-              onClick={() => onDelete(post.slug)}
-            />
-          )}
-        </ListItem.Header.Container>
-      }
+      showEditBtn={true}
+      showDeleteBtn={true}
+      onDelete={onDelete}
       key={post.slug}
       showShareLinks={false}
       likePost={() => !liked && onLike(post.slug)}
@@ -120,7 +100,6 @@ const Contributions = props => {
 
   return (
     <Container>
-      <DefaultTooltip />
       <List>
         <InfiniteList loadMore={loadMore} opts={opts}>
           {posts.map(post => {
