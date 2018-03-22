@@ -1,6 +1,9 @@
+import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import ContentEditable from 'react-contenteditable';
+import ReactTooltip from 'react-tooltip';
+import './tooltip.css';
 
 export { default as Chip } from './Chip';
 export { default as Loader } from './Loader';
@@ -103,3 +106,16 @@ export const MultiLineInput = styled(ContentEditable)`
     border-bottom: 2px solid #ffa000;
   }
 `;
+
+export const Tooltip = ReactTooltip;
+export const DefaultTooltip = props => {
+  return (
+    <Tooltip
+      place="bottom"
+      effect="solid"
+      delayShow={500}
+      delayHide={100}
+      {...props}
+    />
+  );
+};

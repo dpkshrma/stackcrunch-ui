@@ -37,7 +37,7 @@ export const LoaderButton = LoadMoreButton.extend`
   cursor: wait;
 `;
 
-export const EditBtn = ({ onClick, to }) => {
+export const EditBtn = ({ onClick, to, ...restProps }) => {
   const EditIcon = styled(PenIcon)`
     fill: #777;
   `;
@@ -53,13 +53,13 @@ export const EditBtn = ({ onClick, to }) => {
     }
   `;
   return (
-    <Container onClick={onClick} to={to} title="Edit Post">
+    <Container onClick={onClick} to={to} {...restProps}>
       <EditIcon height={14} />
     </Container>
   );
 };
 
-export const DeleteBtn = ({ onClick, to }) => {
+export const DeleteBtn = ({ onClick, to, ...restProps }) => {
   const Icon = styled(DeleteIcon)`
     stroke: #777;
   `;
@@ -74,7 +74,7 @@ export const DeleteBtn = ({ onClick, to }) => {
     }
   `;
   return (
-    <Container onClick={onClick} to={to} title="Delete Post">
+    <Container onClick={onClick} to={to} {...restProps}>
       <Icon height={15} />
     </Container>
   );

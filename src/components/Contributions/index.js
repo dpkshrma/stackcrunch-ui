@@ -16,6 +16,7 @@ import {
   EditBtn,
   DeleteBtn
 } from './styled';
+import { DefaultTooltip } from '../common';
 
 const renderPost = (editable, onDelete) => post => (
   <ListItem
@@ -25,8 +26,13 @@ const renderPost = (editable, onDelete) => post => (
         <ListItem.Header.CreatedOn timeStamp={post.createdOn} />
         <ListItem.Separator delimiter="|" space={8} />
         <ListItem.Header.TimeToRead ttr={post.ttr.text} />
-        {editable && <EditBtn to={`write/${post.slug}`} />}
-        {editable && <DeleteBtn onClick={() => onDelete(post.slug)} />}
+        {editable && <EditBtn data-tip="Edit Post" to={`write/${post.slug}`} />}
+        {editable && (
+          <DeleteBtn
+            data-tip="Delete Post"
+            onClick={() => onDelete(post.slug)}
+          />
+        )}
       </ListItem.Header.Container>
     }
     key={post.slug}
@@ -69,6 +75,7 @@ const Contributions = props => {
 
   return (
     <Container>
+      <DefaultTooltip />
       <List>
         <InfiniteList loadMore={loadMore} opts={opts}>
           {posts.map(renderPost(editable, props.deletePost))}
