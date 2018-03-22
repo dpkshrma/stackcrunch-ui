@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 import logo from '../icons/logo_white.png';
 import StackExchangeIcon from './icons/stackexchange';
+import HeartIcon from '../icons/Heart';
 
 const Container = styled.div`
   margin-top: auto;
@@ -32,19 +33,29 @@ const LogoThumb = styled.img`
 const LogoText = styled.div`
   margin-left: 8px;
   color: #292929;
+  display: flex;
 `;
 const Text = styled.span`
   font-family: roboto;
   font-size: ${({ size }) => `${size || 20}px`};
   font-weight: ${({ weight }) => weight};
   color: #fff;
+  display: flex;
   ${({ css }) => css};
 `;
 const RightNav = styled.div`
   margin-left: auto;
 `;
+const LoveIcon = styled(HeartIcon)`
+  margin: 0 6px;
+`;
+const SEIcon = styled(StackExchangeIcon)`
+  margin-top: -6px;
+`;
 const SELink = styled.a`
   text-decoration: none;
+  color: #fff;
+  display: flex;
 `;
 const footerLabelCSS = css`
   color: #ddd;
@@ -65,15 +76,15 @@ const Footer = props => {
           </Logo>
           <RightNav>
             <Text css={footerLabelCSS} size={16} weight={100}>
-              Made in honour of
+              Made with <LoveIcon height={20} style={{ fill: '#d7594a' }} /> for
               <SELink
-                href="https://stackexchange.com/"
+                href="https://stackexchange.com/sites"
                 target="_blank"
                 title="stackexchange"
               >
-                <StackExchangeIcon height={24} />
+                <SEIcon height={24} />
+                communities
               </SELink>
-              contributors
             </Text>
           </RightNav>
         </Content>
