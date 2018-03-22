@@ -4,6 +4,7 @@ import StackExchangeIcon from '../icons/StackExchange';
 import GithubIcon from '../icons/GithubOctocat';
 import { STACKCRUNCH_API_URL } from '../../config';
 import {
+  Container,
   Wrapper,
   Title,
   Input,
@@ -131,33 +132,37 @@ export default class Join extends React.Component {
     );
     if (tab === 'signup') {
       return (
-        <Wrapper>
-          <Title>Sign Up</Title>
-          <Input
-            type="text"
-            placeholder="Username"
-            minLength={3}
-            debounceTimeout={300}
-            onChange={this.onUsernameChange}
-            css={unameInputCSS}
-            inputRef={input => {
-              this.unameInput = input;
-            }}
-          />
-          <Text>{this.state.inputMsg}</Text>
-          {joinButtons}
-          <Text>Already have an account?</Text>
-          <JoinLink to={'/join?tab=signin'}>Sign In</JoinLink>
-        </Wrapper>
+        <Container>
+          <Wrapper>
+            <Title>Sign Up</Title>
+            <Input
+              type="text"
+              placeholder="Username"
+              minLength={3}
+              debounceTimeout={300}
+              onChange={this.onUsernameChange}
+              css={unameInputCSS}
+              inputRef={input => {
+                this.unameInput = input;
+              }}
+            />
+            <Text>{this.state.inputMsg}</Text>
+            {joinButtons}
+            <Text>Already have an account?</Text>
+            <JoinLink to={'/join?tab=signin'}>Sign In</JoinLink>
+          </Wrapper>
+        </Container>
       );
     }
     return (
-      <Wrapper>
-        <Title>Sign In</Title>
-        {joinButtons}
-        <Text>Don't have an account yet?</Text>
-        <JoinLink to={'/join?tab=signup'}>Sign Up</JoinLink>
-      </Wrapper>
+      <Container>
+        <Wrapper>
+          <Title>Sign In</Title>
+          {joinButtons}
+          <Text>Don't have an account yet?</Text>
+          <JoinLink to={'/join?tab=signup'}>Sign Up</JoinLink>
+        </Wrapper>
+      </Container>
     );
   }
 }

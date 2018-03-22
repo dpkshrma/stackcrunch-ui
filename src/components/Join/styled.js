@@ -2,6 +2,12 @@ import { Link } from 'react-router-dom';
 import { DebounceInput } from 'react-debounce-input';
 import styled, { css } from 'styled-components';
 
+export const Container = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+`;
 export const Wrapper = styled.div`
   display: flex;
   align-items: center;
@@ -12,6 +18,7 @@ export const Wrapper = styled.div`
   border-radius: 4px;
   padding: 32px;
   max-height: 300px;
+  margin-top: 24px;
 `;
 export const Title = styled.span`
   font-size: 20px;
