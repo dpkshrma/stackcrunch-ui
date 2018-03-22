@@ -14,6 +14,7 @@ import {
   Tags,
   Meta,
   MetaItem,
+  LikeMetaItem,
   MetaLabel,
   ShareLink,
   Footer,
@@ -69,10 +70,13 @@ const ListItem = ({
   createdOn,
   ttr,
   views = {},
+  likes = 0,
   headerComponent,
   showHeader = true,
   showShareLinks = true,
-  showAuthorChip = true
+  showAuthorChip = true,
+  likePost,
+  liked = true
 }) => {
   const tagList =
     tags &&
@@ -126,10 +130,15 @@ const ListItem = ({
                 <MetaLabel>{views.total}</MetaLabel>
               </MetaItem>
             )}
-            <MetaItem className="meta-item--like" data-tip="Like">
-              <HeartIcon className="icon like" height={16} />
-              <MetaLabel>3.5k</MetaLabel>
-            </MetaItem>
+            <LikeMetaItem
+              className="meta-item--like"
+              data-tip="Like"
+              onClick={likePost}
+              liked={liked}
+            >
+              <HeartIcon className="icon" height={16} />
+              {likes > 0 && <MetaLabel>{likes}</MetaLabel>}
+            </LikeMetaItem>
             {showShareLinks && (
               <MetaItem>
                 <ShareLink href={shareLink} target="_blank" data-tip="Tweet">

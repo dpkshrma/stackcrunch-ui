@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchPosts } from '../../actions/post';
+import { fetchPosts, likePost } from '../../actions/post';
 import ListItem from '../ListItem';
 import hooks from './hooks';
 import {
@@ -22,7 +22,7 @@ import {
 const { EndOfList, LoadMore, Loader } = InfiniteList;
 
 const PostList = props => {
-  const { posts, fetchPosts, match } = props;
+  const { user, posts, fetchPosts, match, likePost } = props;
   const { username } = match.params;
 
   return (
@@ -31,7 +31,17 @@ const PostList = props => {
         <FlexSection flex={5}>
           <InfiniteList loadMore={fetchPosts} opts={{ username }}>
             <List>
-              {posts.map(post => <ListItem {...post} key={post.slug} />)}
+              {posts.map(post => {
+                const liked = user.likedPosts.indexOf(post.slug) !== -1;
+                return (
+                  <ListItem
+                    key={post.slug}
+                    {...post}
+                    likePost={() => !liked && likePost(post.slug)}
+                    liked={liked}
+                  />
+                );
+              })}
             </List>
             {/* TODO: show when a good number of posts are available */}
             {/* <EndOfList>
@@ -55,10 +65,11 @@ const PostList = props => {
   );
 };
 
-const mapStateToProps = ({ posts }) => ({ posts });
+const mapStateToProps = ({ posts, user }) => ({ posts, user });
 const mapDispatchToProps = dispatch => ({
   dispatch,
-  fetchPosts: fetchPosts(dispatch)
+  fetchPosts: fetchPosts(dispatch),
+  likePost: likePost(dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(

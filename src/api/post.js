@@ -23,7 +23,11 @@ const update = ({ slug, post }) => {
 };
 
 const incViews = slug => {
-  return req(`posts/${slug}/views`).put();
+  return req(`posts/${slug}/views`).post();
+};
+
+const like = slug => {
+  return req(`posts/${slug}/like`).post();
 };
 
 const deletePost = slug => {
@@ -43,5 +47,6 @@ export default {
   update,
   delete: deletePost,
   uploadCoverImage,
-  incViews
+  incViews,
+  like
 };

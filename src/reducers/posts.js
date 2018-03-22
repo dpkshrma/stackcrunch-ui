@@ -18,14 +18,20 @@ export default (state = initialState, action) => {
       return state;
 
     case success(pa.INC_POST_VIEWS):
-      const { post: { slug: updatedPostSlug, views } } = action.payload;
+      const { post: { slug: viewedPostSlug, views } } = action.payload;
 
-      const newState = state.map(post => {
-        if (post.slug !== updatedPostSlug) return post;
+      return state.map(post => {
+        if (post.slug !== viewedPostSlug) return post;
         return Object.assign({}, post, { views });
       });
 
-      return newState;
+    case success(pa.LIKE_POST):
+      const { post: { slug: likedPostSlug } } = action.payload;
+
+      return state.map(post => {
+        if (post.slug !== likedPostSlug) return post;
+        return Object.assign({}, post, { likes: post.likes + 1 });
+      });
 
     default:
       return state;

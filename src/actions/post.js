@@ -20,6 +20,17 @@ export const fetchPost = dispatch => {
   };
 };
 
+export const likePost = dispatch => {
+  return slug => {
+    postsAPI.like(slug);
+    const post = { slug };
+    return dispatch({
+      type: pa.LIKE_POST,
+      payload: Promise.resolve({ post })
+    });
+  };
+};
+
 export const incViews = dispatch => {
   return slug => {
     return dispatch({

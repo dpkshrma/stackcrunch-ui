@@ -80,11 +80,20 @@ export const MetaItem = styled.div`
   &:hover .icon.views {
     fill: #07cc;
   }
-  &:hover .icon.like {
-    fill: #d7594a;
-  }
   &:hover .icon.twitter {
     fill: #1da1f2cc;
+  }
+`;
+export const LikeMetaItem = MetaItem.extend`
+  cursor: pointer;
+  ${({ liked }) =>
+    liked &&
+    css`
+      & .icon {
+        fill: #d7594a;
+      }
+    `} &:hover .icon {
+    fill: #d7594a;
   }
 `;
 export const MetaLabel = styled.span`

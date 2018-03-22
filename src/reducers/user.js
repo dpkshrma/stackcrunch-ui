@@ -16,6 +16,12 @@ export default (state = initialState, action) => {
       const { user: { viewedPosts } } = action.payload;
       return Object.assign({}, state, { viewedPosts });
 
+    case success(pa.LIKE_POST):
+      const { post: { slug } } = action.payload;
+      return Object.assign({}, state, {
+        likedPosts: [...new Set([...state.likedPosts, slug])]
+      });
+
     default:
       return state;
   }
