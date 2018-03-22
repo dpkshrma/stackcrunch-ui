@@ -71,7 +71,7 @@ export const Tip = styled.div`
   border-bottom: 1px solid;
   border-color: #555;
 `;
-export const ContributeTip = styled.a`
+export const ContributeTip = styled(Link)`
   background: #fff;
   color: #555;
   border-radius: 2px;

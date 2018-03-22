@@ -7,7 +7,7 @@ import logo from '../icons/logo.png';
 import PenIcon from '../icons/Pen';
 import BellIcon from '../icons/Bell';
 import UserIcon from '../icons/User';
-import { GH_CONTRIBUTION_URL, STACKCRUNCH_TOKEN_ID } from '../../config';
+import { STACKCRUNCH_TOKEN_ID } from '../../config';
 import {
   Wrapper,
   Content,
@@ -40,6 +40,9 @@ bottom: -31px;
 transform: rotateX(90deg) translateY(-30px);
 */
 
+const CONTRIBUTION_POST_LINK =
+  '/post/How-to-share-your-awesome-development-stories-r1lZ_1hJcz';
+
 const EditorLinkIcon = styled(PenIcon)`
   margin-right: 20px;
   margin-top: 9px;
@@ -62,7 +65,7 @@ class Topbar extends RedirectComponent {
               <Text weight={500}>crunch</Text>
             </LogoText>
           </Logo>
-          <ContributeTip href={GH_CONTRIBUTION_URL} target="_blank">
+          <ContributeTip to={CONTRIBUTION_POST_LINK}>
             <Tip />
             Contributions Welcome!
           </ContributeTip>
