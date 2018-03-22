@@ -1,6 +1,7 @@
 import React from 'react';
+import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import {
   fetchDrafts,
   fetchUserPublishedPosts,
@@ -17,7 +18,42 @@ import {
   EditBtn,
   DeleteBtn
 } from './styled';
-import { DefaultTooltip } from '../common';
+import { Button, DefaultTooltip } from '../common';
+
+const NoPosts = ({ postType }) => {
+  const Container = styled.div`
+    padding: 36px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border: 1px solid #ddd;
+    width: 100%;
+    margin-top: 24px;
+    font-size: 20px;
+    color: #777;
+  `;
+  const EditorButton = Button.extend`
+    margin-top: 24px;
+  `;
+  const EditorLink = styled(Link)`
+    text-decoration: none;
+    color: #07c;
+  `;
+  let title = 'Welcome! Create your first story!';
+  const link = 'Share your experience!';
+  if (postType === 'published') {
+    title = 'No Posts published yet! :|';
+  }
+  return (
+    <Container>
+      {title}
+      <EditorButton>
+        <EditorLink to="/write">{link}</EditorLink>
+      </EditorButton>
+    </Container>
+  );
+};
 
 const renderPost = (post, editable, onDelete, liked, onLike) => {
   return (
@@ -63,7 +99,9 @@ const Contributions = props => {
   // loadMore & posts by type of contributions
   let loadMore = props.fetchDrafts;
   let posts = props.contributions.drafts;
+  let postType = 'drafts';
   if (!props.drafts) {
+    postType = 'published';
     loadMore = props.fetchUserPublishedPosts;
     posts = props.contributions.published;
   }
@@ -94,6 +132,7 @@ const Contributions = props => {
           {renderPaginationElements()}
         </InfiniteList>
       </List>
+      {posts.length === 0 && <NoPosts postType={postType} />}
     </Container>
   );
 };
