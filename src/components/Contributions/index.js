@@ -4,7 +4,8 @@ import { withRouter } from 'react-router-dom';
 import {
   fetchDrafts,
   fetchUserPublishedPosts,
-  deletePost
+  deletePost,
+  likePostDispatchLater
 } from '../../actions/post';
 import ListItem from '../ListItem';
 import { InfiniteList, Loader as LoaderIcon } from '../common';
@@ -18,27 +19,33 @@ import {
 } from './styled';
 import { DefaultTooltip } from '../common';
 
-const renderPost = (editable, onDelete) => post => (
-  <ListItem
-    {...post}
-    headerComponent={
-      <ListItem.Header.Container>
-        <ListItem.Header.CreatedOn timeStamp={post.createdOn} />
-        <ListItem.Separator delimiter="|" space={8} />
-        <ListItem.Header.TimeToRead ttr={post.ttr.text} />
-        {editable && <EditBtn data-tip="Edit Post" to={`write/${post.slug}`} />}
-        {editable && (
-          <DeleteBtn
-            data-tip="Delete Post"
-            onClick={() => onDelete(post.slug)}
-          />
-        )}
-      </ListItem.Header.Container>
-    }
-    key={post.slug}
-    showShareLinks={false}
-  />
-);
+const renderPost = (post, editable, onDelete, liked, onLike) => {
+  return (
+    <ListItem
+      {...post}
+      headerComponent={
+        <ListItem.Header.Container>
+          <ListItem.Header.CreatedOn timeStamp={post.createdOn} />
+          <ListItem.Separator delimiter="|" space={8} />
+          <ListItem.Header.TimeToRead ttr={post.ttr.text} />
+          {editable && (
+            <EditBtn data-tip="Edit Post" to={`write/${post.slug}`} />
+          )}
+          {editable && (
+            <DeleteBtn
+              data-tip="Delete Post"
+              onClick={() => onDelete(post.slug)}
+            />
+          )}
+        </ListItem.Header.Container>
+      }
+      key={post.slug}
+      showShareLinks={false}
+      likePost={() => !liked && onLike(post.slug)}
+      liked={liked}
+    />
+  );
+};
 const renderPaginationElements = () => {
   const { LoadMore, Loader } = InfiniteList;
   return [
@@ -78,7 +85,12 @@ const Contributions = props => {
       <DefaultTooltip />
       <List>
         <InfiniteList loadMore={loadMore} opts={opts}>
-          {posts.map(renderPost(editable, props.deletePost))}
+          {posts.map(post => {
+            const liked =
+              props.loggedInUser.likedPosts.indexOf(post.slug) !== -1;
+            const { deletePost, likePost } = props;
+            return renderPost(post, editable, deletePost, liked, likePost);
+          })}
           {renderPaginationElements()}
         </InfiniteList>
       </List>
@@ -94,7 +106,12 @@ const mapStateToProps = ({ contributions, user }) => ({
   contributions,
   loggedInUser: user
 });
-const mapDispatchToProps = { fetchDrafts, fetchUserPublishedPosts, deletePost };
+const mapDispatchToProps = {
+  fetchDrafts,
+  fetchUserPublishedPosts,
+  deletePost,
+  likePost: likePostDispatchLater
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(
   withRouter(Contributions)

@@ -20,15 +20,19 @@ export const fetchPost = dispatch => {
   };
 };
 
+const likePostHelper = (slug, dispatch) => {
+  postsAPI.like(slug);
+  const post = { slug };
+  return dispatch({
+    type: pa.LIKE_POST,
+    payload: Promise.resolve({ post })
+  });
+};
+export const likePostDispatchLater = slug => {
+  return dispatch => likePostHelper(slug, dispatch);
+};
 export const likePost = dispatch => {
-  return slug => {
-    postsAPI.like(slug);
-    const post = { slug };
-    return dispatch({
-      type: pa.LIKE_POST,
-      payload: Promise.resolve({ post })
-    });
-  };
+  return slug => likePostHelper(slug, dispatch);
 };
 
 export const incViews = dispatch => {

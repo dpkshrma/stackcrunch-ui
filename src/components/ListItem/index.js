@@ -76,7 +76,7 @@ const ListItem = ({
   showShareLinks = true,
   showAuthorChip = true,
   likePost,
-  liked = true
+  liked = false
 }) => {
   const tagList =
     tags &&
@@ -132,7 +132,7 @@ const ListItem = ({
             )}
             <LikeMetaItem
               className="meta-item--like"
-              data-tip="Like"
+              data-tip={!liked ? 'Like Story' : 'Unlike Story'}
               onClick={likePost}
               liked={liked}
             >

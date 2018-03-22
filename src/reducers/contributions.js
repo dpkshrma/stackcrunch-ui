@@ -33,6 +33,19 @@ export default (state = initialState, action) => {
         };
       }
       return state;
+
+    case success(pa.LIKE_POST):
+      const { post: { slug: likedPostSlug } } = action.payload;
+
+      const updatePostLike = post => {
+        if (post.slug !== likedPostSlug) return post;
+        return Object.assign({}, post, { likes: post.likes + 1 });
+      };
+      return {
+        published: state.published.map(updatePostLike),
+        drafts: state.drafts.map(updatePostLike)
+      };
+
     default:
       return state;
   }

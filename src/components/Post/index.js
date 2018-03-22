@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import styled from 'styled-components';
+import styled, { keyframes, css } from 'styled-components';
 // stateless components
-import { Chip } from '../common';
+import { Chip, DefaultTooltip } from '../common';
 import {
   Wrapper,
   Header,
@@ -18,7 +18,7 @@ import {
 import Editor, { createEditorState } from '../Editor';
 import CommentThread from './CommentThread';
 import ClockIcon from '../icons/Clock';
-import { fetchPost, incViews } from '../../actions/post';
+import { fetchPost, incViews, likePost } from '../../actions/post';
 // global helpers
 import { hooks } from '../../helpers/routes';
 // component helpers
@@ -26,6 +26,7 @@ import { markdownToDraftOptions, blockRenderMap } from './helpers';
 import markdownToDraft from './helpers/markdownToDraft';
 // sample data
 import { URL_PREFIX } from '../../config';
+import HeartIcon from '../icons/Heart';
 
 const Meta = () => <DateString>{new Date().toDateString()}</DateString>;
 
@@ -43,6 +44,47 @@ const CoverImg = props => {
   return (
     <Container>
       <Img {...props} />
+    </Container>
+  );
+};
+
+const LikePost = ({ onLike, liked }) => {
+  const Container = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ddd;
+    padding: 36px 0;
+  `;
+  const Text = styled.div`
+    font-size: 28px;
+    color: #444;
+  `;
+  const scaleAnimation = keyframes`
+    from {
+      transform: scale(1.2);
+    }
+    to {
+      transform: scale(1);
+    }
+  `;
+  const LikeIcon = styled(HeartIcon)`
+    margin-left: 14px;
+    ${!liked &&
+      css`
+        animation: ${scaleAnimation} 0.8s infinite alternate;
+      `} ${liked
+        ? css`
+            fill: #d7594a;
+          `
+        : css`
+            fill: #d7594a99;
+          `} cursor: pointer;
+  `;
+  return (
+    <Container>
+      <Text>Show your support! Like this post 👉</Text>
+      <LikeIcon onClick={onLike} height={28} data-tip={liked && 'Liked!'} />
     </Container>
   );
 };
@@ -105,12 +147,14 @@ class PostPage extends React.Component {
       showAuthorChip
     } = this.state.metadata;
     const { slug } = this.props.match.params;
+    const { likePost, liked } = this.props;
     const [author] = authors;
     if (!this.state.loaded) {
       return <div>Loading the post...</div>;
     }
     return (
       <Wrapper className="post-wrapper">
+        <DefaultTooltip />
         {coverImageUrl && (
           <CoverImg src={coverImageUrl} alignment={coverAlignment} />
         )}
@@ -144,6 +188,7 @@ class PostPage extends React.Component {
               readOnly={true}
               blockRenderMap={blockRenderMap}
             />
+            <LikePost onLike={() => !liked && likePost(slug)} liked={liked} />
             <CommentThread
               shortname={'stackcrunch'}
               identifier={slug}
@@ -157,12 +202,17 @@ class PostPage extends React.Component {
   }
 }
 
-const mapStateToProps = ({ post }) => ({ post });
+const mapStateToProps = ({ post, user }) => {
+  const previouslyLikedPost = user.likedPosts.indexOf(post.meta.slug) !== -1;
+  const liked = previouslyLikedPost || post.meta.liked;
+  return { post, liked };
+};
 const mapDispatchToProps = dispatch => {
   return {
     dispatch,
     fetchPost: fetchPost(dispatch),
-    increaseViewsCount: incViews(dispatch)
+    increaseViewsCount: incViews(dispatch),
+    likePost: likePost(dispatch)
   };
 };
 
