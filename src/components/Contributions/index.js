@@ -12,7 +12,7 @@ import {
 import ListItem from '../ListItem';
 import { InfiniteList, Loader as LoaderIcon } from '../common';
 import { Container, List, LoadMoreButton, LoaderButton } from './styled';
-import { Button, DefaultTooltip } from '../common';
+import { Button } from '../common';
 
 const NoPosts = ({ postType }) => {
   const Container = styled.div`
