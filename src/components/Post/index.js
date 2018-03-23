@@ -27,6 +27,7 @@ import markdownToDraft from './helpers/markdownToDraft';
 // sample data
 import { URL_PREFIX } from '../../config';
 import HeartIcon from '../icons/Heart';
+import LoadingPage from '../About/Loading';
 
 const Meta = () => <DateString>{new Date().toDateString()}</DateString>;
 
@@ -150,7 +151,7 @@ class PostPage extends React.Component {
     const { likePost, liked } = this.props;
     const [author] = authors;
     if (!this.state.loaded) {
-      return <div>Loading the post...</div>;
+      return <LoadingPage />;
     }
     return (
       <Wrapper className="post-wrapper">
