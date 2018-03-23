@@ -8,21 +8,19 @@ const Button = styled(Link)`
   font-size: 14px;
   outline: none;
   background: none;
-  border: 1px solid #fff;
+  border: 1px solid #777c;
   border-radius: 2px;
-  padding: 8px 16px;
-  color: #fff;
+  padding: 8px 24px;
+  color: #fffc;
   cursor: pointer;
   margin-left: 8px;
-  opacity: 0.9;
   letter-spacing: 0.09em;
   &:hover {
-    opacity: 1;
+    color: #fff;
+    border-color: #777;
   }
 `;
 const SignUpBtn = styled(Button)`
-  background: #fff;
-  color: #333;
   margin-right: 32px;
 `;
 const SignInBtn = styled(Button)`
