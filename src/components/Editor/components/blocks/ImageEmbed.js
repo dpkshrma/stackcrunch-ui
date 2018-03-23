@@ -19,6 +19,7 @@ const Caption = styled.figcaption`
   color: #999;
   position: relative;
   border: none;
+  width: 100%;
 `;
 const CaptionPlaceholder = styled.div`
   position: absolute;
@@ -32,20 +33,20 @@ const CaptionPlaceholder = styled.div`
 
 // TODO: Add loader
 export class ImageEmbed extends React.Component {
-  state = {
-    captionWidth: 0
-  };
-  componentDidMount() {
-    this.setCaptionWidth();
-  }
-  setCaptionWidth = () => {
-    if (this.img && this.img.complete) {
-      const { width: imageWidth } = this.img.getBoundingClientRect();
-      this.setState({ captionWidth: imageWidth });
-    } else {
-      setTimeout(this.setCaptionWidth, 100);
-    }
-  };
+  // state = {
+  //   captionWidth: 0
+  // };
+  // componentDidMount() {
+  //   this.setCaptionWidth();
+  // }
+  // setCaptionWidth = () => {
+  //   if (this.img && this.img.complete) {
+  //     const { width: imageWidth } = this.img.getBoundingClientRect();
+  //     this.setState({ captionWidth: imageWidth });
+  //   } else {
+  //     setTimeout(this.setCaptionWidth, 100);
+  //   }
+  // };
   render() {
     const data = this.props.block.get('data');
     const blockText = this.props.block.getText();
@@ -64,7 +65,7 @@ export class ImageEmbed extends React.Component {
           alt={alt}
           title={title}
         />
-        <Caption style={{ width: `calc(${this.state.captionWidth}px - 8px)` }}>
+        <Caption>
           {!readOnly &&
             blockText.length === 0 && (
               <CaptionPlaceholder
