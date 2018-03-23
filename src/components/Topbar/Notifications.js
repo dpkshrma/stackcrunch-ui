@@ -17,14 +17,15 @@ const ContentWrapper = styled.div`
   z-index: 1000;
   display: flex;
   flex-direction: column;
-  left: -128px;
+  left: -116px;
   color: #777;
 `;
 const Content = styled.div`
   display: flex;
-  padding: 30px;
+  padding: 24px;
   justify-content: center;
   min-width: 196px;
+  font-size: 14px;
 `;
 
 class Notifications extends React.Component {
