@@ -8,26 +8,24 @@ export const jsonHeaders = {
 };
 
 const fetchJSON = (url, opts) => {
-  return fetch(url, opts)
-    .then(async response => {
-      const { status, statusText } = response;
+  return fetch(url, opts).then(async response => {
+    const { status, statusText } = response;
 
-      const responseJSON = await response.json();
-      const { message } = responseJSON;
+    const responseJSON = await response.json();
+    const { message } = responseJSON;
 
-      const statusType = status / 100;
+    const statusType = status / 100;
 
-      if (statusType !== 2 || statusType !== 3) {
-        throw new HTTPError({
-          name: statusText,
-          message,
-          status
-        });
-      }
+    if (statusType !== 2 && statusType !== 3) {
+      throw new HTTPError({
+        name: statusText,
+        message,
+        status
+      });
+    }
 
-      return responseJSON;
-    })
-    .then(response => response.json());
+    return responseJSON;
+  });
 };
 
 export const req = (path, { headers = {}, auth = true } = {}) => {
@@ -35,7 +33,9 @@ export const req = (path, { headers = {}, auth = true } = {}) => {
   const opts = { headers };
   if (auth) {
     const authToken = localStorage.getItem(STACKCRUNCH_TOKEN_ID);
-    opts.headers.Authorization = authToken;
+    if (authToken) {
+      opts.headers.Authorization = authToken;
+    }
   }
   return {
     get: (queryParams = {}) => {
