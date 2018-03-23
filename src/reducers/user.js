@@ -13,8 +13,12 @@ export default (state = initialState, action) => {
       return update(state, { $merge: action.payload });
 
     case success(pa.INC_POST_VIEWS):
-      const { user: { viewedPosts } } = action.payload;
-      return Object.assign({}, state, { viewedPosts });
+      const { user } = action.payload;
+      const { viewedPosts } = user || {};
+      if (viewedPosts) {
+        return Object.assign({}, state, { viewedPosts });
+      }
+      return state;
 
     case success(pa.LIKE_POST):
       const { post: { slug } } = action.payload;
