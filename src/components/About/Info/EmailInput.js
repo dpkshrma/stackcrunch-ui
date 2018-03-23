@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import subscribeApi from '../../../api/subscribe';
+import { Link } from 'react-router-dom';
 
 const Container = styled.div`
   margin-top: 84px;
@@ -88,6 +89,12 @@ const Smile = () => {
   return <Container role="img">&#9787;</Container>;
 };
 
+const GetStartedLink = styled(Link)`
+  text-decoration: none;
+  border-bottom: 1px dashed #ffa000;
+  color: #ccc;
+`;
+
 class EmailInput extends React.Component {
   state = {
     value: '',
@@ -114,7 +121,9 @@ class EmailInput extends React.Component {
     <Message>
       Thanks for subscribing! <Heart />
       <br />
-      We'll notify you as soon as we go live! <Smile />
+      <br />
+      <GetStartedLink to="/join?tab=signup">Click here</GetStartedLink> to start
+      creating new stories! <Smile />
     </Message>
   );
   renderForm = () => [
