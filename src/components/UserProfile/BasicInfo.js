@@ -4,11 +4,14 @@ import queryString from 'query-string';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import ContentEditable from 'react-contenteditable';
+import promisifySetState from 'promisify-setstate';
 import { fetchProfile, updateRemoteProfile } from '../../actions/user';
 import { Connect, Text, Form, FormGroup, SubmitButton } from './styled';
 import { STACKCRUNCH_TOKEN_ID, STACKCRUNCH_API_URL } from '../../config';
 import GithubOctocatIcon from '../icons/GithubOctocat';
 import StackExchangeIcon from '../icons/StackExchange';
+import LoadingIcon from '../icons/Loading';
+import { FlexSection } from '../common';
 
 const getLink = (provider, params) => {
   const queryParams = queryString.stringify({ ...params, proc: 'link' });
@@ -98,7 +101,8 @@ class BasicInfo extends React.Component {
       name: '',
       description: ''
     },
-    editable: false
+    editable: false,
+    saving: false
   };
   componentDidMount() {
     const { username } = this.props.match.params;
@@ -134,7 +138,10 @@ class BasicInfo extends React.Component {
     e.preventDefault();
     // excluding rest of the user info (like github, stackexchange info, etc.)
     const { name, description } = this.state.user;
-    this.props.updateRemoteProfile({ name, description });
+    this.setState({ saving: true })
+      .then(() => this.props.updateRemoteProfile({ name, description }))
+      .then(() => this.setState({ saving: false }))
+      .catch(console.error);
   };
   render() {
     const { user = {}, editable } = this.state;
@@ -192,7 +199,16 @@ class BasicInfo extends React.Component {
           )}
           {editable && (
             <FormGroup>
-              <SubmitButton onClick={this.save}>Save</SubmitButton>
+              <SubmitButton onClick={this.save}>
+                {this.state.saving ? (
+                  <FlexSection style={{ justifyContent: 'center' }}>
+                    Saving&hellip;&nbsp;
+                    <LoadingIcon height={18} stroke="#07c" />
+                  </FlexSection>
+                ) : (
+                  'Save'
+                )}
+              </SubmitButton>
             </FormGroup>
           )}
         </Form>
@@ -205,5 +221,5 @@ const mapStateToProps = ({ users, user }) => ({ users, loggedInUser: user });
 const mapDispatchToProps = { updateRemoteProfile, fetchProfile };
 
 export default connect(mapStateToProps, mapDispatchToProps)(
-  withRouter(BasicInfo)
+  withRouter(promisifySetState(BasicInfo))
 );
