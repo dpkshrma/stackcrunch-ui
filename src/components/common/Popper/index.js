@@ -21,6 +21,7 @@ class Popper extends React.Component {
     } = this.props;
     return (
       <Wrapper
+        className="popper-wrapper"
         innerRef={el => {
           this.popper = el;
         }}

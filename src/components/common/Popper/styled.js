@@ -58,10 +58,10 @@ export const Tip = styled.div`
   transform: rotate(135deg);
   position: absolute;
   bottom: -11px;
-  right: 12px;
+  right: 24px;
   background: #fff;
   border-left: 1px solid;
   border-bottom: 1px solid;
   border-color: #ccc;
-  z-index: 200;
+  z-index: 1001;
 `;

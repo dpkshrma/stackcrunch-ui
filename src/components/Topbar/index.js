@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 import RedirectComponent from '../common/Redirect';
 import logo from '../icons/logo.png';
 import PenIcon from '../icons/Pen';
-import BellIcon from '../icons/Bell';
 import UserIcon from '../icons/User';
 import { STACKCRUNCH_TOKEN_ID } from '../../config';
 import {
@@ -23,6 +22,7 @@ import {
   ProfileIconWrapper,
   ProfileIconImg
 } from './styled';
+import Notifications from './Notifications';
 
 /** SnackBar Notifications
 <- wrapper ->
@@ -47,10 +47,6 @@ const EditorLinkIcon = styled(PenIcon)`
   margin-right: 20px;
   margin-top: 9px;
 `;
-const NotificationIcon = styled(BellIcon)`
-  margin-right: 20px;
-  margin-top: 9px;
-`;
 
 class Topbar extends RedirectComponent {
   render() {
@@ -72,11 +68,7 @@ class Topbar extends RedirectComponent {
           <RightNav>
             {token
               ? [
-                  <NotificationIcon
-                    key="notification"
-                    className="icon"
-                    height={18}
-                  />,
+                  <Notifications key="notification" />,
                   <Link to="/write" key="write">
                     <EditorLinkIcon className="icon" height={18} />
                   </Link>,
