@@ -6,7 +6,8 @@ import {
   fetchDrafts,
   fetchUserPublishedPosts,
   deletePost,
-  likePostDispatchLater
+  likePostDispatchLater,
+  unlikePostDispatchLater
 } from '../../actions/post';
 import ListItem from '../ListItem';
 import { InfiniteList, Loader as LoaderIcon } from '../common';
@@ -48,7 +49,7 @@ const NoPosts = ({ postType }) => {
   );
 };
 
-const renderPost = (post, editable, onDelete, liked, onLike) => {
+const renderPost = (post, editable, onDelete, liked, onLike, onUnlike) => {
   return (
     <ListItem
       {...post}
@@ -57,7 +58,8 @@ const renderPost = (post, editable, onDelete, liked, onLike) => {
       onDelete={onDelete}
       key={post.slug}
       showShareLinks={false}
-      likePost={() => !liked && onLike(post.slug)}
+      likePost={() => onLike(post.slug)}
+      unlikePost={() => onUnlike(post.slug)}
       liked={liked}
     />
   );
@@ -105,8 +107,15 @@ const Contributions = props => {
           {posts.map(post => {
             const { likedPosts = [] } = props.loggedInUser;
             const liked = likedPosts.indexOf(post.slug) !== -1;
-            const { deletePost, likePost } = props;
-            return renderPost(post, editable, deletePost, liked, likePost);
+            const { deletePost, likePost, unlikePost } = props;
+            return renderPost(
+              post,
+              editable,
+              deletePost,
+              liked,
+              likePost,
+              unlikePost
+            );
           })}
           {renderPaginationElements()}
         </InfiniteList>
@@ -128,7 +137,8 @@ const mapDispatchToProps = {
   fetchDrafts,
   fetchUserPublishedPosts,
   deletePost,
-  likePost: likePostDispatchLater
+  likePost: likePostDispatchLater,
+  unlikePost: unlikePostDispatchLater
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(

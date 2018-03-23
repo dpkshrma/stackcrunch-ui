@@ -33,6 +33,14 @@ export default (state = initialState, action) => {
         return Object.assign({}, post, { likes: post.likes + 1 });
       });
 
+    case success(pa.UNLIKE_POST):
+      const { post: { slug: unlikedPostSlug } } = action.payload;
+
+      return state.map(post => {
+        if (post.slug !== unlikedPostSlug) return post;
+        return Object.assign({}, post, { likes: post.likes - 1 });
+      });
+
     default:
       return state;
   }

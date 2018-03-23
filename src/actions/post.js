@@ -35,6 +35,21 @@ export const likePost = dispatch => {
   return slug => likePostHelper(slug, dispatch);
 };
 
+const unlikePostHelper = (slug, dispatch) => {
+  postsAPI.unlike(slug);
+  const post = { slug };
+  return dispatch({
+    type: pa.UNLIKE_POST,
+    payload: Promise.resolve({ post })
+  });
+};
+export const unlikePostDispatchLater = slug => {
+  return dispatch => unlikePostHelper(slug, dispatch);
+};
+export const unlikePost = dispatch => {
+  return slug => unlikePostHelper(slug, dispatch);
+};
+
 export const incViews = dispatch => {
   return slug => {
     return dispatch({

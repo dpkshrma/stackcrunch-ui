@@ -19,6 +19,18 @@ export default (state = initialState, action) => {
           }
         }
       });
+
+    case success(pa.UNLIKE_POST):
+      const { post: { slug: unlikedPostSlug } } = action.payload;
+      if (state.meta.slug !== unlikedPostSlug) return state;
+      return update(state, {
+        $merge: {
+          meta: {
+            liked: false
+          }
+        }
+      });
+
     default:
       return state;
   }

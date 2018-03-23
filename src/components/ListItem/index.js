@@ -82,6 +82,7 @@ const ListItem = ({
   showDeleteBtn = false,
   onDelete,
   likePost,
+  unlikePost,
   liked = false
 }) => {
   const tagList =
@@ -141,7 +142,7 @@ const ListItem = ({
             <LikeMetaItem
               className="meta-item--like"
               data-tip={!liked ? 'Like Story' : 'Unlike Story'}
-              onClick={likePost}
+              onClick={!liked ? likePost : unlikePost}
               liked={liked}
             >
               <HeartIcon className="icon" height={16} />

@@ -30,6 +30,10 @@ const like = slug => {
   return req(`posts/${slug}/like`).post();
 };
 
+const unlike = slug => {
+  return req(`posts/${slug}/unlike`).post();
+};
+
 const deletePost = slug => {
   return req(`posts/${slug}`).delete();
 };
@@ -48,5 +52,6 @@ export default {
   delete: deletePost,
   uploadCoverImage,
   incViews,
-  like
+  like,
+  unlike
 };

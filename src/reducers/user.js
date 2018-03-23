@@ -22,6 +22,14 @@ export default (state = initialState, action) => {
         likedPosts: [...new Set([...state.likedPosts, slug])]
       });
 
+    case success(pa.UNLIKE_POST):
+      const { post: { slug: unlikedSlug } } = action.payload;
+      return Object.assign({}, state, {
+        likedPosts: state.likedPosts.filter(
+          postSlug => postSlug !== unlikedSlug
+        )
+      });
+
     default:
       return state;
   }

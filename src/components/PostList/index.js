@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { fetchPosts, likePost } from '../../actions/post';
+import { fetchPosts, likePost, unlikePost } from '../../actions/post';
 import ListItem from '../ListItem';
 import hooks from './hooks';
 import {
@@ -22,7 +22,7 @@ import {
 const { EndOfList, LoadMore, Loader } = InfiniteList;
 
 const PostList = props => {
-  const { user, posts, fetchPosts, match, likePost } = props;
+  const { user, posts, fetchPosts, match, likePost, unlikePost } = props;
   const { username } = match.params;
 
   return (
@@ -38,7 +38,8 @@ const PostList = props => {
                   <ListItem
                     key={post.slug}
                     {...post}
-                    likePost={() => !liked && likePost(post.slug)}
+                    likePost={() => likePost(post.slug)}
+                    unlikePost={() => unlikePost(post.slug)}
                     liked={liked}
                   />
                 );
@@ -70,7 +71,8 @@ const mapStateToProps = ({ posts, user }) => ({ posts, user });
 const mapDispatchToProps = dispatch => ({
   dispatch,
   fetchPosts: fetchPosts(dispatch),
-  likePost: likePost(dispatch)
+  likePost: likePost(dispatch),
+  unlikePost: unlikePost(dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(

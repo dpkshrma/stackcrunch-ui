@@ -35,7 +35,7 @@ const MainContent = props => {
 
 class UserProfile extends React.Component {
   state = {
-    tab: 'drafts'
+    tab: 'publishedPosts'
   };
   changeTab = tab => e => {
     e.preventDefault();

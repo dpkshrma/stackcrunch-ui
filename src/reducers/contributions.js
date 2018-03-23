@@ -46,6 +46,18 @@ export default (state = initialState, action) => {
         drafts: state.drafts.map(updatePostLike)
       };
 
+    case success(pa.UNLIKE_POST):
+      const { post: { slug: unlikedPostSlug } } = action.payload;
+
+      const updatePostUnlike = post => {
+        if (post.slug !== unlikedPostSlug) return post;
+        return Object.assign({}, post, { likes: post.likes - 1 });
+      };
+      return {
+        published: state.published.map(updatePostUnlike),
+        drafts: state.drafts.map(updatePostUnlike)
+      };
+
     default:
       return state;
   }
