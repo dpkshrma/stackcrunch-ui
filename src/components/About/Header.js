@@ -1,6 +1,33 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import { Link } from 'react-router-dom';
 import Logo from './Logo';
+
+const Button = styled(Link)`
+  text-decoration: none;
+  font-size: 14px;
+  outline: none;
+  background: none;
+  border: 1px solid #fff;
+  border-radius: 2px;
+  padding: 8px 16px;
+  color: #fff;
+  cursor: pointer;
+  margin-left: 8px;
+  opacity: 0.9;
+  letter-spacing: 0.09em;
+  &:hover {
+    opacity: 1;
+  }
+`;
+const SignUpBtn = styled(Button)`
+  background: #fff;
+  color: #333;
+  margin-right: 32px;
+`;
+const SignInBtn = styled(Button)`
+  margin-left: auto;
+`;
 
 const Tip = styled.div`
   height: 8px;
@@ -50,6 +77,7 @@ const Container = styled.div`
   background-color: rgba(0, 0, 0, 0);
   display: flex;
   justify-content: flex-start;
+  align-items: center;
   width: 100%;
   @media (max-width: 1439px) {
     max-width: calc(100vw - 160px);
@@ -77,6 +105,8 @@ const Header = () => (
       <Tip />
       ⚡Get Early Access! ⚡
     </ContributeTip>
+    <SignInBtn to={'/join?tab=signin'}>Login</SignInBtn>,
+    <SignUpBtn to={'/join?tab=signup'}>SignUp</SignUpBtn>
   </Container>
 );
 
