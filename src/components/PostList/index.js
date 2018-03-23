@@ -14,12 +14,13 @@ import {
   Container,
   Wrapper,
   List,
-  EndOfListMsg,
+  // EndOfListMsg,
   LoadMoreButton,
   LoaderButton
 } from './styled';
 
-const { EndOfList, LoadMore, Loader } = InfiniteList;
+// const { EndOfList } = InfiniteList;
+const { LoadMore, Loader } = InfiniteList;
 
 const PostList = props => {
   const { user, posts, fetchPosts, match, likePost, unlikePost } = props;

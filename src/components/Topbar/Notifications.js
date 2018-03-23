@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import Popper from '../common/Popper';
 import BellIcon from '../icons/Bell';
 
@@ -39,7 +39,6 @@ class Notifications extends React.Component {
     this.setState({ isPopperOpen: !this.state.isPopperOpen });
   };
   render() {
-    const { Menu } = Popper;
     return (
       <Popper
         isOpen={this.state.isPopperOpen}

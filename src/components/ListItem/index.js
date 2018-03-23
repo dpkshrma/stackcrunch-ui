@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactTooltip from 'react-tooltip';
 import { fromNow } from '../../utils/time';
 import { Chip } from '../common';
 import {

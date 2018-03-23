@@ -84,7 +84,12 @@ const LikePost = ({ onLike, liked }) => {
   `;
   return (
     <Container>
-      <Text>Show your support! Hit the like button! 👉</Text>
+      <Text>
+        Show your support! Hit the like button!{' '}
+        <span role="img" aria-label="pointing right">
+          👉
+        </span>
+      </Text>
       <LikeIcon onClick={onLike} height={28} data-tip={liked && 'Liked!'} />
     </Container>
   );
