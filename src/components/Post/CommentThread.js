@@ -13,7 +13,6 @@ const DISQUS_CONFIG = [
   'category_id',
   'onNewComment'
 ];
-let __disqusAdded = false;
 
 function copyProps(context, props, prefix = '') {
   Object.keys(props).forEach(prop => {
@@ -32,6 +31,7 @@ function copyProps(context, props, prefix = '') {
 }
 
 class CommentThread extends React.Component {
+  __disqusAdded = false;
   componentDidMount() {
     this.loadDisqus();
   }
@@ -39,7 +39,7 @@ class CommentThread extends React.Component {
     this.loadDisqus();
   }
   addDisqusScript = () => {
-    if (__disqusAdded) {
+    if (this.__disqusAdded) {
       return;
     }
 
@@ -53,7 +53,7 @@ class CommentThread extends React.Component {
     child.src = '//' + this.props.shortname + '.disqus.com/embed.js';
 
     parent.appendChild(child);
-    __disqusAdded = true;
+    this.__disqusAdded = true;
   };
   loadDisqus = () => {
     const props = {};
@@ -102,9 +102,6 @@ class CommentThread extends React.Component {
             <a href="http://disqus.com/?ref_noscript">comments.</a>
           </span>
         </noscript>
-        {/* <a href="http://disqus.com" className="dsq-brlink">
-          Blog comments powered by <span className="logo-disqus">Disqus</span>.
-        </a> */}
       </div>
     );
   }

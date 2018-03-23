@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import styled, { keyframes, css } from 'styled-components';
+import ReactDisqusComments from 'react-disqus-comments';
 // stateless components
 import { Chip, DefaultTooltip } from '../common';
 import {
@@ -16,7 +17,6 @@ import {
   authorCSS
 } from './styled';
 import Editor, { createEditorState } from '../Editor';
-import CommentThread from './CommentThread';
 import ClockIcon from '../icons/Clock';
 import { fetchPost, incViews, likePost } from '../../actions/post';
 // global helpers
@@ -84,7 +84,7 @@ const LikePost = ({ onLike, liked }) => {
   `;
   return (
     <Container>
-      <Text>Show your support! Like this post 👉</Text>
+      <Text>Show your support! Hit the like button! 👉</Text>
       <LikeIcon onClick={onLike} height={28} data-tip={liked && 'Liked!'} />
     </Container>
   );
@@ -153,6 +153,7 @@ class PostPage extends React.Component {
     if (!this.state.loaded) {
       return <LoadingPage />;
     }
+
     return (
       <Wrapper className="post-wrapper">
         <DefaultTooltip />
@@ -190,11 +191,11 @@ class PostPage extends React.Component {
               blockRenderMap={blockRenderMap}
             />
             <LikePost onLike={() => !liked && likePost(slug)} liked={liked} />
-            <CommentThread
-              shortname={'stackcrunch'}
+            <ReactDisqusComments
+              shortname="stackcrunch"
               identifier={slug}
               title={title}
-              category_id={'post'}
+              category_id="post"
             />
           </Content>
         </Post>
@@ -205,8 +206,9 @@ class PostPage extends React.Component {
 
 const mapStateToProps = ({ post, user }) => {
   const { likedPosts = [] } = user;
-  const previouslyLikedPost = likedPosts.indexOf(post.meta.slug) !== -1;
-  const liked = previouslyLikedPost || post.meta.liked;
+  const { meta = {} } = post;
+  const previouslyLikedPost = likedPosts.indexOf(meta.slug) !== -1;
+  const liked = previouslyLikedPost || meta.liked;
   return { post, liked };
 };
 const mapDispatchToProps = dispatch => {
