@@ -23,6 +23,7 @@ import {
   ProfileIconImg
 } from './styled';
 import Notifications from './Notifications';
+import { DefaultTooltip } from '../common';
 
 /** SnackBar Notifications
 <- wrapper ->
@@ -53,6 +54,7 @@ class Topbar extends RedirectComponent {
     const token = localStorage.getItem(STACKCRUNCH_TOKEN_ID);
     return (
       <Wrapper>
+        <DefaultTooltip />
         <Content>
           <Logo to="/posts">
             <Thumb src={logo} />
@@ -69,12 +71,13 @@ class Topbar extends RedirectComponent {
             {token
               ? [
                   <Notifications key="notification" />,
-                  <Link to="/write" key="write">
+                  <Link to="/write" key="write" data-tip="Write a Story">
                     <EditorLinkIcon className="icon" height={18} />
                   </Link>,
                   <ProfileIconWrapper
                     key="profile"
                     to={`/@${this.props.username}`}
+                    data-tip="Your Profile"
                   >
                     {this.props.avatar ? (
                       <ProfileIconImg src={this.props.avatar} />
