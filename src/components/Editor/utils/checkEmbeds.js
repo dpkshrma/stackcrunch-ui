@@ -1,4 +1,4 @@
-import videoUrlParser from 'js-video-url-parser';
+import videoUrlParser from 'js-video-url-parser/dist/jsVideoUrlParser.min';
 import { Block } from '../constants';
 
 export const checkCodeEmbeds = (text = '') => {
