@@ -9,6 +9,7 @@ import { URL_PREFIX } from './config';
 // import { routeAnimation } from './helpers/routes';
 import AboutLoading from './components/About/Loading';
 import Loadable from './components/Loadable';
+import ga from './ga';
 
 // route components
 const rc = ({ component, loader }) => props => (
@@ -49,14 +50,18 @@ export default (
       <Route exact path={uri('/')} render={About} />
       <App>
         <Switch>
-          <Route exact component={UserProfile} path={uri('@:username')} />
-          <Route exact component={PostList} path={uri('posts/')} />
-          <Route exact component={Post} path={uri('post/:slug')} />
-          <Route exact component={Profile} path={uri('profile')} />
-          <Route exact component={Join} path={uri('join')} />
-          <Route exact component={PostInput} path={uri('write/:slug?')} />
-          <Route exact component={Contributions} path={uri('contributions')} />
-          <Route component={NotFound} />
+          <Route exact component={ga(UserProfile)} path={uri('@:username')} />
+          <Route exact component={ga(PostList)} path={uri('posts/')} />
+          <Route exact component={ga(Post)} path={uri('post/:slug')} />
+          <Route exact component={ga(Profile)} path={uri('profile')} />
+          <Route exact component={ga(Join)} path={uri('join')} />
+          <Route exact component={ga(PostInput)} path={uri('write/:slug?')} />
+          <Route
+            exact
+            component={ga(Contributions)}
+            path={uri('contributions')}
+          />
+          <Route component={ga(NotFound)} />
         </Switch>
       </App>
     </Switch>
