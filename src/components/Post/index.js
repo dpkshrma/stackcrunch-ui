@@ -28,6 +28,7 @@ import markdownToDraft from './helpers/markdownToDraft';
 import { URL_PREFIX } from '../../config';
 import HeartIcon from '../icons/Heart';
 import LoadingPage from '../About/Loading';
+import PatronBar from './PatronBar';
 
 const Meta = () => <DateString>{new Date().toDateString()}</DateString>;
 
@@ -99,7 +100,8 @@ class PostPage extends React.Component {
   state = {
     editorState: createEditorState(),
     metadata: {},
-    loaded: false
+    loaded: false,
+    showPatronBar: false
   };
   componentWillMount() {
     const { slug } = this.props.match.params;
@@ -129,6 +131,7 @@ class PostPage extends React.Component {
       .catch(err => {
         throw err;
       });
+    document.addEventListener('scroll', this.handleScroll);
   }
   componentWillUnmount() {
     hooks.post.onLeave(this.props.dispatch);
@@ -143,7 +146,17 @@ class PostPage extends React.Component {
   onChange = editorState => {
     this.setState({ editorState });
   };
+  handleScroll = e => {
+    if (document.body.parentNode.scrollTop > 100) {
+      if (!this.state.showPatronBar) {
+        this.setState({ showPatronBar: true });
+      }
+    } else {
+      this.setState({ showPatronBar: false });
+    }
+  };
   render() {
+    const { showPatronBar } = this.state;
     const {
       authors = [],
       ttr,
@@ -162,6 +175,7 @@ class PostPage extends React.Component {
     return (
       <Wrapper className="post-wrapper">
         <DefaultTooltip />
+        {showPatronBar && <PatronBar />}
         {coverImageUrl && (
           <CoverImg src={coverImageUrl} alignment={coverAlignment} />
         )}
