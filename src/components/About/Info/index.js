@@ -7,7 +7,7 @@ import ShareIcons from './ShareIcons';
 import Loading from '../Loading';
 
 const LAUNCH_POST_LINK =
-  '/post/StackCrunch-Crowdsourcing-Practical-Solutionslessspangreater-rJeRqu5y5f';
+  '/post/StackCrunch-Crowdsourcing-Practical-Solutions-rJeRqu5y5f';
 const ReadMoreLink = styled(Link)`
   text-decoration: none;
   border-bottom: 1px dashed #ffa000;
