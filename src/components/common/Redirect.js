@@ -22,7 +22,9 @@ class Redirect extends React.Component {
     }
   };
   updateProfilePhoto = () => {
-    store.dispatch(fetchProfile());
+    if (localStorage.getItem(STACKCRUNCH_TOKEN_ID)) {
+      store.dispatch(fetchProfile());
+    }
   };
 }
 
